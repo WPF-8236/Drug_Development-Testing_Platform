@@ -22,6 +22,84 @@
     cursor: pointer;
 }
 
+
+
+.btn-s{
+    width: 90px;
+    height: 36px;
+    display: inline-block;
+    position: relative;
+    top: 20%;
+    margin: 16px;
+    overflow: hidden;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+
+}
+
+.btn-s:focus {
+    outline: none;
+}
+
+.btn-s:before {
+    content: "";
+    height: 110%;
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    background-image: url("../img/index_bg.jfif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 50%;
+}
+
+.btn-s span {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 20px;
+    transform: translateY(-50%);
+    z-index: 9;
+}
+
+.btn-s:before {
+    transition: all 0.3s ease;
+}
+
+.btn-s:hover:before {
+    -webkit-filter: blur(8px);
+    filter: blur(8px);
+}
+
+.btn-s:focus {
+    outline: none;
+}
+
+.btn-s#btn-6 {
+    position: fixed;
+    top: 10px;
+    left: 1800px;
+}
+
+.btn-s#btn-7 {
+    width: 180px;
+    position: fixed;
+    top: 10px;
+    left: 1500px;
+}
+
+.btn-s#btn-8 {
+    position: fixed;
+    top: 10px;
+    left: 1500px;
+}
+
+
 .btn {
     width: 380px;
     height: 76px;
@@ -36,10 +114,6 @@
     font-size: 26px;
     cursor: pointer;
 
-}
-
-.btn:focus {
-    outline: none;
 }
 
 .btn:before {
