@@ -10,6 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 	@RequestMapping("/login")
 	public String login(HttpServletResponse response, HttpServletRequest request, String user_id, String password) throws Exception {
-		return "index";
+		return "login";
 	}
 }
