@@ -1,7 +1,7 @@
 #app {
     background-image: url("../img/index_bg.jfif");
-    min-width: 1918px;
-    min-height: 1009px;
+    min-width: 1910px;
+    min-height: 1008px;
     background-size: 100% 100%;
     background-position: center center;
     overflow: auto;
@@ -83,7 +83,7 @@
 .btn-s#btn-6 {
     position: fixed;
     top: 10px;
-    left: 1800px;
+    left: 1790px;
 }
 
 .btn-s#btn-7 {

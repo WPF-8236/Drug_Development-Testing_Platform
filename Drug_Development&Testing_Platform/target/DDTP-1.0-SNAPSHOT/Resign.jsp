@@ -26,7 +26,7 @@
                     <div class="form-section">
                         <h3>注册</h3>
                         <h6>欢迎使用该系统</h6>
-                        <form action="login" method="post" class="signin-form">
+                        <form action="resign" method="post" class="signin-form">
                             <div class="form-input">
                                 <input type="text" name="user_id" placeholder="用户名" required="" autofocus>
                             </div>

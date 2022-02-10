@@ -28,7 +28,7 @@
                         <h6>欢迎使用该系统</h6>
                         <form action="login" method="post" class="signin-form">
                             <div class="form-input">
-                                <input type="text" name="user_id" placeholder="用户名" required="" autofocus>
+                                <input type="text" name="id" placeholder="用户名" required="" autofocus>
                             </div>
                             <div class="form-input">
                                 <input type="password" name="password" placeholder="密码" required="">

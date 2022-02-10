@@ -40,7 +40,7 @@
                 } else {
                 %>
                 <div id="btn-7" class="btn-s">
-                    <span onclick="">你好，${user}</span>
+                    <span onclick="">你好，${user.user_name}</span>
                 </div>
                 <div id="btn-6" class="btn-s">
                     <span onclick="window.location.href = './logout.jsp'">登出</span>
@@ -89,6 +89,7 @@
                         <%
                        if (session.getAttribute("user") == null){
                            %>
+                        alert("请登录");
                         window.location.href = './Login.jsp';
                         <%
                         }else {
