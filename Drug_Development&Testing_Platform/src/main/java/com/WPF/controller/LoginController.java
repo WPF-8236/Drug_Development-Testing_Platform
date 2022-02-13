@@ -30,6 +30,9 @@ public class LoginController {
 		User user = null;
 		PrintWriter printWriter = response.getWriter();
 		if (userGrade == null) {
+			printWriter.print("\t\t<script>\n" +
+					"\t\t\talert(\"" + "用户不存在！！请注册！！" + "\")\n" +
+					"\t\t</script>");
 			response.setHeader("refresh", "0.1;url=./Resign.jsp");
 			printWriter.close();
 			return "";
