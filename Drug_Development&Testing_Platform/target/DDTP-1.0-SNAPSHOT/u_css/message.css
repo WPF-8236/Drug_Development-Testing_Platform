@@ -230,3 +230,11 @@ body > .el-container {
 .el-select{
     width: 300px;
 }
+
+#d_find .input-with-select{
+    width: 800px;
+}
+
+#d_find .el-select{
+    width: 180px;
+}

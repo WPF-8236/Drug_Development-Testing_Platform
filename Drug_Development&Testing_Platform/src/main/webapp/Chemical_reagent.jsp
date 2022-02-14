@@ -90,22 +90,17 @@
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="药物查询">
-                            <el-select
-                                    v-model="value"
-                                    multiple
-                                    filterable
-                                    remote
-                                    reserve-keyword
-                                    placeholder="请输入关键词"
-                                    :remote-method="remoteMethod"
-                                    :loading="loading">
-                                <el-option
-                                        v-for="item in options"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                </el-option>
-                            </el-select>
+                            <div style="margin-top: 15px;" id="d_find">
+                                <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
+                                    <el-select v-model="select" slot="prepend" placeholder="请选择">
+                                        <el-option label="商品名" value="1"></el-option>
+                                        <el-option label="通用名" value="2"></el-option>
+                                        <el-option label="批准号" value="3"></el-option>
+                                    </el-select>
+                                    <el-button slot="append" icon="el-icon-search"></el-button>
+                                </el-input>
+                            </div>
+
                         </el-tab-pane>
                         <el-tab-pane label="药物对比">角色管理</el-tab-pane>
                         <el-tab-pane label="药物科普">定时任务补偿</el-tab-pane>
@@ -123,33 +118,9 @@
                 data() {
                     return {
                         messages: [],
-                        options: [],
-                        value: [],
-                        list: [],
-                        loading: false,
-                        states: ["Alabama", "Alaska", "Arizona",
-                            "Arkansas", "California", "Colorado",
-                            "Connecticut", "Delaware", "Florida",
-                            "Georgia", "Hawaii", "Idaho", "Illinois",
-                            "Indiana", "Iowa", "Kansas", "Kentucky",
-                            "Louisiana", "Maine", "Maryland",
-                            "Massachusetts", "Michigan", "Minnesota",
-                            "Mississippi", "Missouri", "Montana",
-                            "Nebraska", "Nevada", "New Hampshire",
-                            "New Jersey", "New Mexico", "New York",
-                            "North Carolina", "North Dakota", "Ohio",
-                            "Oklahoma", "Oregon", "Pennsylvania",
-                            "Rhode Island", "South Carolina",
-                            "South Dakota", "Tennessee", "Texas",
-                            "Utah", "Vermont", "Virginia",
-                            "Washington", "West Virginia", "Wisconsin",
-                            "Wyoming"]
+                        input3: '',
+                        select: '',
                     };
-                },
-                mounted() {
-                    this.list = this.states.map(item => {
-                        return {value: `value:${item}`, label: `label:${item}`};
-                    });
                 },
                 filters: {
                     dateFilter(value) {
@@ -169,20 +140,7 @@
                             getMessage(1);
                         console.log(tab, event);
                     },
-                    remoteMethod(query) {
-                        if (query !== '') {
-                            this.loading = true;
-                            setTimeout(() => {
-                                this.loading = false;
-                                this.options = this.list.filter(item => {
-                                    return item.label.toLowerCase()
-                                        .indexOf(query.toLowerCase()) > -1;
-                                });
-                            }, 200);
-                        } else {
-                            this.options = [];
-                        }
-                    }
+
                 },
                 created: function () {
                     getMessage(1);
