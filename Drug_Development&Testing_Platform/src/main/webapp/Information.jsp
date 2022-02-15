@@ -83,7 +83,7 @@
                                         <img src="./img/logo.png" class="img-circle">
                                     </el-button>
                                     <el-dialog title="上传头像" :visible.sync="dialogFormVisible">
-                                        <form action="user/fileupload.do" method="post" enctype="multipart/form-data">
+                                        <form action="user/fileupload" method="post" enctype="multipart/form-data">
                                             选择文件：<input type="file" name="upload"><br>
                                             <input type="submit" value="上传">
                                         </form>
@@ -95,7 +95,7 @@
                                         <img src=${sessionScope.user.img} class="img-circle">
                                     </el-button>
                                     <el-dialog title="上传头像" :visible.sync="dialogFormVisible">
-                                        <form action="user/fileupload.do" method="post" enctype="multipart/form-data">
+                                        <form action="user/fileupload" method="post" enctype="multipart/form-data">
                                             选择文件：<input type="file" name="upload"><br>
                                             <input type="submit" value="上传">
                                         </form>
@@ -302,6 +302,9 @@
                                     </el-collapse>
                                 </div>
                             </div>
+                            <div v-if="selectid==2">
+                                志愿者申请
+                            </div>
                         </el-main>
                         <el-footer>
                             &copy; 2022 毕业设计 | Design by 201805020527王潘锋
@@ -313,6 +316,38 @@
 
         </div>
         <script type="text/javascript">
+            function submit() {
+                $.ajax({
+                    url: 'user/updatePassword',
+                    dataType: "text",
+                    contentType: 'application/json;charset=UTF-8',
+                    /* data: {'user': JSON.stringify(this.app.user)},*/
+                    data: {'pass': this.app.passwordForm.pass},
+                    success: function (resp) {
+                        alert(resp);
+                        window.location.href = "./Login.jsp";
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
+
+            function submitAddress() {
+                $.ajax({
+                    url: 'user/updateAddress',
+                    dataType: "text",
+                    contentType: 'application/json;charset=UTF-8',
+                    /* data: {'user': JSON.stringify(this.app.user)},*/
+                    data: {'address': this.app.addressForm.address},
+                    success: function (resp) {
+                        alert(resp);
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
         </script>
         <script type="text/javascript">
             var app = new Vue({
@@ -376,6 +411,27 @@
                     selectMue(key, keyPath) {
                         console.log(key, keyPath);
                         this.selectid = key;
+                    },
+                    submitForm(formName) {
+                        this.$refs[formName].validate((valid) => {
+                            if (valid) {
+                                submit();
+                            } else {
+                                return false;
+                            }
+                        });
+                    },
+                    submitAddress(formName) {
+                        this.$refs[formName].validate((valid) => {
+                            if (valid) {
+                                submitAddress();
+                            } else {
+                                return false;
+                            }
+                        });
+                    },
+                    resetForm(formName) {
+                        this.$refs[formName].resetFields();
                     }
 
                 },

@@ -13,4 +13,48 @@
         insert into ddtp_user(user_id, password)
         values (#{user_id}, #{password})
     </insert>
+
+    <update id="updateImg">
+        update ddtp_user
+        set img=#{img}
+        where user_id = #{user_id}
+    </update>
+
+    <update id="updateUserPassword">
+        update ddtp_user
+        set password=#{password}
+        where user_id = #{user_id}
+    </update>
+
+    <update id="updateUserAddress">
+        update ddtp_user
+        set address=#{address}
+        where user_id = #{user_id}
+    </update>
+
+    <update id="updateModifyBasicInformation">
+        update ddtp_user
+        set user_id=#{user.user_id},
+            user_age=#{user.user_age},
+            user_sex=#{user.user_sex},
+            birthday=#{user.birthday}
+        where user_id = #{old_user_id}
+    </update>
+
+    <update id="updateModifyDetailedInformation">
+        update ddtp_user
+        set password=#{password},
+            phone_number=#{phone_number},
+            email=#{email},
+            address=#{address}
+        where user_id = #{user_id}
+    </update>
+
+    <update id="updateModifyPrivacyInformation">
+        update ddtp_user
+        set identification_number=#{identification_number},
+            document_type=#{document_type},
+            user_name=#{user_name}
+        where user_id = #{user_id}
+    </update>
 </mapper>

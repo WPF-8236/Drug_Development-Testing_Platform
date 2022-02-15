@@ -14,4 +14,23 @@
         insert into ddtp_user_grade(id, password, grade)
         values (#{id}, #{password}, #{grade})
     </insert>
+
+    <update id="updatePassword">
+        update ddtp_user_grade
+        set password=#{password}
+        where id = #{id};
+    </update>
+
+    <update id="updateModifyBasicInformation">
+        update ddtp_user_grade
+        set id=#{userGrade.id},
+            password=#{userGrade.password}
+        where id = #{old_user_id}
+    </update>
+
+    <update id="updateModifyDetailedInformation">
+        update ddtp_user_grade
+        set password=#{password}
+        where id = #{id}
+    </update>
 </mapper>

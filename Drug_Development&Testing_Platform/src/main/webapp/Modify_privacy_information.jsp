@@ -19,14 +19,14 @@
         <script type="text/javascript">
             function submit() {
                 $.ajax({
-                    url: 'user/updateModifyPrivacyInformation.do',
+                    url: 'user/updateModifyPrivacyInformation',
                     dataType: "json",
                     contentType: 'application/json;charset=UTF-8',
                     data: {'user': JSON.stringify(this.app.user)},
                     /*data: {'user': this.app.user},*/
                     success: function (resp) {
                         alert(resp.valueOf());
-                        window.location.href = "/FinalPractice/Personal_Center_information.jsp";
+                        window.location.href = "./Information.jsp";
                     },
                     error: function (resp) {
                         alert("error");
