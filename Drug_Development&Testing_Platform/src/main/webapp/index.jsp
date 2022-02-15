@@ -1,8 +1,10 @@
-<%--<%@ page import="com.WPF.domain.User" %>
+<%@ page import="com.WPF.domain.User" %>
+<%@ page import="com.WPF.domain.UserGrade" %><%--<%@ page import="com.WPF.domain.User" %>
 <%@ page import="com.WPF.domain.Enterprise" %>--%>
 <%
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
-    /*session.setAttribute("user", "1234");*/
+    User user = (User) session.getAttribute("user");
+    UserGrade userGrade = (UserGrade) session.getAttribute("userGrade");
 %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -28,7 +30,7 @@
         <div id="app">
             <div id="wallper">
                 <%
-                    if (session.getAttribute("user") == null) {
+                    if (user == null) {
                 %>
                 <div id="btn-8" class="btn-s">
                     <span onclick="window.location.href = './Resign.jsp'">注册</span>
@@ -40,7 +42,7 @@
                 } else {
                 %>
                 <div id="btn-7" class="btn-s">
-                    <span onclick="">你好，${user.user_name}</span>
+                    <span onclick="window.location.href='./Information.jsp'">你好，${user.user_name}</span>
                 </div>
                 <div id="btn-6" class="btn-s">
                     <span onclick="window.location.href = './logout.jsp'">登出</span>
@@ -51,6 +53,9 @@
                 <div id="index">
                     <span>庵东镇药物研发试测平台</span>
                 </div>
+                <%
+                    if (user != null && userGrade.getGrade() == 3) {
+                %>
                 <div id="btn-1" class="btn">
                     <span onclick="app.isUser(1);">化学药物(制剂)</span>
                 </div>
@@ -66,6 +71,18 @@
                 <div id="btn-5" class="btn">
                     <span onclick="app.isUser(5);">慢性病防止药物</span>
                 </div>
+                <%
+                } else {
+                %>
+                <div id="btn-1" class="btn">
+                    <span onclick="app.isUser(6)">药物信息</span>
+                </div>
+                <div id="btn-2" class="btn">
+                    <span onclick="app.isUser(7);">志愿者招募</span>
+                </div>
+                <%
+                    }
+                %>
             </div>
 
             <div class="clear"></div>
@@ -87,7 +104,7 @@
                 methods: {
                     isUser(id) {
                         <%
-                       if (session.getAttribute("user") == null){
+                       if (user == null){
                            %>
                         alert("请登录");
                         window.location.href = './Login.jsp';
@@ -109,6 +126,12 @@
                                 break;
                             case 5:
                                 window.location.href = './Chronic_disease.jsp';
+                                break;
+                            case 6:
+                                window.location.href = './Message.jsp';
+                                break;
+                            case 7:
+                                window.location.href = './logout.jsp';
                                 break;
                         }
                         <%

@@ -1,0 +1,209 @@
+a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+/*正常的未被访问过的链接*/
+a:link {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+/*已经访问过的链接*/
+a:visited {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+/*鼠标划过(停留)的链接*/
+a:hover {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+/* 正在点击的链接*/
+a:active {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.img-circle {
+    width: 140px;
+}
+
+#el-1 {
+    border-left: #409EFF 10px solid;
+    padding-left: 10px;
+
+}
+
+#el-2 {
+    border-left: #67C23A 10px solid;
+    padding-left: 10px;
+}
+
+#el-3 {
+    border-left: #E6A23C 10px solid;
+    padding-left: 10px;
+}
+
+#el-4 {
+    border-left: #F56C6C 10px solid;
+    padding-left: 10px;
+}
+
+.el-row {
+    margin-bottom: 20px;
+}
+
+.el-row:last-child {
+    margin-bottom: 0;
+}
+
+.el-col {
+    border-radius: 4px;
+}
+
+.grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+}
+
+.row-bg {
+    padding: 10px 0;
+}
+
+#el-1 .span-text {
+    font-size: 18px;
+    font-weight: 800;
+    color: #409EFF;
+}
+
+#el-2 .span-text {
+    font-size: 18px;
+    font-weight: 800;
+    color: #67C23A;
+}
+
+#el-3 .span-text {
+    font-size: 18px;
+    font-weight: 800;
+    color: #E6A23C;
+}
+
+.span-text-result {
+    font-size: 18px;
+    font-weight: 550;
+    color: #606266;
+}
+
+
+.clear {
+    clear: both;
+}
+
+
+.copy-right p {
+    color: #606266;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    padding: 0 15px;
+}
+
+.copy-right p a {
+    color: #606266;
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+.copy-right p a:hover {
+    text-decoration: none;
+}
+
+.el-header, .el-footer {
+    background-color: #B3C0D1;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+}
+
+.el-aside {
+    /*background-color: #D3DCE6;*/
+    color: #333;
+    /*text-align: center;*/
+    line-height: 845px;
+}
+
+.el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: center;
+    /*line-height: 845px;*/
+    height: 885px;
+}
+
+
+
+
+.btn-s {
+    width: 90px;
+    height: 36px;
+    display: inline-block;
+    position: relative;
+    top: 20%;
+    margin: 16px;
+    overflow: hidden;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+
+}
+
+.btn-s:focus {
+    outline: none;
+}
+
+.btn-s:before {
+    content: "";
+    height: 110%;
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    background-image: url("../img/index_bg.jfif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 50%;
+}
+
+.btn-s span {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0px;
+    transform: translateY(-50%);
+    z-index: 9;
+}
+
+.btn-s:before {
+    transition: all 0.3s ease;
+}
+
+.btn-s:hover:before {
+    -webkit-filter: blur(8px);
+    filter: blur(8px);
+}
+
+.btn-s:focus {
+    outline: none;
+}
+
+.btn-s#btn-6 {
+    position: fixed;
+    top: 0px;
+    left: 1790px;
+}

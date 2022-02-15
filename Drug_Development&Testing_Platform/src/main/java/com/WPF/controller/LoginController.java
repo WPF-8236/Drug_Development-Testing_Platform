@@ -36,15 +36,16 @@ public class LoginController {
 			response.setHeader("refresh", "0.1;url=./Resign.jsp");
 			printWriter.close();
 			return "";
-		} else if(userGrade.getGrade()==2) {
+		} else if (userGrade.getGrade() == 2 || userGrade.getGrade() == 3) {
 			user = userService.getUser(id);
 			System.out.println(user);
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
+			session.setAttribute("userGrade", userGrade);
 			return "index";
-		}else if (userGrade.getGrade()==1){
+		} else if (userGrade.getGrade() == 1) {
 			return "Admin";
-		}else
+		} else
 			return "";
 	}
 }
