@@ -176,4 +176,14 @@ body > .el-container {
     margin-right: auto;
 }
 
+#recruitList{
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.param{
+    display: none;
+}
+
 

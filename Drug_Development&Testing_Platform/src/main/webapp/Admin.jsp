@@ -17,7 +17,21 @@
         <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="lib-master/index.js" type="text/javascript" charset="utf-8"></script>
         <script type="text/javascript">
-
+            function addEnterprise() {
+                $.ajax({
+                    url: "recruit/submitRecruitList",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"recruitList" : JSON.stringify(this.app.recruitList)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Volunteer.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
         </script>
     </head>
     <body>
@@ -37,7 +51,8 @@
                                         default-active="1"
                                         class="el-menu-vertical-demo"
                                         @open="handleOpen"
-                                        @close="handleClose">
+                                        @close="handleClose"
+                                        @select="select">
                                     <el-menu-item index="1">
                                         <i class="el-icon-menu"></i>
                                         <span slot="title">药物公司管理</span>
@@ -60,16 +75,42 @@
                     </el-aside>
                     <el-container>
                         <el-main>
-
-                            <template>
-                                <el-tabs v-model="activeName" @tab-click="handleClick">
-                                    <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-                                    <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-                                    <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-                                    <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
-                                </el-tabs>
-                            </template>
-                            main
+                            <div v-if="index==1">
+                                <div id="addEnterprise">
+                                    <el-form ref="addEnterprise" :model="addEnterprise" label-width="80px">
+                                        <el-row :gutter="20">
+                                            <el-col :span="6">
+                                                <div class="grid-content bg-purple">
+                                                    <el-form-item label="公司编号:">
+                                                        <el-input v-model="addEnterprise.e_id"></el-input>
+                                                    </el-form-item>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span="6">
+                                                <div class="grid-content bg-purple">
+                                                    <el-form-item label="公司名称:">
+                                                        <el-input v-model="addEnterprise.e_name"></el-input>
+                                                    </el-form-item>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span="6">
+                                                <div class="grid-content bg-purple">
+                                                    <el-form-item label="公司密码:">
+                                                        <el-input v-model="addEnterprise.e_password"></el-input>
+                                                    </el-form-item>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span="6">
+                                                <div class="grid-content bg-purple">
+                                                    <el-form-item>
+                                                        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                                                    </el-form-item>
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                    </el-form>
+                                </div>
+                            </div>
                         </el-main>
                         <el-footer>
                             &copy; 2022 毕业设计 | Design by 201805020527王潘锋
@@ -88,6 +129,12 @@
                 data() {
                     return {
                         activeName: 'second',
+                        index: '1',
+                        addEnterprise: {
+                            e_name: '',
+                            e_id: '',
+                            e_password: ''
+                        }
                     };
                 },
                 methods: {
@@ -99,6 +146,12 @@
                     },
                     handleClick(tab, event) {
                         console.log(tab, event);
+                    },
+                    select(index, indexPath) {
+                        app.index = index;
+                    },
+                    onSubmit() {
+                        addEnterprise();
                     },
                 },
                 created: function () {
