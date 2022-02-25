@@ -57,4 +57,19 @@
             user_name=#{user_name}
         where user_id = #{user_id}
     </update>
+
+    <update id="updateUser">
+        update ddtp_user
+        set user_name=#{user_name},
+            user_age=#{user_age},
+            user_sex=#{user_sex},
+            birthday=#{birthday},
+            document_type=#{document_type},
+            identification_number=#{identification_number},
+            phone_number=#{phone_number},
+            email=#{email},
+            address=#{address}
+        where user_id = #{user_id}
+          and password = #{password}
+    </update>
 </mapper>

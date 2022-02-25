@@ -19,7 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter printWriter = response.getWriter();
-		String user_id = request.getParameter("user_id");
+		String user_id = request.getParameter("id");
 		User user = userService.getUser(user_id);
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
@@ -29,7 +29,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			printWriter.print("\t\t<script>\n" +
 					"\t\t\talert(\"" + "信息不完全请完善信息！！" + "\")\n" +
 					"\t\t</script>");
-			response.setHeader("refresh", "0.1;url=/FinalPractice/firstform.jsp");
+			response.setHeader("refresh", "0.1;url=./firstform.jsp");
 			printWriter.close();
 			return true;
 		} else

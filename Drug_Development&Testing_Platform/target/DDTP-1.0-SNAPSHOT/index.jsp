@@ -131,7 +131,7 @@
                                 window.location.href = './Message.jsp';
                                 break;
                             case 7:
-                                window.location.href = './logout.jsp';
+                                window.location.href = './Volunteer.jsp';
                                 break;
                         }
                         <%

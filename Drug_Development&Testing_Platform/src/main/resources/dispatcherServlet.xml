@@ -28,4 +28,12 @@
         <property name="maxUploadSize" value="10485760"/>
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--指定拦截的请求uri地址，可以使用通配符**：任意字符，文件，多级目录-->
+            <mvc:mapping path="/login"/>
+            <bean class="com.WPF.handler.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

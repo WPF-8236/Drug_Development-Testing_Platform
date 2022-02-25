@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.UUID;
 
 @Controller
@@ -174,5 +175,43 @@ public class UserController {
 			printWriter.close();
 		}
 
+	}
+
+	@RequestMapping("/firstForm")
+	public void firstForm(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		String user_name = request.getParameter("user[user_name]");
+		Integer user_age = Integer.parseInt(request.getParameter("user[user_age]"));
+		Integer user_sex = request.getParameter("user[user_sex]").equals("男") ? 0 : 1;
+		Date birthday = Date.valueOf(request.getParameter("user[birthday]"));
+		Integer document_type = Integer.parseInt(request.getParameter("user[document_type]"));
+		String identification_number = request.getParameter("user[identification_number]");
+		String phone_number = request.getParameter("user[phone_number]");
+		String email = request.getParameter("user[email]");
+		String address = request.getParameter("user[address]");
+		user.setUser_name(user_name);
+		user.setUser_age(user_age);
+		user.setUser_sex(user_sex);
+		user.setBirthday(birthday);
+		user.setDocument_type(document_type);
+		user.setIdentification_number(identification_number);
+		user.setPhone_number(phone_number);
+		user.setEmail(email);
+		user.setAddress(address);
+		System.out.println(user);
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		int num = 0;
+		num = userService.update(user);
+		System.out.println(num);
+		if (num != 0) {
+			printWriter.print("完善成功");
+			printWriter.close();
+		} else {
+			printWriter.print("完善失败！！");
+			printWriter.close();
+		}
 	}
 }

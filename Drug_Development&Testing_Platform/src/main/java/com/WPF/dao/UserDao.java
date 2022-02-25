@@ -20,4 +20,7 @@ public interface UserDao {
 
 	int updateModifyPrivacyInformation(User user);
 
+	int updateUser(User user);
+
+
 }

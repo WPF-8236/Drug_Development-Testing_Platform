@@ -39,7 +39,7 @@ public class RegisterController {
 			printWriter.print("\t\t<script>\n" +
 					"\t\t\talert(\"" + "注册成功！！请登录！！" + "\")\n" +
 					"\t\t</script>");
-			response.setHeader("refresh", "0.1;url=./Resign.jsp");
+			response.setHeader("refresh", "0.1;url=./Login.jsp");
 			printWriter.close();
 			return "";
 		} else {

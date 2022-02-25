@@ -61,4 +61,10 @@ public class UserServiceImpl implements UserService {
 	public int updateModifyPrivacyInformation(User user) {
 		return userDao.updateModifyPrivacyInformation(user);
 	}
+
+	@Override
+	public int update(User user) {
+		return userDao.updateUser(user);
+	}
+
 }

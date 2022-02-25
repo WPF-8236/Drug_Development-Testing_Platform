@@ -18,4 +18,7 @@ public interface UserService {
 
 	int updateModifyPrivacyInformation(User user);
 
+	int update(User user);
+
+
 }
