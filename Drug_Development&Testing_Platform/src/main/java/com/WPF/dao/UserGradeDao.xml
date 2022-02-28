@@ -33,4 +33,10 @@
         set password=#{password}
         where id = #{id}
     </update>
+
+    <delete id="deleteUserGrade">
+        delete
+        from ddtp_user_grade
+        where id = #{id}
+    </delete>
 </mapper>
