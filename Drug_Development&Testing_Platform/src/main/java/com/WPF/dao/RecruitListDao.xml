@@ -4,13 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.WPF.dao.RecruitListDao">
     <insert id="insertRecruitList">
-        insert into ddtp_recruit_list(rl_id, rl_title, rl_user_name, rl_user_sex, rl_user_phone,
+        insert into ddtp_recruit_list(rl_id, rl_u_id, rl_title, rl_user_name, rl_user_sex, rl_user_phone,
                                       rl_user_identification_number, rl_user_height, rl_user_weight, rl_address,
                                       rl_issmoke, rl_text)
-        values (#{rl_id}, #{rl_title}, #{rl_user_name}, #{rl_user_sex},
+        values (#{rl_id}, #{rl_u_id}, #{rl_title}, #{rl_user_name}, #{rl_user_sex},
                 #{rl_user_phone},
                 #{rl_user_identification_number}, #{rl_user_height},
                 #{rl_user_weight}, #{rl_address},
                 #{rl_issmoke}, #{rl_text})
     </insert>
+
+    <select id="selectAllRecruitListByUserID" resultType="RecruitList">
+        select *
+        from ddtp_recruit_list
+        where rl_u_id = #{user_id}
+    </select>
 </mapper>

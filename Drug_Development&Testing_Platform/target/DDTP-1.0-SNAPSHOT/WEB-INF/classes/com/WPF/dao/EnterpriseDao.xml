@@ -18,4 +18,10 @@
         from ddtp_enterprise
         where e_id = #{e_id}
     </delete>
+
+    <select id="selectAnEnterprise" resultType="Enterprise">
+        select *
+        from ddtp_enterprise
+        where e_id = #{e_id}
+    </select>
 </mapper>

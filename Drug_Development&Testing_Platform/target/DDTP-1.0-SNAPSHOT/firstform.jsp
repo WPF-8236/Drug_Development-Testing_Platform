@@ -7,7 +7,6 @@
     <head>
         <base href="<%=basePath%>">
         <meta charset="utf-8">
-        <title>【潘锋酒店】酒店预订,酒店价格查询,宾馆住宿推荐,网上订酒店</title>
         <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>

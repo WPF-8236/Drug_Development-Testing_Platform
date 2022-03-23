@@ -27,6 +27,11 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	}
 
 	@Override
+	public Enterprise getEnterprise(String e_id) {
+		return enterpriseDao.selectAnEnterprise(e_id);
+	}
+
+	@Override
 	public List<Enterprise> getEnterpriseList() {
 		return enterpriseDao.selectEnterprise();
 	}

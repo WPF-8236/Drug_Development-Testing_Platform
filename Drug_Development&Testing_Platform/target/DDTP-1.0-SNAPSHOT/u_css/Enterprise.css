@@ -1,0 +1,100 @@
+.el-header, .el-footer {
+    background-color: #B3C0D1;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+}
+
+.el-aside {
+    /*background-color: #D3DCE6;*/
+    color: #333;
+    /*text-align: center;*/
+    line-height: 845px;
+}
+
+.el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: center;
+    /*line-height: 845px;*/
+    height: 885px;
+}
+
+body > .el-container {
+    margin-bottom: 40px;
+}
+
+#header{
+    font-size: 28px;
+}
+
+.btn-s{
+    width: 90px;
+    height: 36px;
+    display: inline-block;
+    position: relative;
+    top: 20%;
+    margin: 16px;
+    overflow: hidden;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+
+}
+
+.btn-s:focus {
+    outline: none;
+}
+
+.btn-s:before {
+    content: "";
+    height: 110%;
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    background-image: url("../img/index_bg.jfif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 50%;
+}
+
+.btn-s span {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 5px;
+    transform: translateY(-50%);
+    z-index: 9;
+}
+
+.btn-s:before {
+    transition: all 0.3s ease;
+}
+
+.btn-s:hover:before {
+    -webkit-filter: blur(8px);
+    filter: blur(8px);
+}
+
+.btn-s:focus {
+    outline: none;
+}
+
+.btn-s#btn-6 {
+    position: fixed;
+    top: 0;
+    left: 1790px;
+}
+
+#updateEnterprise{
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.param{
+    display: none;
+}

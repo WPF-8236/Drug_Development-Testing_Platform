@@ -31,6 +31,19 @@ public class RecruitController {
 		return recruits;
 	}
 
+	@RequestMapping("/getRecruitByUserID")
+	@ResponseBody
+	public List<RecruitList> getRecruitListByUserID(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("user_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String user_id = mapper.readValue(json, String.class);
+		List<RecruitList> recruitList = recruitService.getUserRecruitList(user_id);
+		System.out.println(recruitList);
+		return recruitList;
+	}
+
 	@RequestMapping("/submitRecruitList")
 	public void submitRecruitList(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		String json = request.getParameter("recruitList");

@@ -15,6 +15,7 @@ public class User {
 	private String email;
 	private String address;
 	private String img;
+	private int isv;
 
 	public User() {
 	}
@@ -24,7 +25,7 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String user_id, String user_name, int user_age, int user_sex, Date birthday, String password, int document_type, String identification_number, String phone_number, String email, String address) {
+	public User(String user_id, String user_name, int user_age, int user_sex, Date birthday, String password, int document_type, String identification_number, String phone_number, String email, String address, String img, int isv) {
 		this.user_id = user_id;
 		this.user_name = user_name;
 		this.user_age = user_age;
@@ -36,8 +37,9 @@ public class User {
 		this.phone_number = phone_number;
 		this.email = email;
 		this.address = address;
+		this.img = img;
+		this.isv = isv;
 	}
-
 
 	public String getUser_id() {
 		return user_id;
@@ -135,6 +137,14 @@ public class User {
 		this.img = img;
 	}
 
+	public int getIsv() {
+		return isv;
+	}
+
+	public void setIsv(int isv) {
+		this.isv = isv;
+	}
+
 	@Override
 	public String toString() {
 		return "User{" +
@@ -150,6 +160,7 @@ public class User {
 				", email='" + email + '\'' +
 				", address='" + address + '\'' +
 				", img='" + img + '\'' +
+				", isv=" + isv +
 				'}';
 	}
 }

@@ -63,7 +63,7 @@
                 })
             }
 
-            function updateEnterprise(){
+            function updateEnterprise() {
                 $.ajax({
                     url: "Admin/updateEnterprise",
                     contentType: 'application/json;charset=UTF-8',
@@ -235,6 +235,57 @@
                                     </el-drawer>
                                 </div>
                             </div>
+                            <div v-if="index==3">
+                                <div id="recruitlist">
+                                    <el-table
+                                            :data="recruitList"
+                                            border
+                                            style="width: 100%">
+                                        <el-table-column
+                                                fixed
+                                                prop="e_id"
+                                                label="公司编号"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="e_name"
+                                                label="公司名称"
+                                                width="300">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="e_password"
+                                                label="公司密码"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="e_phone"
+                                                label="公司电话"
+                                                width="220">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="e_email"
+                                                label="公司邮箱"
+                                                width="300">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="e_address"
+                                                label="公司地址"
+                                                width="300">
+                                        </el-table-column>
+                                        <el-table-column
+                                                label="操作"
+                                                width="100">
+                                            <template slot-scope="scope">
+                                                <el-button @click="handleClick1(scope.row)" type="text" size="small">不通过
+                                                </el-button>
+                                                <el-button @click="handleClick2(scope.row)" type="text" size="small">
+                                                    通过
+                                                </el-button>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                </div>
+                            </div>
                         </el-main>
                         <el-footer>
                             &copy; 2022 毕业设计 | Design by 201805020527王潘锋
@@ -257,6 +308,12 @@
                         activeName: 'second',
                         index: '1',
                         labelPosition: 'left',
+                        recruitList:{
+                            rl_title:'',
+                            rl_user_name:'',
+                            rl_user_sex:'',
+
+                        },
                         addEnterprise: {
                             e_name: '',
                             e_id: '',

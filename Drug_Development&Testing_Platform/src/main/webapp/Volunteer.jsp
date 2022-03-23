@@ -40,6 +40,7 @@
             function changeDrawer2() {
                 app.drawer2 = 'true';
                 app.recruitList.rl_title = app.recruit_detial.r_title;
+                app.recruitList.rl_u_id=document.getElementById("user_id").textContent;
                 app.recruitList.rl_user_name = document.getElementById("user_name").textContent;
                 app.recruitList.rl_user_sex = document.getElementById("user_sex").textContent;
                 app.recruitList.rl_user_phone = document.getElementById("phone_number").textContent;
@@ -47,12 +48,12 @@
                 app.recruitList.rl_address = document.getElementById("address").textContent;
             }
 
-            function submitRecruitList(){
+            function submitRecruitList() {
                 $.ajax({
                     url: "recruit/submitRecruitList",
                     contentType: 'application/json;charset=UTF-8',
                     dataType: "json",
-                    data: {"recruitList" : JSON.stringify(this.app.recruitList)},
+                    data: {"recruitList": JSON.stringify(this.app.recruitList)},
                     success: function (reps) {
                         alert(reps.valueOf());
                         window.location.href = "./Volunteer.jsp";
@@ -66,6 +67,7 @@
     </head>
     <body>
         <div class="param" id="user_name">${user.user_name}</div>
+        <div class="param" id="user_id">${user.user_id}</div>
         <div class="param" id="user_sex">${user.user_sex}</div>
         <div class="param" id="phone_number">${user.phone_number}</div>
         <div class="param" id="address">${user.address}</div>
@@ -224,6 +226,7 @@
                             r_title: '',
                         },
                         recruitList: {
+                            rl_u_id: '',
                             rl_title: '',
                             rl_user_name: '',
                             rl_user_sex: '',
@@ -255,7 +258,7 @@
                     }
                 },
                 methods: {
-                    putRecruit(){
+                    putRecruit() {
                         submitRecruitList()
                     }
                 },

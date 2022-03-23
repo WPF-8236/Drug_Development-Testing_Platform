@@ -1,7 +1,9 @@
 package com.WPF.controller;
 
+import com.WPF.domain.Enterprise;
 import com.WPF.domain.User;
 import com.WPF.domain.UserGrade;
+import com.WPF.service.EnterpriseService;
 import com.WPF.service.LoginService;
 import com.WPF.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class LoginController {
 	@Resource
 	private UserService userService;
 
+	@Resource
+	private EnterpriseService enterpriseService;
+
 	@RequestMapping("/login")
 	public String login(HttpServletResponse response, HttpServletRequest request, String id, String password) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -28,6 +33,7 @@ public class LoginController {
 		System.out.println(id + "  " + password);
 		UserGrade userGrade = loginService.login(id, password);
 		User user = null;
+		Enterprise enterprise = null;
 		PrintWriter printWriter = response.getWriter();
 		if (userGrade == null) {
 			printWriter.print("\t\t<script>\n" +
@@ -36,15 +42,21 @@ public class LoginController {
 			response.setHeader("refresh", "0.1;url=./Resign.jsp");
 			printWriter.close();
 			return "";
-		} else if (userGrade.getGrade() == 2 || userGrade.getGrade() == 3) {
+		} else if (userGrade.getGrade() == 2) {
 			user = userService.getUser(id);
 			System.out.println(user);
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			session.setAttribute("userGrade", userGrade);
+			session.setAttribute("enterprise", enterprise);
 			return "index";
 		} else if (userGrade.getGrade() == 1) {
 			return "Admin";
+		} else if (userGrade.getGrade() == 3) {
+			enterprise = enterpriseService.getEnterprise(id);
+			HttpSession session = request.getSession();
+			session.setAttribute("enterprise", enterprise);
+			return "Enterprise";
 		} else
 			return "";
 	}

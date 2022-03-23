@@ -25,6 +25,12 @@
         </script>
     </head>
     <body>
+        <div class="param" id="user_id">${user.user_id}</div>
+        <div class="param" id="user_name">${user.user_name}</div>
+        <div class="param" id="user_sex">${user.user_sex}</div>
+        <div class="param" id="phone_number">${user.phone_number}</div>
+        <div class="param" id="address">${user.address}</div>
+        <div class="param" id="identification_number">${user.identification_number}</div>
         <div id="app">
             <el-container>
                 <el-header>
@@ -50,21 +56,17 @@
                                     </el-menu-item>
                                     <el-menu-item index="2">
                                         <i class="el-icon-document"></i>
-                                        <span slot="title">志愿者资格申请</span>
+                                        <span slot="title">志愿者药物试测资格申请</span>
                                     </el-menu-item>
                                     <el-menu-item index="3">
                                         <i class="el-icon-document"></i>
-                                        <span slot="title">志愿者药物试测资格申请</span>
-                                    </el-menu-item>
-                                    <el-menu-item index="4">
-                                        <i class="el-icon-document"></i>
                                         <span slot="title">志愿者身体报告查看</span>
                                     </el-menu-item>
-                                    <el-menu-item index="5">
+                                    <el-menu-item index="4">
                                         <i class="el-icon-setting"></i>
                                         <span slot="title">志愿者身体情况反馈</span>
                                     </el-menu-item>
-                                    <el-menu-item index="6">
+                                    <el-menu-item index="5">
                                         <i class="el-icon-setting"></i>
                                         <span slot="title">受试药物报告管理</span>
                                     </el-menu-item>
@@ -303,52 +305,19 @@
                                 </div>
                             </div>
                             <div v-if="selectid==2" id="selectid-2">
-                                <el-form ref="form" :model="form" label-width="80px">
-                                    <el-form-item label="活动名称">
-                                        <el-input v-model="form.name"></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="活动区域">
-                                        <el-select v-model="form.region" placeholder="请选择活动区域">
-                                            <el-option label="区域一" value="shanghai"></el-option>
-                                            <el-option label="区域二" value="beijing"></el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                    <el-form-item label="活动时间">
-                                        <el-col :span="11">
-                                            <el-date-picker type="date" placeholder="选择日期" v-model="form.date1"
-                                                            style="width: 100%;"></el-date-picker>
-                                        </el-col>
-                                        <el-col class="line" :span="2">-</el-col>
-                                        <el-col :span="11">
-                                            <el-time-picker placeholder="选择时间" v-model="form.date2"
-                                                            style="width: 100%;"></el-time-picker>
-                                        </el-col>
-                                    </el-form-item>
-                                    <el-form-item label="即时配送">
-                                        <el-switch v-model="form.delivery"></el-switch>
-                                    </el-form-item>
-                                    <el-form-item label="活动性质">
-                                        <el-checkbox-group v-model="form.type">
-                                            <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-                                            <el-checkbox label="地推活动" name="type"></el-checkbox>
-                                            <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-                                            <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-                                        </el-checkbox-group>
-                                    </el-form-item>
-                                    <el-form-item label="特殊资源">
-                                        <el-radio-group v-model="form.resource">
-                                            <el-radio label="线上品牌商赞助"></el-radio>
-                                            <el-radio label="线下场地免费"></el-radio>
-                                        </el-radio-group>
-                                    </el-form-item>
-                                    <el-form-item label="活动形式">
-                                        <el-input type="textarea" v-model="form.desc"></el-input>
-                                    </el-form-item>
-                                    <el-form-item>
-                                        <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                                        <el-button>取消</el-button>
-                                    </el-form-item>
-                                </el-form>
+                                <div v-for="rl in recruitList">
+                                    <el-descriptions>
+                                        <el-descriptions-item label="申请项目名">{{rl.rl_title}}</el-descriptions-item>
+                                        <el-descriptions-item label="用户名">{{rl.rl_user_name}}</el-descriptions-item>
+                                        <el-descriptions-item label="用户性别">{{rl.rl_user_sex|sexFilter}}
+                                        </el-descriptions-item>
+                                        <el-descriptions-item label="联系电话">{{rl.rl_user_phone}}</el-descriptions-item>
+                                        <el-descriptions-item label="联系地址">{{rl.rl_address}}</el-descriptions-item>
+                                        <el-descriptions-item label="备注">
+                                            <el-tag size="small">{{rl.isv|isvFilter}}</el-tag>
+                                        </el-descriptions-item>
+                                    </el-descriptions>
+                                </div>
                             </div>
                         </el-main>
                         <el-footer>
@@ -393,6 +362,24 @@
                     }
                 });
             }
+
+            function getRecruitList() {
+                var rl_u_id = document.getElementById("user_id").textContent;
+                console.log(rl_u_id);
+                $.ajax({
+                    url: "recruit/getRecruitByUserID",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {'user_id': JSON.stringify(rl_u_id)},
+                    success: function (reps) {
+                        console.log(reps);
+                        app.recruitList = reps;
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
         </script>
         <script type="text/javascript">
             var app = new Vue({
@@ -418,6 +405,8 @@
                         }
                     };
                     return {
+                        mainTableKey: 1,
+                        recruitList: [],
                         selectid: '1',
                         dialogFormVisible: false,
                         activeNames: ['1', '2', '3', '4'],
@@ -444,16 +433,7 @@
                                 {required: true, message: '请填写地址', trigger: 'blur'}
                             ]
                         },
-                        form: {
-                            name: '',
-                            region: '',
-                            date1: '',
-                            date2: '',
-                            delivery: false,
-                            type: [],
-                            resource: '',
-                            desc: ''
-                        },
+
                     };
                 },
                 methods: {
@@ -466,6 +446,9 @@
                     selectMue(key, keyPath) {
                         console.log(key, keyPath);
                         this.selectid = key;
+                        if (key == 2) {
+                            getRecruitList();
+                        }
                     },
                     submitForm(formName) {
                         this.$refs[formName].validate((valid) => {
@@ -492,6 +475,30 @@
                         console.log('submit!');
                     },
 
+                },
+                filters: {
+                    sexFilter(value) {
+                        if (value === 0)
+                            return '男'
+                        else if (value === 1)
+                            return '女'
+                        else
+                            return '男女不限'
+                    },
+                    isvFilter(value) {
+                        if (value === 0)
+                            return '审核中'
+                        else if (value === 1)
+                            return '通过'
+                        else
+                            return '未通过'
+                    },
+                    typeFilter(value) {
+                        if (value === 0)
+                            return '健康志愿者'
+                        else
+                            return '患者志愿者'
+                    }
                 },
                 created: function () {
 

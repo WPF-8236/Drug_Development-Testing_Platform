@@ -9,4 +9,6 @@ public interface RecruitService {
 	List<Recruit> getRecruits();
 
 	int submitRecruitList(RecruitList recruitList);
+
+	List<RecruitList> getUserRecruitList(String user_id);
 }

@@ -2,6 +2,7 @@ package com.WPF.domain;
 
 public class RecruitList {
 	private String rl_id;
+	private String rl_u_id;
 	private String rl_title;
 	private String rl_user_name;
 	private int rl_user_sex;
@@ -12,12 +13,14 @@ public class RecruitList {
 	private String rl_address;
 	private int rl_issmoke;
 	private String rl_text;
+	private int isv;
 
 	public RecruitList() {
 	}
 
-	public RecruitList(String rl_id, String rl_title, String rl_user_name, int rl_user_sex, String rl_user_phone, String rl_user_identification_number, double rl_user_height, double rl_user_weight, String rl_address, int rl_issmoke, String rl_text) {
+	public RecruitList(String rl_id, String rl_u_id, String rl_title, String rl_user_name, int rl_user_sex, String rl_user_phone, String rl_user_identification_number, double rl_user_height, double rl_user_weight, String rl_address, int rl_issmoke, String rl_text, int isv) {
 		this.rl_id = rl_id;
+		this.rl_u_id = rl_u_id;
 		this.rl_title = rl_title;
 		this.rl_user_name = rl_user_name;
 		this.rl_user_sex = rl_user_sex;
@@ -28,6 +31,7 @@ public class RecruitList {
 		this.rl_address = rl_address;
 		this.rl_issmoke = rl_issmoke;
 		this.rl_text = rl_text;
+		this.isv = isv;
 	}
 
 	public String getRl_id() {
@@ -36,6 +40,14 @@ public class RecruitList {
 
 	public void setRl_id(String rl_id) {
 		this.rl_id = rl_id;
+	}
+
+	public String getRl_u_id() {
+		return rl_u_id;
+	}
+
+	public void setRl_u_id(String rl_u_id) {
+		this.rl_u_id = rl_u_id;
 	}
 
 	public String getRl_title() {
@@ -118,10 +130,20 @@ public class RecruitList {
 		this.rl_text = rl_text;
 	}
 
+	public int getIsv() {
+		return isv;
+	}
+
+	public void setIsv(int isv) {
+		this.isv = isv;
+	}
+
+
 	@Override
 	public String toString() {
 		return "RecruitList{" +
 				"rl_id='" + rl_id + '\'' +
+				", rl_u_id='" + rl_u_id + '\'' +
 				", rl_title='" + rl_title + '\'' +
 				", rl_user_name='" + rl_user_name + '\'' +
 				", rl_user_sex=" + rl_user_sex +
@@ -132,6 +154,7 @@ public class RecruitList {
 				", rl_address='" + rl_address + '\'' +
 				", rl_issmoke=" + rl_issmoke +
 				", rl_text='" + rl_text + '\'' +
+				", isv=" + isv +
 				'}';
 	}
 }

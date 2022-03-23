@@ -7,6 +7,8 @@ import java.util.List;
 public interface EnterpriseDao {
 	int insertEnterprise(Enterprise enterprise);
 
+	Enterprise selectAnEnterprise(String e_id);
+
 	List<Enterprise> selectEnterprise();
 
 	int deleteEnterprise(String e_id);

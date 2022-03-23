@@ -28,5 +28,10 @@ public class RecruitServiceImpl implements RecruitService {
 		return recruitListDao.insertRecruitList(recruitList);
 	}
 
+	@Override
+	public List<RecruitList> getUserRecruitList(String user_id) {
+		return recruitListDao.selectAllRecruitListByUserID(user_id);
+	}
+
 
 }
