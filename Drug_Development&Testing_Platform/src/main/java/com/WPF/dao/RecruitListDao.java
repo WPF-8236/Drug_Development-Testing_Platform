@@ -9,4 +9,8 @@ public interface RecruitListDao {
 	int insertRecruitList(RecruitList recruitList);
 
 	List<RecruitList> selectAllRecruitListByUserID(@Param("user_id")String user_id);
+
+	List<RecruitList> selectAllRecruitList();
+
+	int updateRecruitListisv(@Param("rl_id")String rl_id);
 }

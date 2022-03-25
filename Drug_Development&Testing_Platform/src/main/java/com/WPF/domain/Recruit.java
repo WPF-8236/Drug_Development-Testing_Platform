@@ -2,6 +2,7 @@ package com.WPF.domain;
 
 public class Recruit {
 	private String r_id;
+	private String r_e_id;
 	private String r_title;
 	private String r_drag_name;
 	private String r_drag_attending;
@@ -20,8 +21,9 @@ public class Recruit {
 	public Recruit() {
 	}
 
-	public Recruit(String r_id, String r_title, String r_drag_name, String r_drag_attending, String r_institutes, int r_sex, String r_year, String r_bmi, int r_stage, int r_type, String r_address, String r_time, int r_number, String r_money, String r_detial) {
+	public Recruit(String r_id, String r_e_id, String r_title, String r_drag_name, String r_drag_attending, String r_institutes, int r_sex, String r_year, String r_bmi, int r_stage, int r_type, String r_address, String r_time, int r_number, String r_money, String r_detial) {
 		this.r_id = r_id;
+		this.r_e_id = r_e_id;
 		this.r_title = r_title;
 		this.r_drag_name = r_drag_name;
 		this.r_drag_attending = r_drag_attending;
@@ -44,6 +46,14 @@ public class Recruit {
 
 	public void setR_id(String r_id) {
 		this.r_id = r_id;
+	}
+
+	public String getR_e_id() {
+		return r_e_id;
+	}
+
+	public void setR_e_id(String r_e_id) {
+		this.r_e_id = r_e_id;
 	}
 
 	public String getR_title() {
@@ -162,6 +172,7 @@ public class Recruit {
 	public String toString() {
 		return "Recruit{" +
 				"r_id='" + r_id + '\'' +
+				", r_e_id='" + r_e_id + '\'' +
 				", r_title='" + r_title + '\'' +
 				", r_drag_name='" + r_drag_name + '\'' +
 				", r_drag_attending='" + r_drag_attending + '\'' +

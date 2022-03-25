@@ -24,11 +24,11 @@ body > .el-container {
     margin-bottom: 40px;
 }
 
-#header{
+#header {
     font-size: 28px;
 }
 
-.btn-s{
+.btn-s {
     width: 90px;
     height: 36px;
     display: inline-block;
@@ -90,8 +90,25 @@ body > .el-container {
     left: 1790px;
 }
 
-#updateEnterprise{
+#updateEnterprise {
     width: 70%;
     margin-right: auto;
     margin-left: auto;
 }
+
+.el-table .hidden-row {
+    display: none;
+}
+
+.el-table .warning-row {
+    background: oldlace;
+}
+
+.el-table .success-row {
+    background: #f0f9eb;
+}
+
+.el-table .error-row {
+    background: #dd6161;
+}
+

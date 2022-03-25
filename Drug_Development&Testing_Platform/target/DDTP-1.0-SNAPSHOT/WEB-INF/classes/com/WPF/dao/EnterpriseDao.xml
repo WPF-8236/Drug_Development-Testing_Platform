@@ -24,4 +24,14 @@
         from ddtp_enterprise
         where e_id = #{e_id}
     </select>
+
+    <update id="updateEnterprise">
+        update ddtp_enterprise
+        set e_name=#{e_name},
+            e_password=#{e_password},
+            e_phone=#{e_phone},
+            e_email=#{e_email},
+            e_address=#{e_address}
+        where e_id = #{e_id}
+    </update>
 </mapper>

@@ -11,4 +11,8 @@ public interface RecruitService {
 	int submitRecruitList(RecruitList recruitList);
 
 	List<RecruitList> getUserRecruitList(String user_id);
+
+	List<RecruitList> getRecruitList();
+
+	int changeRecruitListisv(String rl_id);
 }

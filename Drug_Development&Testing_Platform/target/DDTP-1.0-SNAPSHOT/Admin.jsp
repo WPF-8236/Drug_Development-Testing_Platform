@@ -33,6 +33,20 @@
                 })
             }
 
+            function getRecruitList() {
+                $.ajax({
+                    url: "recruit/getRecruitList",
+                    contentType: 'application/json;charset=UTF-8',
+                    success: function (reps) {
+                        console.log(reps)
+                        app.recruitList = reps;
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
             function getEnterpriseList() {
                 $.ajax({
                     url: "Admin/getEnterpriseList",
@@ -63,7 +77,24 @@
                 })
             }
 
-            function updateEnterprise() {
+            function changeRecruitListisv(rl_id) {
+                console.log(rl_id)
+                $.ajax({
+                    url: "Admin/changeRecruitListisv",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"rl_id": JSON.stringify(rl_id)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Admin.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function updateAEnterprise() {
                 $.ajax({
                     url: "Admin/updateEnterprise",
                     contentType: 'application/json;charset=UTF-8',
@@ -229,7 +260,7 @@
                                                 <el-form-item label="公司地址">
                                                     <el-input v-model="updateEnterprise.e_address"></el-input>
                                                 </el-form-item>
-                                                <el-button type="primary" @click="updateEnterprise()">修改信息</el-button>
+                                                <el-button type="primary" @click="updateAEnterprise">修改信息</el-button>
                                             </el-form>
                                         </div>
                                     </el-drawer>
@@ -240,45 +271,54 @@
                                     <el-table
                                             :data="recruitList"
                                             border
-                                            style="width: 100%">
+                                            style="width: 100%"
+                                            :row-class-name="tableRowClassName">
                                         <el-table-column
                                                 fixed
-                                                prop="e_id"
-                                                label="公司编号"
+                                                prop="rl_user_name"
+                                                label="姓名"
                                                 width="200">
                                         </el-table-column>
                                         <el-table-column
-                                                prop="e_name"
-                                                label="公司名称"
-                                                width="300">
-                                        </el-table-column>
-                                        <el-table-column
-                                                prop="e_password"
-                                                label="公司密码"
+                                                prop="rl_user_sex"
+                                                label="性别"
+                                                :formatter="sexTypeFormatter"
                                                 width="200">
                                         </el-table-column>
                                         <el-table-column
-                                                prop="e_phone"
-                                                label="公司电话"
-                                                width="220">
+                                                prop="rl_user_phone"
+                                                label="联系电话"
+                                                width="200">
                                         </el-table-column>
                                         <el-table-column
-                                                prop="e_email"
-                                                label="公司邮箱"
-                                                width="300">
+                                                prop="rl_user_height"
+                                                label="身高"
+                                                width="200">
                                         </el-table-column>
                                         <el-table-column
-                                                prop="e_address"
-                                                label="公司地址"
-                                                width="300">
+                                                prop="rl_user_weight"
+                                                label="体重"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="rl_address"
+                                                label="住址"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="rl_issmoke"
+                                                label="是否抽烟"
+                                                :formatter="smokeTypeFormatter"
+                                                width="200">
                                         </el-table-column>
                                         <el-table-column
                                                 label="操作"
-                                                width="100">
-                                            <template slot-scope="scope">
-                                                <el-button @click="handleClick1(scope.row)" type="text" size="small">不通过
+                                                width="100"
+                                                prop="isv">
+                                            <template slot-scope="scope" v-if="scope.row.isv===0">
+                                                <el-button @click="handleClick3(scope.row)" type="text" size="small">不通过
                                                 </el-button>
-                                                <el-button @click="handleClick2(scope.row)" type="text" size="small">
+                                                <el-button @click="handleClick4(scope.row)" type="text" size="small">
                                                     通过
                                                 </el-button>
                                             </template>
@@ -286,6 +326,7 @@
                                     </el-table>
                                 </div>
                             </div>
+
                         </el-main>
                         <el-footer>
                             &copy; 2022 毕业设计 | Design by 201805020527王潘锋
@@ -308,12 +349,7 @@
                         activeName: 'second',
                         index: '1',
                         labelPosition: 'left',
-                        recruitList:{
-                            rl_title:'',
-                            rl_user_name:'',
-                            rl_user_sex:'',
-
-                        },
+                        recruitList: [],
                         addEnterprise: {
                             e_name: '',
                             e_id: '',
@@ -337,7 +373,36 @@
                         },
                     };
                 },
+                filters: {
+                    sexFilter(value) {
+                        if (value === 0)
+                            return '男'
+                        else
+                            return '女'
+                    },
+                },
                 methods: {
+                    tableRowClassName({row, rowIndex}) {
+                        if (row.isv === 0) {
+                            return 'warning-row';
+                        } else if (row.isv === 1) {
+                            return 'success-row';
+                        } else {
+                            return 'error-row'
+                        }
+                    },
+                    sexTypeFormatter(row, column) {
+                        if (row.rl_user_sex === 0)
+                            return '男'
+                        else
+                            return '女'
+                    },
+                    smokeTypeFormatter(row, column) {
+                        if (row.rl_issmoke === 0)
+                            return '否'
+                        else
+                            return '是'
+                    },
                     handleOpen(key, keyPath) {
                         console.log(key, keyPath);
                     },
@@ -355,6 +420,12 @@
                         this.updateEnterprise = row
 
                     },
+                    handleClick3(row) {
+                        changeRecruitListisv(row.rl_id);
+                    },
+                    handleClick4(row) {
+
+                    },
                     select(index, indexPath) {
                         app.index = index;
                     },
@@ -364,6 +435,7 @@
                 },
                 created: function () {
                     getEnterpriseList();
+                    getRecruitList();
                 }
             })
         </script>

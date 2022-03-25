@@ -1,8 +1,10 @@
 package com.WPF.controller;
 
 import com.WPF.domain.Enterprise;
+import com.WPF.domain.Researcher;
 import com.WPF.domain.UserGrade;
 import com.WPF.service.EnterpriseService;
+import com.WPF.service.RecruitService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,9 @@ import java.util.List;
 public class AdminController {
 	@Resource
 	private EnterpriseService enterpriseService;
+
+	@Resource
+	private RecruitService recruitService;
 
 	@RequestMapping("/addEnterprise")
 	public void addEnterprise(HttpServletResponse response, HttpServletRequest request) throws Exception {
@@ -44,6 +49,7 @@ public class AdminController {
 			printWriter.close();
 		}
 	}
+
 
 	@RequestMapping("/getEnterpriseList")
 	@ResponseBody
@@ -92,11 +98,34 @@ public class AdminController {
 		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
-			json = objectMapper.writeValueAsString("添加成功");
+			json = objectMapper.writeValueAsString("修改成功");
 			printWriter.print(json);
 			printWriter.close();
 		} else {
-			json = objectMapper.writeValueAsString("添加失败！！");
+			json = objectMapper.writeValueAsString("修改失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
+	@RequestMapping("/changeRecruitListisv")
+	public void changeRecruitListisv(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("rl_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String rl_id = mapper.readValue(json,String.class);
+		int num = 0;
+		num = recruitService.changeRecruitListisv(rl_id);
+		System.out.println(num);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("修改成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("修改失败！！");
 			printWriter.print(json);
 			printWriter.close();
 		}

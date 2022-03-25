@@ -2,6 +2,7 @@ package com.WPF.domain;
 
 public class Drag {
 	private String d_id;
+	private String d_e_id;
 	private String d_trade_name;
 	private String d_generic_name;
 	private String d_specification;
@@ -20,12 +21,12 @@ public class Drag {
 	private String d_characters;
 	private String d_interaction;
 	private String d_pharmacological;
-
 	public Drag() {
 	}
 
-	public Drag(String d_id, String d_trade_name, String d_generic_name, String d_specification, String d_manufacturer, String d_batch_number, String d_approval_number, String d_attending, String d_taboo, String d_adverse_reactions, String d_shelf_life, int d_state, int d_approve, int d_mark, String d_notes, String d_ingredients, String d_characters, String d_interaction, String d_pharmacological) {
+	public Drag(String d_id, String d_e_id, String d_trade_name, String d_generic_name, String d_specification, String d_manufacturer, String d_batch_number, String d_approval_number, String d_attending, String d_taboo, String d_adverse_reactions, String d_shelf_life, int d_state, int d_approve, int d_mark, String d_notes, String d_ingredients, String d_characters, String d_interaction, String d_pharmacological) {
 		this.d_id = d_id;
+		this.d_e_id = d_e_id;
 		this.d_trade_name = d_trade_name;
 		this.d_generic_name = d_generic_name;
 		this.d_specification = d_specification;
@@ -52,6 +53,14 @@ public class Drag {
 
 	public void setD_id(String d_id) {
 		this.d_id = d_id;
+	}
+
+	public String getD_e_id() {
+		return d_e_id;
+	}
+
+	public void setD_e_id(String d_e_id) {
+		this.d_e_id = d_e_id;
 	}
 
 	public String getD_trade_name() {
@@ -202,6 +211,7 @@ public class Drag {
 	public String toString() {
 		return "Drag{" +
 				"d_id='" + d_id + '\'' +
+				", d_e_id='" + d_e_id + '\'' +
 				", d_trade_name='" + d_trade_name + '\'' +
 				", d_generic_name='" + d_generic_name + '\'' +
 				", d_specification='" + d_specification + '\'' +

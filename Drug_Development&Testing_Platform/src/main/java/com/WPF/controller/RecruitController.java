@@ -31,6 +31,16 @@ public class RecruitController {
 		return recruits;
 	}
 
+	@RequestMapping("/getRecruitList")
+	@ResponseBody
+	public List<RecruitList> getRecruitList(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		List<RecruitList> recruitList = recruitService.getRecruitList();
+		System.out.println(recruitList);
+		return recruitList;
+	}
+
 	@RequestMapping("/getRecruitByUserID")
 	@ResponseBody
 	public List<RecruitList> getRecruitListByUserID(HttpServletResponse response, HttpServletRequest request) throws Exception {

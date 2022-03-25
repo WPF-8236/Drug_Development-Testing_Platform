@@ -19,4 +19,16 @@
         from ddtp_recruit_list
         where rl_u_id = #{user_id}
     </select>
+
+
+    <select id="selectAllRecruitList" resultType="RecruitList">
+        select *
+        from ddtp_recruit_list
+    </select>
+
+    <update id="updateRecruitListisv">
+        update ddtp_recruit_list
+        set isv=2
+        where rl_id = #{rl_id}
+    </update>
 </mapper>

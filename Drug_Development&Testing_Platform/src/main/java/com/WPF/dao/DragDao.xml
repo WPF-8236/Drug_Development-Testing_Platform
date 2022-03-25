@@ -20,4 +20,19 @@
         from ddtp_drag
         where d_approval_number like #{d_approval_number}
     </select>
+
+    <insert id="insertADrag">
+        insert into ddtp_drag(d_id, d_e_id, d_trade_name, d_generic_name, d_specification, d_manufacturer,
+                              d_batch_number, d_approval_number, d_attending, d_taboo, d_adverse_reactions,
+                              d_shelf_life, d_state, d_approve, d_mark, d_notes, d_ingredients, d_characters,
+                              d_interaction, d_pharmacological)
+        VALUES (#{d_id}, #{d_e_id}, #{d_trade_name}, #{d_generic_name},
+                #{d_specification}, #{d_manufacturer},
+                #{d_batch_number}, #{d_approval_number},
+                #{d_attending}, #{d_taboo}, #{d_adverse_reactions},
+                #{d_shelf_life}, #{d_state}, #{d_approve}, #{d_mark},
+                #{d_notes},
+                #{d_ingredients}, #{d_characters}, #{d_interaction},
+                #{d_pharmacological})
+    </insert>
 </mapper>

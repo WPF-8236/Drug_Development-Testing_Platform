@@ -12,4 +12,6 @@ public interface EnterpriseDao {
 	List<Enterprise> selectEnterprise();
 
 	int deleteEnterprise(String e_id);
+
+	int updateEnterprise(Enterprise enterprise);
 }

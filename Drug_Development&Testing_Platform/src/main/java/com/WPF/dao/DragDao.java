@@ -11,4 +11,6 @@ public interface DragDao {
 	List<Drag> selectDragByGenericName(@Param("d_generic_name") String d_generic_name);
 
 	List<Drag> selectDragByApprovalNumber(@Param("d_approval_number") String d_approval_number);
+
+	int insertADrag(Drag drag);
 }
