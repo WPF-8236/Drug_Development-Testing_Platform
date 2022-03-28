@@ -1,13 +1,7 @@
 package com.WPF.service.impl;
 
-import com.WPF.dao.DragDao;
-import com.WPF.dao.EnterpriseDao;
-import com.WPF.dao.ResearcherDao;
-import com.WPF.dao.UserGradeDao;
-import com.WPF.domain.Drag;
-import com.WPF.domain.Enterprise;
-import com.WPF.domain.Researcher;
-import com.WPF.domain.UserGrade;
+import com.WPF.dao.*;
+import com.WPF.domain.*;
 import com.WPF.service.EnterpriseService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +19,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	private UserGradeDao userGradeDao;
 	@Resource
 	private DragDao dragDao;
+	@Resource
+	private RecruitDao recruitDao;
 
 	@Override
 	@Transactional
@@ -38,6 +34,11 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	public int addDrag(Drag drag) {
 		int num = dragDao.insertADrag(drag);
 		return num;
+	}
+
+	@Override
+	public int addRecruit(Recruit recruit) {
+		return recruitDao.insertRecruit(recruit);
 	}
 
 	@Override
@@ -60,6 +61,11 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	@Override
 	public List<Researcher> getResearcherList() {
 		return researcherDao.selectResearcher();
+	}
+
+	@Override
+	public List<Drag> getDragList(String d_e_id) {
+		return dragDao.selectDragByDEID(d_e_id);
 	}
 
 	@Override

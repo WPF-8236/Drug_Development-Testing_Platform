@@ -1,9 +1,6 @@
 package com.WPF.service;
 
-import com.WPF.domain.Drag;
-import com.WPF.domain.Enterprise;
-import com.WPF.domain.Researcher;
-import com.WPF.domain.UserGrade;
+import com.WPF.domain.*;
 
 import java.util.List;
 
@@ -12,6 +9,8 @@ public interface EnterpriseService {
 
 	int addDrag(Drag drag);
 
+	int addRecruit(Recruit recruit);
+
 	int addResearcher(Researcher researcher, UserGrade userGrade);
 
 	Enterprise getEnterprise(String e_id);
@@ -19,6 +18,8 @@ public interface EnterpriseService {
 	List<Enterprise> getEnterpriseList();
 
 	List<Researcher> getResearcherList();
+
+	List<Drag> getDragList(String d_e_id);
 
 	int deleteEnterprise(String e_id);
 

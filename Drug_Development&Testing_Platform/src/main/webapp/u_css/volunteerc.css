@@ -1,25 +1,32 @@
-#app {
-    background-image: url("../img/index_bg.jfif");
-    min-width: 1920px;
-    min-height: 1080px;
-    background-size: 100% 100%;
-    background-position: center center;
-    overflow: auto;
+.el-header, .el-footer {
+    background-color: #B3C0D1;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+    font-size: 30px;
 }
 
-#index {
-    width: 380px;
-    height: 76px;
-    display: inline-block;
-    position: fixed;
-    top: 100px;
-    left: 1500px;
-    margin: 16px;
-    overflow: hidden;
-    background: transparent;
-    color: white;
-    font-size: 32px;
-    cursor: pointer;
+.el-footer {
+    font-size: 20px;
+}
+
+.el-aside {
+    background-color: #D3DCE6;
+    color: #333;
+    text-align: center;
+    line-height: 200px;
+}
+
+.el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: center;
+    height: 960px;
+    min-width: 1920px;
+}
+
+body > .el-container {
+    margin-bottom: 40px;
 }
 
 
@@ -61,7 +68,7 @@
     position: absolute;
     top: 50%;
     right: 0;
-    left: 20px;
+    left: 0px;
     transform: translateY(-50%);
     z-index: 9;
 }
@@ -81,27 +88,20 @@
 
 .btn-s#btn-6 {
     position: fixed;
-    top: 10px;
+    top: 0px;
     left: 1790px;
 }
 
 .btn-s#btn-7 {
     width: 180px;
     position: fixed;
-    top: 10px;
+    top: 0px;
     left: 1500px;
 }
-
-.btn-s#btn-8 {
-    position: fixed;
-    top: 10px;
-    left: 1500px;
-}
-
 
 .btn {
-    width: 380px;
-    height: 76px;
+    width: 300px;
+    height: 60px;
     display: inline-block;
     position: relative;
     top: 20%;
@@ -147,41 +147,48 @@
     filter: blur(8px);
 }
 
-.btn#btn-1 {
+.btn#btn {
     position: fixed;
-    top: 200px;
-    left: 1500px;
+    top: -15px;
+    left: 0px;
 }
 
-.btn#btn-2 {
-    position: fixed;
-    top: 300px;
-    left: 1500px;
+.el-tabs{
+    width: 1280px;
+    margin-right: auto;
+    margin-left:auto ;
+}
+.el-tabs__item {
+    height: 60px;
+    line-height: 60px;
+    width: 200px;
+    font-size: 20px;
+}
+.el-tab-pane{
+    min-height: 750px;
+}
+.clear {
+    clear: both;
+}
+.detail{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.btn#btn-3 {
-    position: fixed;
-    top: 400px;
-    left: 1500px;
+#recruitList{
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
-.btn#btn-4 {
-    position: fixed;
-    top: 500px;
-    left: 1500px;
+#addPhyExam{
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
 }
-
-.btn#btn-5 {
-    position: fixed;
-    top: 600px;
-    left: 1500px;
-}
-.btn#btn-6 {
-    position: fixed;
-    top: 700px;
-    left: 1500px;
-}
-
-.param {
+.param{
     display: none;
 }
+
+

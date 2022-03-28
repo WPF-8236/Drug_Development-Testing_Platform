@@ -21,14 +21,26 @@
     </select>
 
 
-    <select id="selectAllRecruitList" resultType="RecruitList">
-        select *
-        from ddtp_recruit_list
-    </select>
-
     <update id="updateRecruitListisv">
         update ddtp_recruit_list
-        set isv=2
+        set isv=#{trg}
         where rl_id = #{rl_id}
     </update>
+
+    <update id="updateRecruitListispe">
+        update ddtp_recruit_list
+        set ispe=1
+        where rl_id = #{rl_id}
+    </update>
+
+    <select id="selectAllRecruitListWithispe1" resultType="RecruitList">
+        select *
+        from ddtp_recruit_list
+        where ispe = 1
+    </select>
+    <select id="selectAllRecruitListWithispe2" resultType="RecruitList">
+        select *
+        from ddtp_recruit_list
+        where ispe = 0
+    </select>
 </mapper>

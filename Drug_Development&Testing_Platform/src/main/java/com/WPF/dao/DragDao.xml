@@ -35,4 +35,10 @@
                 #{d_ingredients}, #{d_characters}, #{d_interaction},
                 #{d_pharmacological})
     </insert>
+
+    <select id="selectDragByDEID" resultType="Drag">
+        select *
+        from ddtp_drag
+        where d_e_id = #{d_e_id}
+    </select>
 </mapper>

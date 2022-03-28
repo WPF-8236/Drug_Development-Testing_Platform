@@ -53,6 +53,23 @@
                 })
             }
 
+            function getDragList() {
+                $.ajax({
+                    url: "enterprise/getDragList",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"e_id": JSON.stringify(document.getElementById("e_id").textContent)},
+                    success: function (reps) {
+                        console.log(reps)
+                        app.DragList = reps;
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+
             function deleteResearcher(ra_id) {
                 $.ajax({
                     url: "enterprise/deleteResearcher",
@@ -91,6 +108,13 @@
                 app.Drag.d_e_id = document.getElementById("e_id").textContent;
             }
 
+            function changeDrawer1() {
+                app.drawer3 = true;
+                app.Recruit.r_e_id = document.getElementById("e_id").textContent;
+                app.Recruit.r_institutes = document.getElementById("e_name").textContent;
+                app.Recruit.r_address = document.getElementById("e_address").textContent;
+            }
+
             function putADrag() {
                 console.log(this.app.Drag)
                 $.ajax({
@@ -107,10 +131,29 @@
                     }
                 })
             }
+
+            function putRecruit() {
+                console.log(this.app.Recruit)
+                $.ajax({
+                    url: "enterprise/addRecruit",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"Recruit": JSON.stringify(this.app.Recruit)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Enterprise.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
         </script>
     </head>
     <body>
         <div class="param" id="e_id">${enterprise.e_id}</div>
+        <div class="param" id="e_name">${enterprise.e_name}</div>
+        <div class="param" id="e_address">${enterprise.e_address}</div>
         <div id="app">
             <el-container>
                 <el-header>
@@ -155,7 +198,7 @@
                     </el-aside>
                     <el-container>
                         <el-main>
-                            <div v-if="index==1">
+                            <div v-show="index==1">
                                 <div id="addResearcher">
                                     <el-form ref="addResearcher" :model="addResearcher" label-width="100px">
                                         <el-row :gutter="30">
@@ -275,7 +318,7 @@
                                     </el-drawer>
                                 </div>
                             </div>
-                            <div v-if="index==2">
+                            <div v-show="index==2">
                                 <div id="addDrag">
                                     <el-button type="primary" onclick="changeDrawer()">添加药物申请</el-button>
                                 </div>
@@ -318,49 +361,65 @@
                                         </el-form>
                                     </div>
                                 </el-drawer>
+                                <el-divider></el-divider>
                                 <div id="DragList">
                                     <el-table
                                             :data="DragList"
                                             border
-                                            style="width: 1310px">
+                                            style="width:100%"
+                                            :row-class-name="tableRowClassName">
                                         <el-table-column
-                                                fixed
-                                                prop="ra_id"
-                                                label="员工编号"
-                                                width="300">
+                                                prop="d_trade_name"
+                                                label="药品商品名"
+                                                width="200">
                                         </el-table-column>
                                         <el-table-column
-                                                prop="ra_name"
-                                                label="员工姓名"
-                                                width="300">
+                                                prop="d_generic_name"
+                                                label="药品通用名"
+                                                width="200">
                                         </el-table-column>
                                         <el-table-column
-                                                prop="ra_password"
-                                                label="员工密码"
-                                                width="300">
+                                                prop="d_specification"
+                                                label="药品规格"
+                                                width="200">
                                         </el-table-column>
                                         <el-table-column
-                                                prop="ra_d_type"
-                                                label="员工任务"
-                                                width="300"
-                                                :formatter="ra_d_typeFormatter">
+                                                prop="d_attending"
+                                                label="药品主治功能"
+                                                width="200">
                                         </el-table-column>
                                         <el-table-column
-                                                label="操作"
-                                                width="100">
+                                                prop="d_mark"
+                                                label="药品标记"
+                                                width="200"
+                                                :formatter="d_mark_typeFormatter">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="d_ingredients"
+                                                label="药品成分"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="d_characters"
+                                                label="药品性状"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="d_approve"
+                                                label="状态"
+                                                width="200">
                                             <template slot-scope="scope">
-                                                <el-button @click="handleClick1(scope.row)" type="text" size="small">删除
-                                                </el-button>
-                                                <el-button @click="handleClick2(scope.row)" type="text" size="small">
-                                                    编辑
-                                                </el-button>
+                                                <el-tag
+                                                        :type="scope.row.d_approve == '1' ? 'success' : 'danger'"
+                                                        disable-transitions>{{scope.row.d_approve|isvFilter}}
+                                                </el-tag>
                                             </template>
                                         </el-table-column>
                                     </el-table>
                                 </div>
 
                             </div>
-                            <div v-if="index==3">
+                            <div v-show="index==3">
                                 <el-collapse v-model="activeNames" @change="handleChange">
                                     <el-collapse-item title="未分配的志愿者" name="1">
                                         <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
@@ -381,8 +440,89 @@
                                     </el-collapse-item>
                                 </el-collapse>
                             </div>
-                            <div v-if="index==5">
-                                之一是
+                            <div v-show="index==5">
+                                <div id="addRecruit">
+                                    <el-button type="primary" onclick="changeDrawer1()">添加支援招募申请</el-button>
+                                </div>
+                                <el-drawer
+                                        title="申请志愿招募"
+                                        :visible.sync="drawer3"
+                                        :direction="direction">
+                                    <div id="addARecruit">
+                                        <el-form :label-position="labelPosition" label-width="100px"
+                                                 :model="Recruit">
+                                            <el-form-item label="招募标题">
+                                                <el-input v-model="Recruit.r_title"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="招募药物名称">
+                                                <el-select v-model="Recruit.r_drag_name" placeholder="请选择">
+                                                    <el-option
+                                                            v-for="item in DragList"
+                                                            :key="item.d_id"
+                                                            :label="item.d_trade_name"
+                                                            :value="item.d_trade_name">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="招募药物效果">
+                                                <el-input v-model="Recruit.r_drag_attending"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="招募性别">
+                                                <el-select v-model="Recruit.r_sex" placeholder="请选择">
+                                                    <el-option
+                                                            v-for="item in options2"
+                                                            :key="item.value"
+                                                            :label="item.label"
+                                                            :value="item.value">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="招募年龄">
+                                                <el-input v-model="Recruit.r_year"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="招募BMI指数">
+                                                <el-input v-model="Recruit.r_bmi"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="招募实验分期">
+                                                <el-input v-model="Recruit.r_stage"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="招募类型">
+                                                <el-select v-model="Recruit.r_type" placeholder="请选择">
+                                                    <el-option
+                                                            v-for="item in options3"
+                                                            :key="item.value"
+                                                            :label="item.label"
+                                                            :value="item.value">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="招募时间">
+                                                <el-date-picker
+                                                        v-model="Recruit.r_time"
+                                                        type="date"
+                                                        placeholder="选择日期"
+                                                        value-format="yyyy-MM-dd">
+                                                </el-date-picker>
+                                            </el-form-item>
+                                            <el-form-item label="招募人数">
+                                                <el-input v-model="Recruit.r_number"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="招募费用">
+                                                <el-input v-model="Recruit.r_money"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="招募细节">
+                                                <el-input
+                                                        type="textarea"
+                                                        :rows="2"
+                                                        placeholder="请输入内容"
+                                                        v-model="Recruit.r_detial">
+                                                </el-input>
+                                            </el-form-item>
+                                            <el-button type="primary" @click="putRecruit">提交申请</el-button>
+                                        </el-form>
+                                    </div>
+                                </el-drawer>
+                                <el-divider></el-divider>
                             </div>
                         </el-main>
                         <el-footer>
@@ -427,10 +567,28 @@
                             value: '3',
                             label: '保健品'
                         }],
+                        options2: [{
+                            value: '0',
+                            label: '男'
+                        }, {
+                            value: '1',
+                            label: '女'
+                        }, {
+                            value: '2',
+                            label: '男女不限'
+                        }],
+                        options3: [{
+                            value: '0',
+                            label: '健康志愿者'
+                        }, {
+                            value: '1',
+                            label: '患病志愿者'
+                        }],
                         value: '',
                         direction: 'rtl',
                         drawer: false,
                         drawer2: false,
+                        drawer3: false,
                         activeName: 'second',
                         index: '1',
                         labelPosition: 'left',
@@ -479,7 +637,25 @@
                             d_characters: '',
                             d_interaction: '',
                             d_pharmacological: '',
-                        }
+                        },
+                        Recruit: {
+                            r_id: '',
+                            r_e_id: '',
+                            r_title: '',
+                            r_drag_name: '',
+                            r_drag_attending: '',
+                            r_institutes: '',
+                            r_sex: '',
+                            r_year: '',
+                            r_bmi: '',
+                            r_stage: '',
+                            r_type: '',
+                            r_address: '',
+                            r_time: '',
+                            r_number: '',
+                            r_money: '',
+                            r_detial: '',
+                        },
                     };
                 },
                 methods: {
@@ -494,6 +670,14 @@
                             return '靶向药物'
                         else
                             return '慢性病防止药物'
+                    },
+                    d_mark_typeFormatter(row, colum) {
+                        if (row.d_mark == 1)
+                            return '甲类OTC'
+                        else if (row.d_mark == 2)
+                            return '乙类OTC'
+                        else
+                            return '保健品'
                     },
                     handleOpen(key, keyPath) {
                         console.log(key, keyPath);
@@ -524,9 +708,29 @@
                     putDrag() {
                         putADrag();
                     },
+                    tableRowClassName({row, rowIndex}) {
+                        if (row.d_approve === 0) {
+                            return 'warning-row';
+                        } else if (row.d_approve === 1) {
+                            return 'success-row';
+                        } else {
+                            return 'error-row'
+                        }
+                    },
+                },
+                filters: {
+                    isvFilter(value) {
+                        if (value === 0)
+                            return '审核中'
+                        else if (value === 1)
+                            return '通过'
+                        else
+                            return '未通过'
+                    },
                 },
                 created: function () {
                     getResearcherList();
+                    getDragList();
                 }
             })
         </script>

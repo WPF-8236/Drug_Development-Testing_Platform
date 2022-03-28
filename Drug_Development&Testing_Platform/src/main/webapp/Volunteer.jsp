@@ -95,7 +95,7 @@
                                     <div class="contlist_left"><h3><a>{{recruit.r_title}}</a></h3>
                                         <p>适应症<span>{{recruit.r_drag_attending}}</span> <span class="fenge">|&nbsp;&nbsp;</span>
                                             地点
-                                            <span>庵东镇</span></p>
+                                            <span>{{recruit.r_institutes}}</span></p>
                                         <p>研究机构<span>{{recruit.r_institutes}}</span></p>
                                         <p>体检时间<span>{{recruit.r_time}}</span><span class="fenge">|&nbsp;&nbsp;</span>补偿<span>{{recruit.r_money}}</span>
                                         </p>
@@ -113,7 +113,7 @@
                                     <div class="contlist_left"><h3><a>{{recruit.r_title}}</a></h3>
                                         <p>适应症<span>{{recruit.r_drag_attending}}</span> <span class="fenge">|&nbsp;&nbsp;</span>
                                             地点
-                                            <span>庵东镇</span></p>
+                                            <span>{{recruit.r_institutes}}</span></p>
                                         <p>研究机构<span>{{recruit.r_institutes}}</span></p>
                                         <p>体检时间<span>{{recruit.r_time}}</span><span class="fenge">|&nbsp;&nbsp;</span>补偿<span>{{recruit.r_money}}</span>
                                         </p>

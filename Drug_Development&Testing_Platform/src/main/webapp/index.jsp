@@ -1,11 +1,9 @@
 <%@ page import="com.WPF.domain.User" %>
-<%@ page import="com.WPF.domain.UserGrade" %>
-<%@ page import="com.WPF.domain.Enterprise" %><%--<%@ page import="com.WPF.domain.User" %>
-<%@ page import="com.WPF.domain.Enterprise" %>--%>
+<%@ page import="com.WPF.domain.Researcher" %>
 <%
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
     User user = (User) session.getAttribute("user");
-    UserGrade userGrade = (UserGrade) session.getAttribute("userGrade");
+    Researcher researcher = (Researcher) session.getAttribute("researcher");
 %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -28,10 +26,11 @@
         <title>庵东镇药物研发试测平台</title>
     </head>
     <body>
+        <div class="param" id="ra_d_type">${researcher.ra_d_type}</div>
         <div id="app">
             <div id="wallper">
                 <%
-                    if (user == null) {
+                    if (user == null && researcher == null) {
                 %>
                 <div id="btn-8" class="btn-s">
                     <span onclick="window.location.href = './Resign.jsp'">注册</span>
@@ -40,10 +39,19 @@
                     <span onclick="window.location.href = './Login.jsp'">登录</span>
                 </div>
                 <%
-                } else {
+                } else if (user != null && researcher == null) {
                 %>
                 <div id="btn-7" class="btn-s">
                     <span onclick="window.location.href='./Information.jsp'">你好，${user.user_name}</span>
+                </div>
+                <div id="btn-6" class="btn-s">
+                    <span onclick="window.location.href = './logout.jsp'">登出</span>
+                </div>
+                <%
+                } else {
+                %>
+                <div id="btn-7" class="btn-s">
+                    <span>你好，${researcher.ra_name}</span>
                 </div>
                 <div id="btn-6" class="btn-s">
                     <span onclick="window.location.href = './logout.jsp'">登出</span>
@@ -55,22 +63,25 @@
                     <span>庵东镇药物研发试测平台</span>
                 </div>
                 <%
-                    if (user != null && userGrade.getGrade() == 3) {
+                    if (user == null && researcher != null) {
                 %>
-                <div id="btn-1" class="btn">
+                <div id="btn-1" class="btn" v-show="researcher_d_type==1">
                     <span onclick="app.isUser(1);">化学药物(制剂)</span>
                 </div>
-                <div id="btn-2" class="btn">
+                <div id="btn-2" class="btn" v-show="researcher_d_type==2">
                     <span onclick="app.isUser(2);">生物制品</span>
                 </div>
-                <div id="btn-3" class="btn">
+                <div id="btn-3" class="btn" v-show="researcher_d_type==3">
                     <span onclick="app.isUser(3);">新型疫苗</span>
                 </div>
-                <div id="btn-4" class="btn">
+                <div id="btn-4" class="btn" v-show="researcher_d_type==4">
                     <span onclick="app.isUser(4);">靶向药物</span>
                 </div>
-                <div id="btn-5" class="btn">
+                <div id="btn-5" class="btn" v-show="researcher_d_type==5">
                     <span onclick="app.isUser(5);">慢性病防止药物</span>
+                </div>
+                <div id="btn-6" class="btn">
+                    <span onclick="app.isUser(8);">志愿者体检</span>
                 </div>
                 <%
                 } else {
@@ -100,12 +111,14 @@
             var app = new Vue({
                 el: '#app',
                 data() {
-                    return {};
+                    return {
+                        researcher_d_type: document.getElementById("ra_d_type").textContent,
+                    };
                 },
                 methods: {
                     isUser(id) {
                         <%
-                       if (user == null){
+                       if (user == null&&researcher==null){
                            %>
                         alert("请登录");
                         window.location.href = './Login.jsp';
@@ -133,6 +146,9 @@
                                 break;
                             case 7:
                                 window.location.href = './Volunteer.jsp';
+                                break;
+                            case 8:
+                                window.location.href = './VolunteerCheck.jsp';
                                 break;
                         }
                         <%

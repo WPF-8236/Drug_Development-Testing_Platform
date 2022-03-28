@@ -13,6 +13,8 @@
     <body>
         <%
             session.removeAttribute("user");
+			session.removeAttribute("enterprise");
+			session.removeAttribute("researcher");
             response.setHeader("refresh", "0.1;url=./index.jsp");
         %>
     </body>

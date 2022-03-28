@@ -17,7 +17,7 @@
     color: #333;
     text-align: center;
     /*line-height: 845px;*/
-    height: 885px;
+    height: 960px;
 }
 
 body > .el-container {
@@ -110,7 +110,25 @@ body > .el-container {
     margin-left: auto;
 }
 
-#DragList{
-    margin-left: 100px;
+#addARecruit {
+    width: 70%;
     margin-right: auto;
+    margin-left: auto;
+}
+
+
+.el-table .hidden-row {
+    display: none;
+}
+
+.el-table .warning-row {
+    background: oldlace;
+}
+
+.el-table .success-row {
+    background: #f0f9eb;
+}
+
+.el-table .error-row {
+    background: #dd6161;
 }

@@ -3,6 +3,7 @@ package com.WPF.dao;
 import com.WPF.domain.RecruitList;
 import org.apache.ibatis.annotations.Param;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 public interface RecruitListDao {
@@ -10,7 +11,9 @@ public interface RecruitListDao {
 
 	List<RecruitList> selectAllRecruitListByUserID(@Param("user_id")String user_id);
 
-	List<RecruitList> selectAllRecruitList();
+	List<RecruitList> selectAllRecruitListWithispe1();
+	List<RecruitList> selectAllRecruitListWithispe2();
 
-	int updateRecruitListisv(@Param("rl_id")String rl_id);
+	int updateRecruitListisv(@Param("rl_id")String rl_id,@Param("trg") int trg);
+	int updateRecruitListispe(@Param("rl_id")String rl_id);
 }

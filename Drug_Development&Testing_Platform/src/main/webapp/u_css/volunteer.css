@@ -21,7 +21,7 @@
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
-    height: 888px;
+    height: 960px;
     min-width: 1920px;
 }
 
@@ -165,7 +165,7 @@ body > .el-container {
     font-size: 20px;
 }
 .el-tab-pane{
-    min-height: 750px;
+    min-height: 820px;
 }
 .clear {
     clear: both;

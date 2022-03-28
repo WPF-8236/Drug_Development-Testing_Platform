@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.WPF.dao.PhysicalExamDao">
+    <insert id="insertPhysicalExam">
+        insert into ddtp_physical_examination(pe_id, pe_u_id, pe_rl_id, pe_ra_id, pe_e_id, pe_body_temperature,
+                                              pe_pulse, pe_blood_pressure, pe_skin, pe_lymph_nodes, pe_neck, pe_chest,
+                                              pe_abdomen, pe_spine, pe_limbs, pe_other, pe_height, pe_weight, pe_ECG,
+                                              pe_blood_routine, pe_urine_routine, pe_blood_chemistry, pe_coagulation,
+                                              pe_pregnancy, pe_smoking, pe_drinking)
+        VALUES (#{pe_id}, #{pe_u_id}, #{pe_rl_id}, #{pe_ra_id}, #{pe_e_id}, #{pe_body_temperature}, #{pe_pulse},
+                #{pe_blood_pressure}, #{pe_skin}, #{pe_lymph_nodes}, #{pe_neck}, #{pe_chest}, #{pe_abdomen},
+                #{pe_spine}, #{pe_limbs}, #{pe_other}, #{pe_height}, #{pe_weight}, #{pe_ECG}, #{pe_blood_routine},
+                #{pe_urine_routine}, #{pe_blood_chemistry}, #{pe_coagulation}, #{pe_pregnancy}, #{pe_smoking},
+                #{pe_drinking})
+    </insert>
+
+    <select id="selectPhysicalExamByPeRlID" resultType="PhysicalExam">
+        select *
+        from ddtp_physical_examination
+        where pe_rl_id = #{pe_rl_id}
+    </select>
+</mapper>

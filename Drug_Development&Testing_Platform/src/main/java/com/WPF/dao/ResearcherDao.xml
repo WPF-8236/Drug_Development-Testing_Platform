@@ -13,6 +13,12 @@
         from ddtp_researcher
     </select>
 
+    <select id="selectAResearcher" resultType="Researcher">
+        select *
+        from ddtp_researcher
+        where ra_id = #{ra_id}
+    </select>
+
     <update id="updateResearcher">
         update ddtp_researcher
         set ra_name=#{ra_name},
@@ -22,6 +28,8 @@
     </update>
 
     <delete id="deleteResearcher">
-        delete from ddtp_researcher where ra_id=#{ra_id}
+        delete
+        from ddtp_researcher
+        where ra_id = #{ra_id}
     </delete>
 </mapper>

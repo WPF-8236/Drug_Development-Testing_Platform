@@ -34,13 +34,23 @@ public class RecruitServiceImpl implements RecruitService {
 	}
 
 	@Override
-	public List<RecruitList> getRecruitList() {
-		return recruitListDao.selectAllRecruitList();
+	public List<RecruitList> getRecruitListWithispe1() {
+		return recruitListDao.selectAllRecruitListWithispe1();
 	}
 
 	@Override
-	public int changeRecruitListisv(String rl_id) {
-		return recruitListDao.updateRecruitListisv(rl_id);
+	public List<RecruitList> getRecruitListWithispe2() {
+		return recruitListDao.selectAllRecruitListWithispe2();
+	}
+
+	@Override
+	public int changeRecruitListisv(String rl_id, int trg) {
+		return recruitListDao.updateRecruitListisv(rl_id, trg);
+	}
+
+	@Override
+	public int changeRecruitListispe(String rl_id) {
+		return recruitListDao.updateRecruitListispe(rl_id);
 	}
 
 

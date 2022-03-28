@@ -1,9 +1,6 @@
 package com.WPF.controller;
 
-import com.WPF.domain.Drag;
-import com.WPF.domain.Enterprise;
-import com.WPF.domain.Researcher;
-import com.WPF.domain.UserGrade;
+import com.WPF.domain.*;
 import com.WPF.service.EnterpriseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
@@ -72,6 +69,30 @@ public class EnterpriseController {
 		}
 	}
 
+	@RequestMapping("/addRecruit")
+	public void addRecruit(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("Recruit");
+		ObjectMapper mapper = new ObjectMapper();
+		Recruit recruit = mapper.readValue(json, Recruit.class);
+		recruit.setR_id(new Date().toLocaleString());
+		int num = 0;
+		num = enterpriseService.addRecruit(recruit);
+		System.out.println(num);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("申请成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("申请失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
 	@RequestMapping("/getResearcherList")
 	@ResponseBody
 	public List<Researcher> getResearcherList(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -80,6 +101,19 @@ public class EnterpriseController {
 		response.setContentType("text/html;charset=utf-8");
 		researchers = enterpriseService.getResearcherList();
 		return researchers;
+	}
+
+	@RequestMapping("/getDragList")
+	@ResponseBody
+	public List<Drag> getDragList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<Drag> drags = new ArrayList<>();
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("e_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String e_id = mapper.readValue(json, String.class);
+		drags = enterpriseService.getDragList(e_id);
+		return drags;
 	}
 
 	@RequestMapping("/updateResearcher")
@@ -93,7 +127,6 @@ public class EnterpriseController {
 		UserGrade userGrade = new UserGrade(researcher.getRa_id(), researcher.getRa_password(), 4);
 		int num = 0;
 		num = enterpriseService.updateResearcher(researcher, userGrade);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("修改成功");
@@ -115,7 +148,7 @@ public class EnterpriseController {
 		ObjectMapper mapper = new ObjectMapper();
 		String ra_id = mapper.readValue(json, String.class);
 		int num = 0;
-		System.out.println(num);
+		num = enterpriseService.deleteResearcher(ra_id);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("删除成功");

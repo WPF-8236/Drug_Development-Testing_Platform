@@ -1,9 +1,11 @@
 package com.WPF.controller;
 
 import com.WPF.domain.Enterprise;
+import com.WPF.domain.PhysicalExam;
 import com.WPF.domain.Researcher;
 import com.WPF.domain.UserGrade;
 import com.WPF.service.EnterpriseService;
+import com.WPF.service.PhysicalExamService;
 import com.WPF.service.RecruitService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,9 @@ public class AdminController {
 
 	@Resource
 	private RecruitService recruitService;
+
+	@Resource
+	private PhysicalExamService physicalExamService;
 
 	@RequestMapping("/addEnterprise")
 	public void addEnterprise(HttpServletResponse response, HttpServletRequest request) throws Exception {
@@ -114,10 +119,12 @@ public class AdminController {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter printWriter = response.getWriter();
 		String json = request.getParameter("rl_id");
+		String json2 = request.getParameter("trg");
 		ObjectMapper mapper = new ObjectMapper();
-		String rl_id = mapper.readValue(json,String.class);
+		String rl_id = mapper.readValue(json, String.class);
+		int trg = mapper.readValue(json2, Integer.class);
 		int num = 0;
-		num = recruitService.changeRecruitListisv(rl_id);
+		num = recruitService.changeRecruitListisv(rl_id, trg);
 		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
@@ -129,5 +136,18 @@ public class AdminController {
 			printWriter.print(json);
 			printWriter.close();
 		}
+	}
+
+	@RequestMapping("/getPhyExam")
+	@ResponseBody
+	public PhysicalExam getPhyExam(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		PhysicalExam physicalExam = null;
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("pe_rl_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String pe_rl_id = mapper.readValue(json, String.class);
+		physicalExam = physicalExamService.getPhyExam(pe_rl_id);
+		return physicalExam;
 	}
 }

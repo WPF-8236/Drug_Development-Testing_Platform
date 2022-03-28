@@ -14,11 +14,12 @@ public class RecruitList {
 	private int rl_issmoke;
 	private String rl_text;
 	private int isv;
+	private int ispe;
 
 	public RecruitList() {
 	}
 
-	public RecruitList(String rl_id, String rl_u_id, String rl_title, String rl_user_name, int rl_user_sex, String rl_user_phone, String rl_user_identification_number, double rl_user_height, double rl_user_weight, String rl_address, int rl_issmoke, String rl_text, int isv) {
+	public RecruitList(String rl_id, String rl_u_id, String rl_title, String rl_user_name, int rl_user_sex, String rl_user_phone, String rl_user_identification_number, double rl_user_height, double rl_user_weight, String rl_address, int rl_issmoke, String rl_text, int isv, int ispe) {
 		this.rl_id = rl_id;
 		this.rl_u_id = rl_u_id;
 		this.rl_title = rl_title;
@@ -32,6 +33,7 @@ public class RecruitList {
 		this.rl_issmoke = rl_issmoke;
 		this.rl_text = rl_text;
 		this.isv = isv;
+		this.ispe = ispe;
 	}
 
 	public String getRl_id() {
@@ -138,6 +140,13 @@ public class RecruitList {
 		this.isv = isv;
 	}
 
+	public int getIspe() {
+		return ispe;
+	}
+
+	public void setIspe(int ispe) {
+		this.ispe = ispe;
+	}
 
 	@Override
 	public String toString() {
@@ -155,6 +164,7 @@ public class RecruitList {
 				", rl_issmoke=" + rl_issmoke +
 				", rl_text='" + rl_text + '\'' +
 				", isv=" + isv +
+				", ispe=" + ispe +
 				'}';
 	}
 }
