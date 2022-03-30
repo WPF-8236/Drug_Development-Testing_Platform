@@ -7,12 +7,43 @@
         select *
         from ddtp_recruit
     </select>
+    <select id="selectRecruitsByREId" resultType="Recruit">
+        select *
+        from ddtp_recruit
+        where r_e_id = #{r_e_id}
+    </select>
 
     <insert id="insertRecruit">
         insert into ddtp_recruit(r_id, r_e_id, r_title, r_drag_name, r_drag_attending, r_institutes, r_sex, r_year,
                                  r_bmi, r_stage, r_type, r_address, r_time, r_number, r_money, r_detial)
         VALUES (#{r_id}, #{r_e_id}, #{r_title}, #{r_drag_name}, #{r_drag_attending}, #{r_institutes}, #{r_sex},
                 #{r_year}, #{r_bmi}, #{r_stage}, #{r_type}, #{r_address}, #{r_time}, #{r_number}, #{r_money},
-                #{r_detial})
+                #{r_detial});
     </insert>
+
+    <update id="updateARrecruit">
+        update ddtp_recruit
+        set r_title=#{r_title},
+            r_drag_name=#{r_drag_name},
+            r_drag_attending=#{r_drag_attending},
+            r_institutes=#{r_institutes},
+            r_sex=#{r_sex},
+            r_year=#{r_year},
+            r_bmi=#{r_bmi},
+            r_stage=#{r_stage},
+            r_type=#{r_type},
+            r_address=#{r_address},
+            r_time=#{r_time},
+            r_number=#{r_number},
+            r_money=#{r_money},
+            r_detial=#{r_detial}
+        where r_id = #{r_id}
+    </update>
+
+
+    <delete id="deleteRrecruit">
+        delete
+        from ddtp_recruit
+        where r_id = #{r_id}
+    </delete>
 </mapper>

@@ -116,6 +116,32 @@ public class EnterpriseController {
 		return drags;
 	}
 
+	@RequestMapping("/getRecruits")
+	@ResponseBody
+	public List<Recruit> getRecruits(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<Recruit> recruits = new ArrayList<>();
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("e_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String e_id = mapper.readValue(json, String.class);
+		recruits = enterpriseService.getRecruits(e_id);
+		return recruits;
+	}
+
+	@RequestMapping("/getVolunteers")
+	@ResponseBody
+	public List<Volunteer> getVolunteers(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<Volunteer> volunteers = new ArrayList<>();
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("e_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String e_id = mapper.readValue(json, String.class);
+		volunteers = enterpriseService.getVolunteers(e_id);
+		return volunteers;
+	}
+
 	@RequestMapping("/updateResearcher")
 	public void updateResearcher(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -139,6 +165,50 @@ public class EnterpriseController {
 		}
 	}
 
+	@RequestMapping("/updateARrecruit")
+	public void updateARrecruit(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("updateRrecruit");
+		ObjectMapper mapper = new ObjectMapper();
+		Recruit recruit = mapper.readValue(json, Recruit.class);
+		int num = 0;
+		num = enterpriseService.updateARrecruit(recruit);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("修改成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("修改失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
+	@RequestMapping("/addURa")
+	public void addURa(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("u_ra");
+		ObjectMapper mapper = new ObjectMapper();
+		URa uRa = mapper.readValue(json, URa.class);
+		int num = 0;
+		num = enterpriseService.addURa(uRa);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("修改成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("修改失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
 	@RequestMapping("/deleteResearcher")
 	public void deleteResearcher(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -149,6 +219,28 @@ public class EnterpriseController {
 		String ra_id = mapper.readValue(json, String.class);
 		int num = 0;
 		num = enterpriseService.deleteResearcher(ra_id);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("删除成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("删除失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
+	@RequestMapping("/deleteRrecruit")
+	public void deleteRrecruit(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("r_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String r_id = mapper.readValue(json, String.class);
+		int num = 0;
+		num = enterpriseService.deleteRrecruit(r_id);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("删除成功");

@@ -6,12 +6,12 @@
     <insert id="insertRecruitList">
         insert into ddtp_recruit_list(rl_id, rl_u_id, rl_title, rl_user_name, rl_user_sex, rl_user_phone,
                                       rl_user_identification_number, rl_user_height, rl_user_weight, rl_address,
-                                      rl_issmoke, rl_text)
+                                      rl_issmoke, rl_text, isv, ispe)
         values (#{rl_id}, #{rl_u_id}, #{rl_title}, #{rl_user_name}, #{rl_user_sex},
                 #{rl_user_phone},
                 #{rl_user_identification_number}, #{rl_user_height},
                 #{rl_user_weight}, #{rl_address},
-                #{rl_issmoke}, #{rl_text})
+                #{rl_issmoke}, #{rl_text}, 0, 0);
     </insert>
 
     <select id="selectAllRecruitListByUserID" resultType="RecruitList">

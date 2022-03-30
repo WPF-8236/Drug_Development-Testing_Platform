@@ -16,4 +16,5 @@ public interface RecruitListDao {
 
 	int updateRecruitListisv(@Param("rl_id")String rl_id,@Param("trg") int trg);
 	int updateRecruitListispe(@Param("rl_id")String rl_id);
+
 }

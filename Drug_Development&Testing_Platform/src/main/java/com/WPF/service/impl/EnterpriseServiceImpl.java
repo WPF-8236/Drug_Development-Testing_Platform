@@ -21,6 +21,14 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	private DragDao dragDao;
 	@Resource
 	private RecruitDao recruitDao;
+	@Resource
+	private RecruitListDao recruitListDao;
+	@Resource
+	private RlUEDao rlUEDao;
+	@Resource
+	private VolunteerDao volunteerDao;
+	@Resource
+	private URaDao uRaDao;
 
 	@Override
 	@Transactional
@@ -69,6 +77,11 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	}
 
 	@Override
+	public List<Recruit> getRecruits(String d_e_id) {
+		return recruitDao.selectRecruitsByREId(d_e_id);
+	}
+
+	@Override
 	@Transactional
 	public int deleteEnterprise(String e_id) {
 		int num1 = enterpriseDao.deleteEnterprise(e_id);
@@ -84,6 +97,11 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	}
 
 	@Override
+	public int deleteRrecruit(String r_id) {
+		return recruitDao.deleteRrecruit(r_id);
+	}
+
+	@Override
 	public int updateEnterprise(Enterprise enterprise, UserGrade userGrade) {
 		int num1 = enterpriseDao.updateEnterprise(enterprise);
 		int num2 = userGradeDao.updatePassword(userGrade);
@@ -95,5 +113,25 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 		int num1 = researcherDao.updateResearcher(researcher);
 		int num2 = userGradeDao.updatePassword(userGrade);
 		return num1 * num2;
+	}
+
+	@Override
+	public int updateARrecruit(Recruit recruit) {
+		return recruitDao.updateARrecruit(recruit);
+	}
+
+	@Override
+	public int updateARlUE(String rl_id, String rl_u_id) {
+		return rlUEDao.insertRlUEDao(rl_id, rl_u_id);
+	}
+
+	@Override
+	public List<Volunteer> getVolunteers(String e_id) {
+		return volunteerDao.selectVolunteerByEid(e_id);
+	}
+
+	@Override
+	public int addURa(URa uRa) {
+		return uRaDao.insertAURa(uRa);
 	}
 }

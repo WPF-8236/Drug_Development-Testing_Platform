@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.WPF.dao.RlUEDao">
+    <insert id="insertRlUEDao">
+        insert into ddtp_rl_u_e(e_id, user_id, rl_id)
+        VALUES ((SELECT r_e_id FROM ddtp_recruit WHERE r_id = #{rl_id}), #{rl_u_id}, #{rl_id})
+    </insert>
+</mapper>

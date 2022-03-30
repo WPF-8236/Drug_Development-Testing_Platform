@@ -21,12 +21,23 @@ public interface EnterpriseService {
 
 	List<Drag> getDragList(String d_e_id);
 
+	List<Recruit> getRecruits(String d_e_id);
+
 	int deleteEnterprise(String e_id);
 
 	int deleteResearcher(String ra_id);
+
+	int deleteRrecruit(String r_id);
 
 	int updateEnterprise(Enterprise enterprise, UserGrade userGrade);
 
 	int updateResearcher(Researcher researcher, UserGrade userGrade);
 
+	int updateARrecruit(Recruit recruit);
+
+	int updateARlUE(String rl_id, String rl_u_id);
+
+	List<Volunteer> getVolunteers(String e_id);
+
+	int addURa(URa uRa);
 }

@@ -454,7 +454,7 @@
                         }
                     },
                     stateFormat2(row, column) {
-                        if (row.ifcheck === 1) {
+                        if (row.d_approve === 1) {
                             return '通过批准'
                         } else {
                             return '未通过批注'

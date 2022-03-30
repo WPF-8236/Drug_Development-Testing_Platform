@@ -92,12 +92,42 @@
             }
 
             function changeRecruitListisv(rl_id, trg) {
-                console.log(rl_id)
                 $.ajax({
                     url: "Admin/changeRecruitListisv",
                     contentType: 'application/json;charset=UTF-8',
                     dataType: "json",
                     data: {"rl_id": JSON.stringify(rl_id), "trg": JSON.stringify(trg)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Admin.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function updateARlUE(rl_id,rl_u_id){
+                $.ajax({
+                    url: "Admin/updateARlUE",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"rl_id": JSON.stringify(rl_id), "rl_u_id": JSON.stringify(rl_u_id)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function changeDragDApprove(d_id, trg) {
+                $.ajax({
+                    url: "Admin/changeDragDApprove",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"d_id": JSON.stringify(d_id), "trg": JSON.stringify(trg)},
                     success: function (reps) {
                         alert(reps.valueOf());
                         window.location.href = "./Admin.jsp";
@@ -132,7 +162,22 @@
                     data: {"pe_rl_id": JSON.stringify(pe_rl_id)},
                     success: function (reps) {
                         app.PhyExam = reps;
-                        console.log(app.PhyExam)
+                        app.PhyExam.pe_skin = reps.pe_skin.toString();
+                        app.PhyExam.pe_lymph_nodes = reps.pe_lymph_nodes.toString();
+                        app.PhyExam.pe_neck = reps.pe_neck.toString();
+                        app.PhyExam.pe_chest = reps.pe_chest.toString();
+                        app.PhyExam.pe_abdomen = reps.pe_abdomen.toString();
+                        app.PhyExam.pe_spine = reps.pe_spine.toString();
+                        app.PhyExam.pe_limbs = reps.pe_limbs.toString();
+                        app.PhyExam.pe_ECG = reps.pe_ECG.toString();
+                        app.PhyExam.pe_blood_routine = reps.pe_blood_routine.toString();
+                        app.PhyExam.pe_urine_routine = reps.pe_urine_routine.toString();
+                        app.PhyExam.pe_blood_chemistry = reps.pe_blood_chemistry.toString();
+                        app.PhyExam.pe_coagulation = reps.pe_coagulation.toString();
+                        app.PhyExam.pe_pregnancy = reps.pe_pregnancy.toString();
+                        app.PhyExam.pe_smoking = reps.pe_smoking.toString();
+                        app.PhyExam.pe_drinking = reps.pe_drinking.toString();
+
                     },
                     error: function () {
                         alert('error');
@@ -301,7 +346,8 @@
                                     <el-table
                                             :data="DragList"
                                             border
-                                            style="width:100%">
+                                            style="width:100%"
+                                            :row-class-name="tableRowClassName">
                                         <el-table-column
                                                 prop="d_trade_name"
                                                 label="药品商品名"
@@ -359,7 +405,7 @@
                                             :data="recruitList"
                                             border
                                             style="width: 100%"
-                                            :row-class-name="tableRowClassName">
+                                            :row-class-name="tableRowClassName1">
                                         <el-table-column
                                                 fixed
                                                 prop="rl_user_name"
@@ -410,7 +456,7 @@
                                                 label="操作"
                                                 width="100"
                                                 prop="isv">
-                                            <template slot-scope="scope" v-if="scope.row.isv===0">
+                                            <template slot-scope="scope" v-if="scope.row.isv==0">
                                                 <el-button @click="handleClick3(scope.row)" type="text" size="small">不通过
                                                 </el-button>
                                                 <el-button @click="handleClick4(scope.row)" type="text" size="small">
@@ -427,112 +473,147 @@
                                             <el-form :label-position="labelPosition" label-width="100px"
                                                      :model="PhyExam">
                                                 <el-divider>生命体征（包括体温、脉搏及血压）</el-divider>
+
                                                 <el-form-item label="体温">
-                                                    <el-input v-model="PhyExam.pe_body_temperature">
+                                                    <el-input v-model="PhyExam.pe_body_temperature" disabled>
                                                         <i slot="suffix"
                                                            style="font-style:normal;margin-right: 20px;">℃</i>
                                                     </el-input>
                                                 </el-form-item>
                                                 <el-form-item label="脉搏">
-                                                    <el-input v-model="PhyExam.pe_pulse">
+                                                    <el-input v-model="PhyExam.pe_pulse" disabled>
                                                         <i slot="suffix" style="font-style:normal;margin-right: 20px;">次/分</i>
                                                     </el-input>
                                                 </el-form-item>
                                                 <el-form-item label="血压">
-                                                    <el-input v-model="PhyExam.pe_blood_pressure">
+                                                    <el-input v-model="PhyExam.pe_blood_pressure" disabled>
                                                         <i slot="suffix" style="font-style:normal;margin-right: 20px;">mmHg</i>
                                                     </el-input>
                                                 </el-form-item>
                                                 <el-divider>体格检查</el-divider>
                                                 <el-form-item label="皮肤">
-                                                    <el-radio v-model="PhyExam.pe_skin" label="0" border>正常</el-radio>
-                                                    <el-radio v-model="PhyExam.pe_skin" label="1" border>异常</el-radio>
+                                                    <el-radio v-model="PhyExam.pe_skin" v-if="PhyExam.pe_skin==0"
+                                                              label="0" border>正常
+                                                    </el-radio>
+                                                    <el-radio v-model="PhyExam.pe_skin" v-else label="1" border>异常
+                                                    </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="淋巴结">
-                                                    <el-radio v-model="PhyExam.pe_lymph_nodes" label="0" border>正常
+                                                    <el-radio v-model="PhyExam.pe_lymph_nodes" label="0"
+                                                              v-if="PhyExam.pe_lymph_nodes==0" border>正常
                                                     </el-radio>
-                                                    <el-radio v-model="PhyExam.pe_lymph_nodes" label="1" border>异常
+                                                    <el-radio v-model="PhyExam.pe_lymph_nodes" v-else label="1" border>
+                                                        异常
                                                     </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="头颈">
-                                                    <el-radio v-model="PhyExam.pe_neck" label="0" border>正常</el-radio>
-                                                    <el-radio v-model="PhyExam.pe_neck" label="1" border>异常</el-radio>
+                                                    <el-radio v-model="PhyExam.pe_neck" label="0"
+                                                              v-if="PhyExam.pe_neck==0" border>正常
+                                                    </el-radio>
+                                                    <el-radio v-model="PhyExam.pe_neck" label="1" v-else border>异常
+                                                    </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="胸部">
-                                                    <el-radio v-model="PhyExam.pe_chest" label="0" border>正常</el-radio>
-                                                    <el-radio v-model="PhyExam.pe_chest" label="1" border>异常</el-radio>
+                                                    <el-radio v-model="PhyExam.pe_chest" label="0"
+                                                              v-if="PhyExam.pe_chest==0" border>正常
+                                                    </el-radio>
+                                                    <el-radio v-model="PhyExam.pe_chest" label="1" v-else border>异常
+                                                    </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="腹部">
-                                                    <el-radio v-model="PhyExam.pe_abdomen" label="0" border>正常
+                                                    <el-radio v-model="PhyExam.pe_abdomen" label="0"
+                                                              v-if="PhyExam.pe_abdomen==0" border>正常
                                                     </el-radio>
-                                                    <el-radio v-model="PhyExam.pe_abdomen" label="1" border>异常
+                                                    <el-radio v-model="PhyExam.pe_abdomen" label="1" v-else border>异常
                                                     </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="脊椎">
-                                                    <el-radio v-model="PhyExam.pe_spine" label="0" border>正常</el-radio>
-                                                    <el-radio v-model="PhyExam.pe_spine" label="1" border>异常</el-radio>
+                                                    <el-radio v-model="PhyExam.pe_spine" label="0"
+                                                              v-if="PhyExam.pe_spine==0" border>正常
+                                                    </el-radio>
+                                                    <el-radio v-model="PhyExam.pe_spine" label="1" v-else border>异常
+                                                    </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="四肢">
-                                                    <el-radio v-model="PhyExam.pe_limbs" label="0" border>正常</el-radio>
-                                                    <el-radio v-model="PhyExam.pe_limbs" label="1" border>异常</el-radio>
+                                                    <el-radio v-model="PhyExam.pe_limbs" label="0"
+                                                              v-if="PhyExam.pe_limbs==0" border>正常
+                                                    </el-radio>
+                                                    <el-radio v-model="PhyExam.pe_limbs" label="1" v-else border>异常
+                                                    </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="其他">
-                                                    <el-input v-model="PhyExam.pe_other"></el-input>
+                                                    <el-input v-model="PhyExam.pe_other" disabled></el-input>
                                                 </el-form-item>
                                                 <el-form-item label="身高">
-                                                    <el-input v-model="PhyExam.pe_height">
+                                                    <el-input v-model="PhyExam.pe_height" disabled>
                                                         <i slot="suffix" style="font-style:normal;margin-right: 20px;">CM</i>
                                                     </el-input>
                                                 </el-form-item>
                                                 <el-form-item label="体重">
-                                                    <el-input v-model="PhyExam.pe_weight">
+                                                    <el-input v-model="PhyExam.pe_weight" disabled>
                                                         <i slot="suffix" style="font-style:normal;margin-right: 20px;">KG</i>
                                                     </el-input>
                                                 </el-form-item>
                                                 <el-divider>导联心电图、血常规、尿常规等</el-divider>
                                                 <el-form-item label="导联心电图">
-                                                    <el-radio v-model="PhyExam.pe_ECG" label="0" border>正常</el-radio>
-                                                    <el-radio v-model="PhyExam.pe_ECG" label="1" border>异常</el-radio>
+                                                    <el-radio v-model="PhyExam.pe_ECG" label="0"
+                                                              v-if="PhyExam.pe_ECG==0" border>正常
+                                                    </el-radio>
+                                                    <el-radio v-model="PhyExam.pe_ECG" label="1" v-else border>异常
+                                                    </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="血常规">
-                                                    <el-radio v-model="PhyExam.pe_blood_routine" label="0" border>正常
+                                                    <el-radio v-model="PhyExam.pe_blood_routine" label="0"
+                                                              v-if="PhyExam.pe_blood_routine==0" border>正常
                                                     </el-radio>
-                                                    <el-radio v-model="PhyExam.pe_blood_routine" label="1" border>异常
+                                                    <el-radio v-model="PhyExam.pe_blood_routine" label="1" v-else
+                                                              border>异常
                                                     </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="尿常规">
-                                                    <el-radio v-model="PhyExam.pe_urine_routine" label="0" border>正常
+                                                    <el-radio v-model="PhyExam.pe_urine_routine" label="0"
+                                                              v-if="PhyExam.pe_urine_routine==0" border>正常
                                                     </el-radio>
-                                                    <el-radio v-model="PhyExam.pe_urine_routine" label="1" border>异常
+                                                    <el-radio v-model="PhyExam.pe_urine_routine" label="1" v-else
+                                                              border>异常
                                                     </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="血生化">
-                                                    <el-radio v-model="PhyExam.pe_blood_chemistry" label="0" border>正常
+                                                    <el-radio v-model="PhyExam.pe_blood_chemistry" label="0"
+                                                              v-if="PhyExam.pe_blood_chemistry==0" border>正常
                                                     </el-radio>
-                                                    <el-radio v-model="PhyExam.pe_blood_chemistry" label="1" border>异常
+                                                    <el-radio v-model="PhyExam.pe_blood_chemistry" label="1" v-else
+                                                              border>异常
                                                     </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="凝血功能">
-                                                    <el-radio v-model="PhyExam.pe_coagulation" label="0" border>正常
+                                                    <el-radio v-model="PhyExam.pe_coagulation" label="0"
+                                                              v-if="PhyExam.pe_coagulation==0" border>正常
                                                     </el-radio>
-                                                    <el-radio v-model="PhyExam.pe_coagulation" label="1" border>异常
+                                                    <el-radio v-model="PhyExam.pe_coagulation" label="1" v-else border>
+                                                        异常
                                                     </el-radio>
                                                 </el-form-item>
                                                 <el-divider></el-divider>
                                                 <el-form-item label="妊娠检查">
-                                                    <el-radio v-model="PhyExam.pe_pregnancy" label="0" border>正常
+                                                    <el-radio v-model="PhyExam.pe_pregnancy" label="0"
+                                                              v-if="PhyExam.pe_pregnancy==0" border>正常
                                                     </el-radio>
-                                                    <el-radio v-model="PhyExam.pe_pregnancy" label="1" border>异常
+                                                    <el-radio v-model="PhyExam.pe_pregnancy" label="1" v-else border>异常
                                                     </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="吸烟">
-                                                    <el-radio v-model="PhyExam.pe_smoking" label="0" border>否</el-radio>
-                                                    <el-radio v-model="PhyExam.pe_smoking" label="1" border>是</el-radio>
+                                                    <el-radio v-model="PhyExam.pe_smoking" label="0"
+                                                              v-if="PhyExam.pe_smoking==0" border>否
+                                                    </el-radio>
+                                                    <el-radio v-model="PhyExam.pe_smoking" label="1" v-else border>是
+                                                    </el-radio>
                                                 </el-form-item>
                                                 <el-form-item label="喝酒">
-                                                    <el-radio v-model="PhyExam.pe_drinking" label="0" border>否
+                                                    <el-radio v-model="PhyExam.pe_drinking" label="0"
+                                                              v-if="PhyExam.pe_drinking==0" border>否
                                                     </el-radio>
-                                                    <el-radio v-model="PhyExam.pe_drinking" label="1" border>是
+                                                    <el-radio v-model="PhyExam.pe_drinking" label="1" v-else border>是
                                                     </el-radio>
                                                 </el-form-item>
                                             </el-form>
@@ -626,6 +707,24 @@
                     },
                 },
                 methods: {
+                    tableRowClassName({row, rowIndex}) {
+                        if (row.d_approve === 0) {
+                            return 'warning-row';
+                        } else if (row.d_approve === 1) {
+                            return 'success-row';
+                        } else {
+                            return 'error-row'
+                        }
+                    },
+                    tableRowClassName1({row, rowIndex}) {
+                        if (row.isv == 0) {
+                            return 'warning-row';
+                        } else if (row.isv == 1) {
+                            return 'success-row';
+                        } else {
+                            return 'error-row'
+                        }
+                    },
                     d_mark_typeFormatter(row, colum) {
                         if (row.d_mark == 1)
                             return '甲类OTC'
@@ -633,15 +732,6 @@
                             return '乙类OTC'
                         else
                             return '保健品'
-                    },
-                    tableRowClassName({row, rowIndex}) {
-                        if (row.isv === 0) {
-                            return 'warning-row';
-                        } else if (row.isv === 1) {
-                            return 'success-row';
-                        } else {
-                            return 'error-row'
-                        }
                     },
                     sexTypeFormatter(row, column) {
                         if (row.rl_user_sex === 0)
@@ -676,13 +766,14 @@
                         changeRecruitListisv(row.rl_id, 2);
                     },
                     handleClick4(row) {
+                        updateARlUE(row.rl_id,row.rl_u_id);
                         changeRecruitListisv(row.rl_id, 1);
                     },
                     handleClick5(row) {
-
+                        changeDragDApprove(row.d_id, 2);
                     },
                     handleClick6(row) {
-
+                        changeDragDApprove(row.d_id, 1);
                     },
                     handleClick7(row) {
                         getPhyExam(row.rl_id);

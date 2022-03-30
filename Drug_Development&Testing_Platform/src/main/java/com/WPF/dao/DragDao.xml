@@ -41,4 +41,15 @@
         from ddtp_drag
         where d_e_id = #{d_e_id}
     </select>
+
+    <select id="selectAllDrags" resultType="Drag">
+        select *
+        from ddtp_drag
+    </select>
+
+    <update id="updateDragDApprove">
+        update ddtp_drag
+        set d_approve=#{trg}
+        where d_id = #{d_id}
+    </update>
 </mapper>

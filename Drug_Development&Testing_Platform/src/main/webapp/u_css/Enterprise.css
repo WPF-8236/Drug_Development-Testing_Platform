@@ -130,5 +130,11 @@ body > .el-container {
 }
 
 .el-table .error-row {
-    background: #dd6161;
+    background: #F56C6C;
+}
+
+#updateRrecruit {
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
 }
