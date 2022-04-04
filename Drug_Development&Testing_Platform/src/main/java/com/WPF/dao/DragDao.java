@@ -16,6 +16,8 @@ public interface DragDao {
 
 	List<Drag> selectDragByDEID(@Param("d_e_id") String d_e_id);
 
+	List<Drag> selectDragWithApprove(@Param("d_e_id") String d_e_id);
+
 	List<Drag> selectAllDrags();
 
 	int updateDragDApprove(@Param("d_id") String d_id, @Param("trg") int trg);

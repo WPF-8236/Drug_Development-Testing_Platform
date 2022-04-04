@@ -229,6 +229,38 @@
                     }
                 })
             }
+
+            function getVolunteersByRaId(v_ra_id) {
+                $.ajax({
+                    url: "enterprise/getVolunteersByRaId",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"v_ra_id": JSON.stringify(v_ra_id)},
+                    success: function (reps) {
+                        console.log(reps)
+                        app.volunteeer_ra = reps;
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function deleteVolunteer() {
+                $.ajax({
+                    url: "enterprise/deleteVolunteer",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"u_ra": JSON.stringify(this.app.deleteu_ra)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Enterprise.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
         </script>
     </head>
     <body>
@@ -522,12 +554,7 @@
                                                         prop="user_sex"
                                                         label="志愿者性别"
                                                         width="200"
-                                                        :formatter="r_sexFormatter">
-                                                </el-table-column>
-                                                <el-table-column
-                                                        prop="rl_title"
-                                                        label="招募标题"
-                                                        width="200">
+                                                        :formatter="user_sexFormatter">
                                                 </el-table-column>
                                                 <el-table-column
                                                         prop="rl_title"
@@ -545,7 +572,7 @@
                                                                         v-for="item in researcherList"
                                                                         :key="item.ra_id"
                                                                         :label="item.ra_name"
-                                                                        :value="item.ra_name">
+                                                                        :value="item.ra_id">
                                                                 </el-option>
                                                             </el-select>
                                                         </el-form>
@@ -567,7 +594,7 @@
                                         <el-collapse-item :title="researcher.ra_name" :name="researcher.ra_id">
                                             <div id="VolunteerListBy">
                                                 <el-table
-                                                        :data="volunteers"
+                                                        :data="volunteeer_ra"
                                                         border
                                                         style="width:100%">
                                                     <el-table-column
@@ -584,12 +611,7 @@
                                                             prop="user_sex"
                                                             label="志愿者性别"
                                                             width="200"
-                                                            :formatter="r_sexFormatter">
-                                                    </el-table-column>
-                                                    <el-table-column
-                                                            prop="rl_title"
-                                                            label="招募标题"
-                                                            width="200">
+                                                            :formatter="user_sexFormatter">
                                                     </el-table-column>
                                                     <el-table-column
                                                             prop="rl_title"
@@ -600,7 +622,7 @@
                                                             label="操作"
                                                             width="100">
                                                         <template slot-scope="scope">
-                                                            <el-button @click="handleClick5(scope.row)" type="text"
+                                                            <el-button @click="handleClick6(scope.row)" type="text"
                                                                        size="small">解除
                                                             </el-button>
                                                         </template>
@@ -992,10 +1014,16 @@
                         },
                         updateRrecruit: '',
                         volunteers: [],
+                        volunteeer_ra: [],
                         u_ra: {
                             v_user_id: '',
                             v_ra_id: '',
-                        }
+                        },
+                        deleteu_ra: {
+                            v_user_id: '',
+                            v_ra_id: '',
+                        },
+
                     };
                 },
                 methods: {
@@ -1009,6 +1037,14 @@
                         if (row.r_sex == 0)
                             return '男性'
                         else if (row.r_sex == 1)
+                            return '女性'
+                        else
+                            return '男女不限'
+                    },
+                    user_sexFormatter(row, colum) {
+                        if (row.user_sex == 0)
+                            return '男性'
+                        else if (row.user_sex == 1)
                             return '女性'
                         else
                             return '男女不限'
@@ -1063,6 +1099,10 @@
                         this.u_ra.v_user_id = row.user_id;
                         addURa();
                     },
+                    handleClick6(row) {
+                        app.deleteu_ra.v_user_id = row.user_id;
+                        deleteVolunteer();
+                    },
                     open(row) {
                         this.$alert(row.r_detial);
                     },
@@ -1075,7 +1115,8 @@
                     }
                     ,
                     handleChange(val) {
-                        console.log(val);
+                        app.deleteu_ra.v_ra_id = val;
+                        getVolunteersByRaId(val);
                     }
                     ,
                     putDrag() {

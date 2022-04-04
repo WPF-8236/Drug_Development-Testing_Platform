@@ -3,6 +3,11 @@
     color: #333;
     text-align: center;
     line-height: 60px;
+    font-size: 30px;
+}
+
+.el-footer {
+    font-size: 20px;
 }
 
 .el-aside {
@@ -16,7 +21,6 @@
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
-    /*line-height: 845px;*/
     height: 960px;
 }
 
@@ -24,9 +28,6 @@ body > .el-container {
     margin-bottom: 40px;
 }
 
-#header {
-    font-size: 28px;
-}
 
 .btn-s {
     width: 90px;
@@ -66,7 +67,7 @@ body > .el-container {
     position: absolute;
     top: 50%;
     right: 0;
-    left: 5px;
+    left: 0px;
     transform: translateY(-50%);
     z-index: 9;
 }
@@ -86,36 +87,104 @@ body > .el-container {
 
 .btn-s#btn-6 {
     position: fixed;
-    top: 0;
+    top: 0px;
     left: 1790px;
 }
 
-#updateResearcher {
-    width: 70%;
-    margin-right: auto;
-    margin-left: auto;
+.btn-s#btn-7 {
+    width: 180px;
+    position: fixed;
+    top: 0px;
+    left: 1500px;
 }
 
-.param {
-    display: none;
+.btn {
+    width: 300px;
+    height: 60px;
+    display: inline-block;
+    position: relative;
+    top: 20%;
+    margin: 16px;
+    overflow: hidden;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+
 }
 
-#researcherList {
-    margin-left: 30px;
+.btn:before {
+    content: "";
+    height: 110%;
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    background-image: url("../img/index_bg.jfif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 50%;
 }
 
-#addADrag {
-    width: 70%;
-    margin-right: auto;
-    margin-left: auto;
+.btn span {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 9;
 }
 
-#addARecruit {
-    width: 70%;
-    margin-right: auto;
-    margin-left: auto;
+.btn:before {
+    transition: all 0.3s ease;
 }
 
+.btn:hover:before {
+    -webkit-filter: blur(8px);
+    filter: blur(8px);
+}
+
+.btn#btn {
+    position: fixed;
+    top: -15px;
+    left: 0px;
+}
+
+.el-tabs__item {
+    height: 40px;
+    line-height: 40px;
+    width: 150px;
+    font-size: 16px;
+}
+
+.el-tab-pane {
+    min-height: 750px;
+}
+
+.clear {
+    clear: both;
+}
+.el-tabs__nav-next, .el-tabs__nav-prev{
+    padding-top: 15px;
+}
+
+.el-select {
+    width: 300px;
+}
+
+#d_find .input-with-select {
+    width: 800px;
+}
+
+#d_find .el-select {
+    width: 180px;
+}
+
+#formTab{
+    margin-top: 10px;
+}
 
 .el-table .hidden-row {
     display: none;
@@ -133,13 +202,6 @@ body > .el-container {
     background: #F56C6C;
 }
 
-#updateRrecruit {
-    width: 80%;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.el-table__empty-block {
-    max-height: 200px;
-    border: none;
+.param{
+    display: none;
 }

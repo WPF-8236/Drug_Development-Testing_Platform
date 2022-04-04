@@ -134,4 +134,19 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	public int addURa(URa uRa) {
 		return uRaDao.insertAURa(uRa);
 	}
+
+	@Override
+	public List<Volunteer> getVolunteersByRaId(String v_ra_id) {
+		return volunteerDao.selectVolunteerByRaId(v_ra_id);
+	}
+
+	@Override
+	public int deleteVolunteer(URa uRa) {
+		return volunteerDao.deleteVolunteer(uRa);
+	}
+
+	@Override
+	public List<Drag> getDragListWithApprove(String e_id) {
+		return dragDao.selectDragWithApprove(e_id);
+	}
 }

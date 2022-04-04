@@ -4,14 +4,14 @@ public class Volunteer {
 	private String user_id;
 	private String user_name;
 	private String user_age;
-	private String user_sex;
+	private int user_sex;
 	private String rl_id;
 	private String rl_title;
 
 	public Volunteer() {
 	}
 
-	public Volunteer(String user_id, String user_name, String user_age, String user_sex, String rl_id, String rl_title) {
+	public Volunteer(String user_id, String user_name, String user_age, int user_sex, String rl_id, String rl_title) {
 		this.user_id = user_id;
 		this.user_name = user_name;
 		this.user_age = user_age;
@@ -44,11 +44,11 @@ public class Volunteer {
 		this.user_age = user_age;
 	}
 
-	public String getUser_sex() {
+	public int getUser_sex() {
 		return user_sex;
 	}
 
-	public void setUser_sex(String user_sex) {
+	public void setUser_sex(int user_sex) {
 		this.user_sex = user_sex;
 	}
 

@@ -42,6 +42,13 @@
         where d_e_id = #{d_e_id}
     </select>
 
+    <select id="selectDragWithApprove" resultType="Drag">
+        select *
+        from ddtp_drag
+        where d_e_id = #{d_e_id}
+          and d_approve = 1
+    </select>
+
     <select id="selectAllDrags" resultType="Drag">
         select *
         from ddtp_drag

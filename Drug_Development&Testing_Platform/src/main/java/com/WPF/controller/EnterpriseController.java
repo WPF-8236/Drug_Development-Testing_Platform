@@ -103,6 +103,19 @@ public class EnterpriseController {
 		return researchers;
 	}
 
+	@RequestMapping("/getDragListWithApprove")
+	@ResponseBody
+	public List<Drag> getDragListWithApprove(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<Drag> drags = new ArrayList<>();
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("e_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String e_id = mapper.readValue(json, String.class);
+		drags = enterpriseService.getDragListWithApprove(e_id);
+		return drags;
+	}
+
 	@RequestMapping("/getDragList")
 	@ResponseBody
 	public List<Drag> getDragList(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -195,6 +208,7 @@ public class EnterpriseController {
 		String json = request.getParameter("u_ra");
 		ObjectMapper mapper = new ObjectMapper();
 		URa uRa = mapper.readValue(json, URa.class);
+		System.out.println(uRa);
 		int num = 0;
 		num = enterpriseService.addURa(uRa);
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -208,6 +222,43 @@ public class EnterpriseController {
 			printWriter.close();
 		}
 	}
+
+	@RequestMapping("/deleteVolunteer")
+	public void deleteVolunteer(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("u_ra");
+		ObjectMapper mapper = new ObjectMapper();
+		URa uRa = mapper.readValue(json, URa.class);
+		System.out.println(uRa);
+		int num = 0;
+		num = enterpriseService.deleteVolunteer(uRa);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("修改成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("修改失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
+	@RequestMapping("/getVolunteersByRaId")
+	@ResponseBody
+	public List<Volunteer> getVolunteersByRaId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<Volunteer> volunteers = new ArrayList<>();
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("v_ra_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String v_ra_id = mapper.readValue(json, String.class);
+		volunteers = enterpriseService.getVolunteersByRaId(v_ra_id);
+		return volunteers;
+	}
+
 
 	@RequestMapping("/deleteResearcher")
 	public void deleteResearcher(HttpServletResponse response, HttpServletRequest request) throws Exception {

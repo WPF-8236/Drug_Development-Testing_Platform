@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.WPF.dao.CRFDao">
+    <insert id="submitDC">
+        insert into ddtp_d_c(d_id, c_id, c_user_id, c_ra_id, c_date)
+        VALUES (#{d_id}, #{c_id}, #{c_user_id}, #{c_ra_id}, #{c_date})
+    </insert>
+    <insert id="submitBloodRoutine">
+        insert into ddtp_crf_blood_routine(c_id, c_user_id, c_ra_id, c_date_one, c_one_Hb, c_one_Hb_n, c_one_RBC,
+                                           c_one_RBC_n, c_one_PLT, c_one_PLT_n, c_one_WBC, c_one_WBC_n, c_one_NEU,
+                                           c_one_NEU_n, c_one_LYM, c_one_LYM_n, c_date_two, c_two_Hb, c_two_Hb_n,
+                                           c_two_RBC, c_two_RBC_n, c_two_PLT, c_two_PLT_n, c_two_WBC, c_two_WBC_n,
+                                           c_two_NEU, c_two_NEU_n, c_two_LYM, c_two_LYM_n)
+        VALUES (#{c_id}, #{c_user_id}, #{c_ra_id}, #{c_date_one}, #{c_one_Hb}, #{c_one_Hb_n}, #{c_one_RBC},
+                #{c_one_RBC_n}, #{c_one_PLT}, #{c_one_PLT_n}, #{c_one_WBC}, #{c_one_WBC_n}, #{c_one_NEU},
+                #{c_one_NEU_n}, #{c_one_LYM}, #{c_one_LYM_n}, #{c_date_two}, #{c_two_Hb}, #{c_two_Hb_n}, #{c_two_RBC},
+                #{c_two_RBC_n},
+                #{c_two_PLT}, #{c_two_PLT_n}, #{c_two_WBC}, #{c_two_WBC_n}, #{c_two_NEU}, #{c_two_NEU_n}, #{c_two_LYM},
+                #{c_two_LYM_n})
+    </insert>
+    <insert id="submitUrineRoutine">
+        insert into ddtp_crf_urine_routine(c_id, c_user_id, c_ra_id, c_date, c_up, c_up_n, c_RBC, c_RBC_n, c_WBC,
+                                           c_WBC_n, c_up24, c_up24_n)
+        VALUES (#{c_id}, #{c_user_id}, #{c_ra_id}, #{c_date}, #{c_up}, #{c_up_n}, #{c_RBC}, #{c_RBC_n}, #{c_WBC},
+                #{c_WBC_n}, #{c_up24}, #{c_up24_n})
+    </insert>
+    <insert id="submitBowelRoutine">
+        insert into ddtp_crf_bowel_routine(c_id, c_user_id, c_ra_id, c_date, c_ob, c_ob_n)
+        VALUES (#{c_id}, #{c_user_id}, #{c_ra_id}, #{c_date}, #{c_ob}, #{c_ob_n})
+    </insert>
+    <insert id="submitBloodChemistry">
+        insert into ddtp_crf_blood_chemistry (c_id, c_user_id, c_ra_id, c_date, c_TBIL, c_TBIL_n, c_DBIL, c_DBIL_n,
+                                              c_IBIL, c_IBIL_n, c_ALT, c_ALT_n, c_AST, c_AST_n, c_AKP, c_AKP_n, c_GT,
+                                              c_GT_n, c_TP, c_TP_n, c_ALB, c_ALB_n, c_BUN, c_BUN_n, c_Cr, c_Cr_n, c_GLU,
+                                              c_GLU_n, c_K, c_K_n, c_Na, c_Na_n, c_Cl, c_Cl_n, c_Ca, c_Ca_n, c_Mg,
+                                              c_Mg_n)
+        values (#{c_id}, #{c_user_id}, #{c_ra_id}, #{c_date}, #{c_TBIL}, #{c_TBIL_n}, #{c_DBIL}, #{c_DBIL_n}, #{c_IBIL},
+                #{c_IBIL_n}, #{c_ALT}, #{c_ALT_n}, #{c_AST}, #{c_AST_n}, #{c_AKP}, #{c_AKP_n}, #{c_GT}, #{c_GT_n},
+                #{c_TP}, #{c_TP_n}, #{c_ALB},
+                #{c_ALB_n}, #{c_BUN}, #{c_BUN_n}, #{c_Cr}, #{c_Cr_n}, #{c_GLU}, #{c_GLU_n}, #{c_K}, #{c_K_n}, #{c_Na},
+                #{c_Na_n}, #{c_Cl}, #{c_Cl_n}, #{c_Ca}, #{c_Ca_n}, #{c_Mg}, #{c_Mg_n});
+    </insert>
+    <insert id="submitECOG">
+        insert into ddtp_crf_ecog(c_id, c_user_id, c_ra_id, c_date, c_filed1, c_filed2, c_filed3, c_filed4, c_filed5,
+                                  c_filed6, c_filed7, c_filed8, c_filed9, c_filed10, c_filed11, c_filed12, c_filed13,
+                                  c_filed14, c_filed15, c_filed16, c_filed17)
+        VALUES (#{c_id}, #{c_user_id}, #{c_ra_id}, #{c_date}, #{c_filed1}, #{c_filed2}, #{c_filed3}, #{c_filed4},
+                #{c_filed5}, #{c_filed6}, #{c_filed7}, #{c_filed8}, #{c_filed9}, #{c_filed10}, #{c_filed11},
+                #{c_filed12},
+                #{c_filed13}, #{c_filed14}, #{c_filed15}, #{c_filed16}, #{c_filed17})
+    </insert>
+    <insert id="submitVitalSigns">
+        insert into ddtp_crf_vital_signs(c_id, c_user_id, c_ra_id, c_date, c_BT, c_HR, c_RR, c_BP)
+        VALUES (#{c_id}, #{c_user_id}, #{c_ra_id}, #{c_date}, #{c_BT}, #{c_HR}, #{c_RR}, #{c_BP})
+    </insert>
+    <insert id="submitPhyExam">
+        insert into ddtp_crf_physical_examination(c_id, c_user_id, c_ra_id, c_date, c_generally, c_SaMM, c_head, c_neck,
+                                                  c_chest, c_abdomen, c_SaE, c_other)
+        VALUES (#{c_id}, #{c_user_id}, #{c_ra_id}, #{c_date}, #{c_generally}, #{c_SaMM}, #{c_head}, #{c_neck},
+                #{c_chest}, #{c_abdomen}, #{c_SaE}, #{c_other})
+    </insert>
+</mapper>

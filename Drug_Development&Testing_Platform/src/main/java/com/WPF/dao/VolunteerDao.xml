@@ -16,4 +16,24 @@
         where e_id = #{e_id}
           and du.user_id not in (select v_user_id from ddtp_u_ra)
     </select>
+
+    <select id="selectVolunteerByRaId" resultType="Volunteer">
+        select du.user_id,
+               du.user_name,
+               du.user_age,
+               du.user_sex,
+               drl.rl_id,
+               drl.rl_title
+        from ddtp_rl_u_e
+                 join ddtp_recruit_list drl on ddtp_rl_u_e.rl_id = drl.rl_id
+                 join ddtp_user du on ddtp_rl_u_e.user_id = du.user_id
+        where du.user_id in (select v_user_id from ddtp_u_ra where v_ra_id = #{v_ra_id})
+    </select>
+
+    <delete id="deleteVolunteer">
+        delete
+        from ddtp_u_ra
+        where v_ra_id = #{v_ra_id}
+          and v_user_id = #{v_user_id}
+    </delete>
 </mapper>

@@ -40,4 +40,10 @@ public interface EnterpriseService {
 	List<Volunteer> getVolunteers(String e_id);
 
 	int addURa(URa uRa);
+
+	List<Volunteer> getVolunteersByRaId(String v_ra_id);
+
+	int deleteVolunteer(URa uRa);
+
+	List<Drag> getDragListWithApprove(String e_id);
 }
