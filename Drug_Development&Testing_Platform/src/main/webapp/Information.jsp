@@ -21,7 +21,25 @@
         <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="lib-master/index.js" type="text/javascript" charset="utf-8"></script>
         <script type="text/javascript">
+            function getCRFList() {
+                $.ajax({
+                    url: "researcher/getCRFList",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"user_id": JSON.stringify(document.getElementById("user_id").textContent)},
+                    success: function (reps) {
+                        console.log(reps)
+                        app.CRFList = reps;
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
 
+            function getPDF() {
+                window.location.href='jasper/exportPdf?type=pdf'
+            }
         </script>
     </head>
     <body>
@@ -66,17 +84,13 @@
                                         <i class="el-icon-setting"></i>
                                         <span slot="title">志愿者身体情况反馈</span>
                                     </el-menu-item>
-                                    <el-menu-item index="5">
-                                        <i class="el-icon-setting"></i>
-                                        <span slot="title">受试药物报告管理</span>
-                                    </el-menu-item>
                                 </el-menu>
                             </el-col>
                         </el-row>
                     </el-aside>
                     <el-container>
                         <el-main>
-                            <div id="body-information" v-if="selectid==1">
+                            <div id="body-information" v-show="selectid==1">
                                 <div id="body-information-header">
                                     <%
                                         if (user.getImg() == null) {
@@ -304,7 +318,7 @@
                                     </el-collapse>
                                 </div>
                             </div>
-                            <div v-if="selectid==2" id="selectid-2">
+                            <div v-show="selectid==2" id="selectid-2">
                                 <div v-for="rl in recruitList">
                                     <el-descriptions>
                                         <el-descriptions-item label="申请项目名">{{rl.rl_title}}</el-descriptions-item>
@@ -318,6 +332,40 @@
                                         </el-descriptions-item>
                                     </el-descriptions>
                                 </div>
+                            </div>
+                            <div v-show="selectid==3" id="selectid-3">
+                                <el-table
+                                        :data="CRFList"
+                                        style="width: 820px">
+                                    <el-table-column
+                                            prop="c_id"
+                                            label="报告编号"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="user_name"
+                                            label="志愿者姓名"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="ra_name"
+                                            label="研究员姓名"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="c_date"
+                                            label="报告提交时间"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            label="操作"
+                                            width="100">
+                                        <template slot-scope="scope">
+                                            <el-button @click="handleClick(scope.row)" type="text" size="small">查看
+                                            </el-button>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
                             </div>
                         </el-main>
                         <el-footer>
@@ -405,6 +453,7 @@
                         }
                     };
                     return {
+                        CRFList: [],
                         mainTableKey: 1,
                         recruitList: [],
                         selectid: '1',
@@ -474,6 +523,9 @@
                     onSubmit() {
                         console.log('submit!');
                     },
+                    handleClick(row) {
+                        getPDF();
+                    },
 
                 },
                 filters: {
@@ -484,7 +536,8 @@
                             return '女'
                         else
                             return '男女不限'
-                    },
+                    }
+                    ,
                     isvFilter(value) {
                         if (value === 0)
                             return '审核中'
@@ -492,16 +545,18 @@
                             return '通过'
                         else
                             return '未通过'
-                    },
+                    }
+                    ,
                     typeFilter(value) {
                         if (value === 0)
                             return '健康志愿者'
                         else
                             return '患者志愿者'
                     }
-                },
+                }
+                ,
                 created: function () {
-
+                    getCRFList();
                 }
             })
         </script>

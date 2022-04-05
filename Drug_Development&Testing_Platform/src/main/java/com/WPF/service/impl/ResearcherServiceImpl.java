@@ -44,4 +44,9 @@ public class ResearcherServiceImpl implements ResearcherService {
 	public int submitCRF(DC dc, BloodRoutine bloodRoutine, UrineRoutine urineRoutine, BowelRoutine bowelRoutine, BloodChemistry bloodChemistry, ECOG ecog, VitalSigns vitalSigns, PhyExam phyExam) {
 		return crfDao.submitDC(dc) * crfDao.submitBloodRoutine(bloodRoutine) * crfDao.submitUrineRoutine(urineRoutine) * crfDao.submitBowelRoutine(bowelRoutine) * crfDao.submitBloodChemistry(bloodChemistry) * crfDao.submitECOG(ecog) * crfDao.submitVitalSigns(vitalSigns) * crfDao.submitPhyExam(phyExam);
 	}
+
+	@Override
+	public List<CRFReport> getCRFList(String user_id) {
+		return crfDao.selectCRFReportByUserId(user_id);
+	}
 }

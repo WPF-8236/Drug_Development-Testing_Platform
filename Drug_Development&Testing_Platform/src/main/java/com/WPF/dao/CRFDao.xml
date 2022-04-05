@@ -61,4 +61,12 @@
         VALUES (#{c_id}, #{c_user_id}, #{c_ra_id}, #{c_date}, #{c_generally}, #{c_SaMM}, #{c_head}, #{c_neck},
                 #{c_chest}, #{c_abdomen}, #{c_SaE}, #{c_other})
     </insert>
+
+    <select id="selectCRFReportByUserId" resultType="CRFReport">
+        select ddtp_d_c.*, ddtp_user.user_name, ddtp_researcher.ra_name
+        from ddtp_d_c
+                 join ddtp_user on ddtp_d_c.c_user_id = ddtp_user.user_id
+                 join ddtp_researcher on ddtp_researcher.ra_id = ddtp_d_c.c_ra_id
+        where ddtp_user.user_id = #{user_id}
+    </select>
 </mapper>

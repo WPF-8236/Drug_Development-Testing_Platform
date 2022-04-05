@@ -62,6 +62,19 @@ public class ResearcherController {
 		return volunteers;
 	}
 
+	@RequestMapping("/getCRFList")
+	@ResponseBody
+	public List<CRFReport> getCRFList(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		List<CRFReport> crfReports = null;
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("user_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String user_id = mapper.readValue(json, String.class);
+		crfReports = researcherService.getCRFList(user_id);
+		return crfReports;
+	}
+
 	@RequestMapping("/submitCRF")
 	public void submitCRF(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -87,12 +100,26 @@ public class ResearcherController {
 		PhyExam phyExam = mapper.readValue(json8, PhyExam.class);
 		dc.setC_id(date);
 		bloodRoutine.setC_id(date);
+		bloodRoutine.setC_user_id(dc.getC_user_id());
+		bloodRoutine.setC_ra_id(dc.getC_ra_id());
 		urineRoutine.setC_id(date);
+		urineRoutine.setC_user_id(dc.getC_user_id());
+		urineRoutine.setC_ra_id(dc.getC_ra_id());
 		bowelRoutine.setC_id(date);
+		bowelRoutine.setC_user_id(dc.getC_user_id());
+		bowelRoutine.setC_ra_id(dc.getC_ra_id());
 		bloodChemistry.setC_id(date);
+		bloodChemistry.setC_user_id(dc.getC_user_id());
+		bloodChemistry.setC_ra_id(dc.getC_ra_id());
 		ecog.setC_id(date);
+		ecog.setC_user_id(dc.getC_user_id());
+		ecog.setC_ra_id(dc.getC_ra_id());
 		vitalSigns.setC_id(date);
+		vitalSigns.setC_user_id(dc.getC_user_id());
+		vitalSigns.setC_ra_id(dc.getC_ra_id());
 		phyExam.setC_id(date);
+		phyExam.setC_user_id(dc.getC_user_id());
+		phyExam.setC_ra_id(dc.getC_ra_id());
 		int num = researcherService.submitCRF(dc, bloodRoutine, urineRoutine, bowelRoutine, bloodChemistry, ecog, vitalSigns, phyExam);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {

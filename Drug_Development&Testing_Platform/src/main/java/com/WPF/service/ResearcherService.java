@@ -12,4 +12,6 @@ public interface ResearcherService {
 	List<Volunteer> getVolunteers(String v_ra_id);
 
 	int submitCRF(DC dc, BloodRoutine bloodRoutine, UrineRoutine urineRoutine, BowelRoutine bowelRoutine, BloodChemistry bloodChemistry, ECOG ecog, VitalSigns vitalSigns, PhyExam phyExam);
+
+	List<CRFReport> getCRFList(String user_id);
 }
