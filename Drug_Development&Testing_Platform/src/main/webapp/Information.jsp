@@ -37,8 +37,8 @@
                 })
             }
 
-            function getPDF() {
-                window.location.href='jasper/exportPdf?type=pdf'
+            function getPDF(c_id) {
+                window.location.href = "jasper/exportPdf?c_id=" + c_id+"&type=pdf"
             }
         </script>
     </head>
@@ -524,7 +524,7 @@
                         console.log('submit!');
                     },
                     handleClick(row) {
-                        getPDF();
+                        getPDF(row.c_id);
                     },
 
                 },
