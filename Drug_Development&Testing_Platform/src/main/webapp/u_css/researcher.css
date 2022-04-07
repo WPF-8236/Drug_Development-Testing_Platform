@@ -166,7 +166,8 @@ body > .el-container {
 .clear {
     clear: both;
 }
-.el-tabs__nav-next, .el-tabs__nav-prev{
+
+.el-tabs__nav-next, .el-tabs__nav-prev {
     padding-top: 15px;
 }
 
@@ -182,7 +183,7 @@ body > .el-container {
     width: 180px;
 }
 
-#formTab{
+#formTab {
     margin-top: 10px;
 }
 
@@ -202,6 +203,12 @@ body > .el-container {
     background: #F56C6C;
 }
 
-.param{
+.param {
     display: none;
+}
+
+#feedback {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }

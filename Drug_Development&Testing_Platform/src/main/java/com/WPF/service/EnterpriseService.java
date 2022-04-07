@@ -46,4 +46,6 @@ public interface EnterpriseService {
 	int deleteVolunteer(URa uRa);
 
 	List<Drag> getDragListWithApprove(String e_id);
+
+	int addProgress(Progress progress);
 }

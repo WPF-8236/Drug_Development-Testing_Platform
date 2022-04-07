@@ -29,6 +29,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	private VolunteerDao volunteerDao;
 	@Resource
 	private URaDao uRaDao;
+	@Resource
+	private ProgressDao progressDao;
 
 	@Override
 	@Transactional
@@ -148,5 +150,10 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	@Override
 	public List<Drag> getDragListWithApprove(String e_id) {
 		return dragDao.selectDragWithApprove(e_id);
+	}
+
+	@Override
+	public int addProgress(Progress progress) {
+		return progressDao.insertProgress(progress);
 	}
 }

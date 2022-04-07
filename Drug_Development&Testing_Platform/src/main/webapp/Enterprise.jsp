@@ -261,6 +261,23 @@
                     }
                 })
             }
+
+            function onSubmitProgress() {
+                console.log(app.addProgress)
+                $.ajax({
+                    url: "enterprise/onSubmitProgress",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"addProgress": JSON.stringify(this.app.addProgress)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Enterprise.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
         </script>
     </head>
     <body>
@@ -311,7 +328,7 @@
                     </el-aside>
                     <el-container>
                         <el-main>
-                            <div v-show="index==1">
+                            <div v-if="index==1">
                                 <div id="addResearcher">
                                     <el-form ref="addResearcher" :model="addResearcher" label-width="100px">
                                         <el-row :gutter="30">
@@ -431,7 +448,7 @@
                                     </el-drawer>
                                 </div>
                             </div>
-                            <div v-show="index==2">
+                            <div v-if="index==2">
                                 <div id="addDrag">
                                     <el-button type="primary" onclick="changeDrawer()">添加药物申请</el-button>
                                 </div>
@@ -475,7 +492,7 @@
                                     </div>
                                 </el-drawer>
                                 <el-divider></el-divider>
-                                <div id="DragList">
+                                <div id="DragListDiv">
                                     <el-table
                                             :data="DragList"
                                             border
@@ -532,7 +549,7 @@
                                 </div>
 
                             </div>
-                            <div v-show="index==3">
+                            <div v-if="index==3">
                                 <el-collapse v-model="activeNames" @change="handleChange" accordion>
                                     <el-collapse-item title="未分配的志愿者" name="1">
                                         <div id="VolunteerList">
@@ -633,7 +650,67 @@
                                     </div>
                                 </el-collapse>
                             </div>
-                            <div v-show="index==5">
+                            <div v-if="index==4">
+                                <el-collapse v-model="activeName" @change="handleChange2" accordion>
+                                    <div id="progressListForDrag" v-for="a in DragList">
+                                        <el-collapse-item :title="a.d_trade_name" :name="a.d_id">
+                                            <el-timeline :reverse="false">
+                                                <div id="addProgress">
+                                                    <el-form ref="addProgress" :model="addProgress" label-width="100px">
+                                                        <el-row :gutter="24">
+                                                            <el-col :span="6">
+                                                                <div class="grid-content bg-purple">
+                                                                    <el-form-item label="更新时间:">
+                                                                        <el-date-picker
+                                                                                v-model="addProgress.dp_data"
+                                                                                type="datetime"
+                                                                                placeholder="选择日期"
+                                                                                value-format="yyyy-MM-dd HH:mm:ss">
+                                                                        </el-date-picker>
+                                                                    </el-form-item>
+                                                                </div>
+                                                            </el-col>
+                                                            <el-col :span="6">
+                                                                <div class="grid-content bg-purple">
+                                                                    <el-form-item label="更新备注:">
+                                                                        <el-input
+                                                                                v-model="addProgress.dp_text"></el-input>
+                                                                    </el-form-item>
+                                                                </div>
+                                                            </el-col>
+                                                            <el-col :span="6">
+                                                                <div class="grid-content bg-purple">
+                                                                    <el-form-item label="更新阶段:">
+                                                                        <el-input
+                                                                                v-model="addProgress.dp_stage"></el-input>
+                                                                    </el-form-item>
+                                                                </div>
+                                                            </el-col>
+                                                            <el-col :span="6">
+                                                                <div class="grid-content bg-purple">
+                                                                    <el-form-item>
+                                                                        <el-button type="primary"
+                                                                                   @click="onSubmitProgress">
+                                                                            添加
+                                                                        </el-button>
+                                                                    </el-form-item>
+                                                                </div>
+                                                            </el-col>
+                                                        </el-row>
+                                                    </el-form>
+                                                </div>
+                                                <el-timeline-item
+                                                        v-for="(Progress, index) in ProgressList"
+                                                        :key="index"
+                                                        :timestamp="Progress.dp_data">
+                                                    {{Progress.dp_text}}
+                                                </el-timeline-item>
+                                            </el-timeline>
+                                        </el-collapse-item>
+                                    </div>
+                                </el-collapse>
+                            </div>
+                            <div v-if="index==5">
                                 <div id="addRecruit">
                                     <el-button type="primary" onclick="changeDrawer1()">添加支援招募申请</el-button>
                                 </div>
@@ -716,7 +793,7 @@
                                     </div>
                                 </el-drawer>
                                 <el-divider></el-divider>
-                                <div id="recruitList">
+                                <div id="recruitListDiv">
                                     <el-table
                                             :data="recruitList"
                                             border
@@ -1023,7 +1100,21 @@
                             v_user_id: '',
                             v_ra_id: '',
                         },
-
+                        ProgressList: [],
+                        addProgress: {
+                            dp_id: '',
+                            dp_d_id: '',
+                            dp_data: '',
+                            dp_text: '',
+                            dp_stage: '',
+                        },
+                        Progress: {
+                            dp_id: '',
+                            dp_d_id: '',
+                            dp_data: '',
+                            dp_text: '',
+                            dp_stage: '',
+                        },
                     };
                 },
                 methods: {
@@ -1117,8 +1208,10 @@
                     handleChange(val) {
                         app.deleteu_ra.v_ra_id = val;
                         getVolunteersByRaId(val);
-                    }
-                    ,
+                    },
+                    handleChange2(val) {
+                        app.addProgress.dp_d_id = val;
+                    },
                     putDrag() {
                         putADrag();
                     }

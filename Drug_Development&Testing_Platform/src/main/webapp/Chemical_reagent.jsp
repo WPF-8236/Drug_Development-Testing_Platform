@@ -98,6 +98,22 @@
             function getPDF(c_id) {
                 window.location.href = "jasper/exportPdf?c_id=" + c_id + "&type=pdf"
             }
+
+            function getFeedBack() {
+                $.ajax({
+                    url: "researcher/getFeedBack",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"ra_id": JSON.stringify(document.getElementById("ra_id").textContent)},
+                    success: function (reps) {
+                        console.log(reps)
+                        app.FeedBackList = reps;
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
         </script>
     </head>
     <body>
@@ -131,6 +147,10 @@
                                     <el-menu-item index="2">
                                         <i class="el-icon-document"></i>
                                         <span slot="title">测试报告查看</span>
+                                    </el-menu-item>
+                                    <el-menu-item index="3">
+                                        <i class="el-icon-document"></i>
+                                        <span slot="title">志愿者试药反馈</span>
                                     </el-menu-item>
                                 </el-menu>
                             </el-col>
@@ -1340,6 +1360,97 @@
                                     </el-table-column>
                                 </el-table>
                             </div>
+                            <div v-show="index==3">
+                                <el-table
+                                        :data="FeedBackList"
+                                        style="width: 1000px">
+                                    <el-table-column
+                                            prop="bf_id"
+                                            label="反馈编号"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="user_name"
+                                            label="志愿者姓名"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="user_age"
+                                            label="志愿者年龄"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="user_sex"
+                                            label="志愿者性别"
+                                            :formatter="sexTypeFormatter"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="bf_date"
+                                            label="报告提交时间"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            label="操作"
+                                            width="100">
+                                        <template slot-scope="scope">
+                                            <el-button @click="handleClick2(scope.row)" type="text" size="small">查看
+                                            </el-button>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                                <el-drawer
+                                        title="身体反馈详情"
+                                        :visible.sync="drawer"
+                                        :direction="direction">
+                                    <div id="feedback">
+                                        <el-descriptions class="margin-top" :column="1" border>
+                                            <el-descriptions-item>
+                                                <template slot="label">
+                                                    <i class="el-icon-user"></i>
+                                                    使用药物多长时间
+                                                </template>
+                                                {{FeedBack.bf_filed1}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item>
+                                                <template slot="label">
+                                                    <i class="el-icon-mobile-phone"></i>
+                                                    使用过程中是否有不良反应
+                                                </template>
+                                                {{FeedBack.bf_filed2|isFilter}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item>
+                                                <template slot="label">
+                                                    <i class="el-icon-location-outline"></i>
+                                                    具体的不良反应有些什么
+                                                </template>
+                                                {{FeedBack.bf_filed3}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item>
+                                                <template slot="label">
+                                                    <i class="el-icon-location-outline"></i>
+                                                    使用后感觉效果如何
+                                                </template>
+                                                {{FeedBack.bf_filed4}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item>
+                                                <template slot="label">
+                                                    <i class="el-icon-location-outline"></i>
+                                                    对药物的一些建议
+                                                </template>
+                                                {{FeedBack.bf_filed5}}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item>
+                                                <template slot="label">
+                                                    <i class="el-icon-location-outline"></i>
+                                                    其他
+                                                </template>
+                                                {{FeedBack.bf_filed6}}
+                                            </el-descriptions-item>
+                                        </el-descriptions>
+                                    </div>
+                                </el-drawer>
+                            </div>
                         </el-main>
                         <el-footer>
                             &copy; 2022 毕业设计 | Design by 201805020527王潘锋
@@ -1353,6 +1464,8 @@
                 el: '#app',
                 data() {
                     return {
+                        drawer: false,
+                        direction: 'rtl',
                         options: [{
                             value: '1',
                             label: '1'
@@ -1518,6 +1631,8 @@
                             c_other: '',
                         },
                         index: '1',
+                        FeedBackList: [],
+                        FeedBack: {},
                     };
                 },
                 filters: {
@@ -1530,6 +1645,12 @@
                         m = date.getMinutes() + ':';
                         s = date.getSeconds();
                         return Y + M + D + h + m + s;
+                    },
+                    isFilter(value) {
+                        if (value === 0)
+                            return '是'
+                        else
+                            return '否'
                     },
                 },
                 methods: {
@@ -1547,11 +1668,22 @@
                     handleClick1(row) {
                         getPDF(row.c_id);
                     },
+                    handleClick2(row) {
+                        app.FeedBack = row
+                        app.drawer = true
+                    },
+                    sexTypeFormatter(row, column) {
+                        if (row.rl_user_sex === 0)
+                            return '男'
+                        else
+                            return '女'
+                    },
                 },
                 created: function () {
                     getDragList();
                     getVolunteers();
                     getCRFList();
+                    getFeedBack();
                 },
             })
         </script>

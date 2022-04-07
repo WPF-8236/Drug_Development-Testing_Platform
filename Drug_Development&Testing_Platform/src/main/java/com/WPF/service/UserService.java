@@ -1,5 +1,6 @@
 package com.WPF.service;
 
+import com.WPF.domain.FeedBack;
 import com.WPF.domain.User;
 import com.WPF.domain.UserGrade;
 
@@ -21,4 +22,5 @@ public interface UserService {
 	int update(User user);
 
 
+	int addFeedBack(FeedBack feedBack);
 }

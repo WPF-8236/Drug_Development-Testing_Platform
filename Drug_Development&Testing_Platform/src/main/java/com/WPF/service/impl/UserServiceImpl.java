@@ -1,7 +1,9 @@
 package com.WPF.service.impl;
 
+import com.WPF.dao.FeedBackDao;
 import com.WPF.dao.UserDao;
 import com.WPF.dao.UserGradeDao;
+import com.WPF.domain.FeedBack;
 import com.WPF.domain.User;
 import com.WPF.domain.UserGrade;
 import com.WPF.service.UserService;
@@ -17,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
 	@Resource
 	private UserGradeDao userGradeDao;
+
+	@Resource
+	private FeedBackDao feedBackDao;
 
 	@Override
 	public User getUser(String user_id) {
@@ -65,6 +70,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int update(User user) {
 		return userDao.updateUser(user);
+	}
+
+	@Override
+	public int addFeedBack(FeedBack feedBack) {
+		return feedBackDao.insertFeedBack(feedBack);
 	}
 
 }

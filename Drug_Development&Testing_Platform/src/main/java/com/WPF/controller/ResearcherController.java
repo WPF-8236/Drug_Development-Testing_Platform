@@ -88,6 +88,19 @@ public class ResearcherController {
 		return crfReports;
 	}
 
+	@RequestMapping("/getFeedBack")
+	@ResponseBody
+	public List<FeedBack> getFeedBack(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		List<FeedBack> feedBacks = null;
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("ra_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String ra_id = mapper.readValue(json, String.class);
+		feedBacks = researcherService.getFeedBackByRaId(ra_id);
+		return feedBacks;
+	}
+
 
 	@RequestMapping("/submitCRF")
 	public void submitCRF(HttpServletResponse response, HttpServletRequest request) throws Exception {

@@ -63,6 +63,19 @@
                 app.feedback.user_age = document.getElementById("user_age").textContent;
                 app.feedback.user_sex = document.getElementById("user_sex").textContent;
                 console.log(app.feedback)
+                $.ajax({
+                    url: "user/submitFeedBack",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"feedback": JSON.stringify(this.app.feedback)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Information.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
 
             }
         </script>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.WPF.dao.ProgressDao">
+    <insert id="insertProgress">
+        insert into ddtp_drag_progress(dp_id, dp_d_id, dp_data, dp_text, dp_stage)
+        VALUES (#{dp_id}, #{dp_d_id}, #{dp_data}, #{dp_text}, #{dp_stage})
+    </insert>
+</mapper>

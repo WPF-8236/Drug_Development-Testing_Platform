@@ -16,4 +16,6 @@ public interface ResearcherService {
 	List<CRFReport> getCRFListByUserId(String user_id);
 
 	List<CRFReport> getCRFListByRaId(String ra_id);
+
+	List<FeedBack> getFeedBackByRaId(String ra_id);
 }

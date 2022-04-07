@@ -1,9 +1,6 @@
 package com.WPF.controller;
 
-import com.WPF.domain.Drag;
-import com.WPF.domain.User;
-import com.WPF.domain.UserGrade;
-import com.WPF.domain.Volunteer;
+import com.WPF.domain.*;
 import com.WPF.service.DragService;
 import com.WPF.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -233,5 +230,30 @@ public class UserController {
 		String user_id = mapper.readValue(json, String.class);
 		drags = dragService.getDragListByUserId(user_id);
 		return drags;
+	}
+
+	@RequestMapping("/submitFeedBack")
+	public void submitFeedBack(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("feedback");
+		ObjectMapper mapper = new ObjectMapper();
+		FeedBack feedBack = mapper.readValue(json, FeedBack.class);
+		feedBack.setBf_id(new java.util.Date().toLocaleString());
+		feedBack.setBf_date(new java.util.Date().toLocaleString());
+		int num = 0;
+		num = userService.addFeedBack(feedBack);
+		System.out.println(num);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("添加成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("添加失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
 	}
 }

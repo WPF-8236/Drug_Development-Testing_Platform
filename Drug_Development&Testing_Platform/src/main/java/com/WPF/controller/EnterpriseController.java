@@ -246,6 +246,29 @@ public class EnterpriseController {
 		}
 	}
 
+	@RequestMapping("/onSubmitProgress")
+	public void onSubmitProgress(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("addProgress");
+		ObjectMapper mapper = new ObjectMapper();
+		Progress progress = mapper.readValue(json, Progress.class);
+		progress.setDp_id(new Date().toLocaleString());
+		int num = 0;
+		num = enterpriseService.addProgress(progress);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("添加成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("添加失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
 	@RequestMapping("/getVolunteersByRaId")
 	@ResponseBody
 	public List<Volunteer> getVolunteersByRaId(HttpServletRequest request, HttpServletResponse response) throws Exception {

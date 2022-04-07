@@ -1,9 +1,6 @@
 package com.WPF.service.impl;
 
-import com.WPF.dao.CRFDao;
-import com.WPF.dao.PhysicalExamDao;
-import com.WPF.dao.ResearcherDao;
-import com.WPF.dao.VolunteerDao;
+import com.WPF.dao.*;
 import com.WPF.domain.*;
 import com.WPF.service.ResearcherService;
 import org.springframework.stereotype.Service;
@@ -24,6 +21,9 @@ public class ResearcherServiceImpl implements ResearcherService {
 
 	@Resource
 	private CRFDao crfDao;
+
+	@Resource
+	private FeedBackDao feedBackDao;
 
 	@Override
 	public Researcher getResearcher(String ra_id) {
@@ -53,5 +53,10 @@ public class ResearcherServiceImpl implements ResearcherService {
 	@Override
 	public List<CRFReport> getCRFListByRaId(String ra_id) {
 		return crfDao.selectCRFListByRaId(ra_id);
+	}
+
+	@Override
+	public List<FeedBack> getFeedBackByRaId(String ra_id) {
+		return feedBackDao.getFeedBackByRaId(ra_id);
 	}
 }
