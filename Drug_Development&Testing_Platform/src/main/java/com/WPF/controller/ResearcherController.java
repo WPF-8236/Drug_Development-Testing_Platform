@@ -62,18 +62,32 @@ public class ResearcherController {
 		return volunteers;
 	}
 
-	@RequestMapping("/getCRFList")
+	@RequestMapping("/getCRFListByUserId")
 	@ResponseBody
-	public List<CRFReport> getCRFList(HttpServletResponse response, HttpServletRequest request) throws Exception {
+	public List<CRFReport> getCRFListByUserId(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		List<CRFReport> crfReports = null;
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		String json = request.getParameter("user_id");
 		ObjectMapper mapper = new ObjectMapper();
 		String user_id = mapper.readValue(json, String.class);
-		crfReports = researcherService.getCRFList(user_id);
+		crfReports = researcherService.getCRFListByUserId(user_id);
 		return crfReports;
 	}
+
+	@RequestMapping("/getCRFListByRaId")
+	@ResponseBody
+	public List<CRFReport> getCRFListByRaId(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		List<CRFReport> crfReports = null;
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("ra_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String ra_id = mapper.readValue(json, String.class);
+		crfReports = researcherService.getCRFListByRaId(ra_id);
+		return crfReports;
+	}
+
 
 	@RequestMapping("/submitCRF")
 	public void submitCRF(HttpServletResponse response, HttpServletRequest request) throws Exception {

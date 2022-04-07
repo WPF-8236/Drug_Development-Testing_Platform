@@ -144,8 +144,6 @@ a:active {
 }
 
 
-
-
 .btn-s {
     width: 90px;
     height: 36px;
@@ -208,9 +206,16 @@ a:active {
     left: 1790px;
 }
 
-#selectid-2{
+#selectid-2 {
     width: 800px;
 }
-.param{
+
+.param {
     display: none;
+}
+
+#feedback {
+    width: 800px;
+    margin-right: auto;
+    margin-left: auto;
 }

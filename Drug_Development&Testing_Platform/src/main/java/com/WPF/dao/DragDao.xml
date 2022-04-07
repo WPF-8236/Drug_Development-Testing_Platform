@@ -21,6 +21,13 @@
         where d_approval_number like #{d_approval_number}
     </select>
 
+    <select id="selectDragByUserId" resultType="Drag">
+        select *
+        from ddtp_drag
+                 join ddtp_d_c ddc on ddtp_drag.d_id = ddc.d_id
+        where ddc.c_user_id = #{user_id}
+    </select>
+
     <insert id="insertADrag">
         insert into ddtp_drag(d_id, d_e_id, d_trade_name, d_generic_name, d_specification, d_manufacturer,
                               d_batch_number, d_approval_number, d_attending, d_taboo, d_adverse_reactions,

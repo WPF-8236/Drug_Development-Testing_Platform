@@ -78,6 +78,26 @@
                     }
                 })
             }
+
+            function getCRFList() {
+                $.ajax({
+                    url: "researcher/getCRFListByRaId",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"ra_id": JSON.stringify(document.getElementById("ra_id").textContent)},
+                    success: function (reps) {
+                        console.log(reps)
+                        app.CRFList = reps;
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function getPDF(c_id) {
+                window.location.href = "jasper/exportPdf?c_id=" + c_id + "&type=pdf"
+            }
         </script>
     </head>
     <body>
@@ -110,15 +130,7 @@
                                     </el-menu-item>
                                     <el-menu-item index="2">
                                         <i class="el-icon-document"></i>
-                                        <span slot="title">药物申请管理</span>
-                                    </el-menu-item>
-                                    <el-menu-item index="3">
-                                        <i class="el-icon-setting"></i>
-                                        <span slot="title">志愿者申请管理</span>
-                                    </el-menu-item>
-                                    <el-menu-item index="4">
-                                        <i class="el-icon-setting"></i>
-                                        <span slot="title">公开平台信息管理</span>
+                                        <span slot="title">测试报告查看</span>
                                     </el-menu-item>
                                 </el-menu>
                             </el-col>
@@ -1295,8 +1307,38 @@
                                 </div>
                             </div>
                             <div v-show="index==2">
-                            </div>
-                            <div v-show="index==3">
+                                <el-table
+                                        :data="CRFList"
+                                        style="width: 820px">
+                                    <el-table-column
+                                            prop="c_id"
+                                            label="报告编号"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="user_name"
+                                            label="志愿者姓名"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="ra_name"
+                                            label="研究员姓名"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="c_date"
+                                            label="报告提交时间"
+                                            width="180">
+                                    </el-table-column>
+                                    <el-table-column
+                                            label="操作"
+                                            width="100">
+                                        <template slot-scope="scope">
+                                            <el-button @click="handleClick1(scope.row)" type="text" size="small">查看
+                                            </el-button>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
                             </div>
                         </el-main>
                         <el-footer>
@@ -1334,6 +1376,7 @@
                             c_ra_id: '',
                             c_date: '',
                         },
+                        CRFList: [],
                         crf_blood_routine: {
                             c_id: '',
                             c_user_id: '',
@@ -1500,11 +1543,15 @@
                         console.log(key, keyPath);
                     },
                     handleClick(tab, event) {
-                    }
+                    },
+                    handleClick1(row) {
+                        getPDF(row.c_id);
+                    },
                 },
                 created: function () {
                     getDragList();
                     getVolunteers();
+                    getCRFList();
                 },
             })
         </script>

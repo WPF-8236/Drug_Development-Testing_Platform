@@ -46,7 +46,12 @@ public class ResearcherServiceImpl implements ResearcherService {
 	}
 
 	@Override
-	public List<CRFReport> getCRFList(String user_id) {
+	public List<CRFReport> getCRFListByUserId(String user_id) {
 		return crfDao.selectCRFReportByUserId(user_id);
+	}
+
+	@Override
+	public List<CRFReport> getCRFListByRaId(String ra_id) {
+		return crfDao.selectCRFListByRaId(ra_id);
 	}
 }

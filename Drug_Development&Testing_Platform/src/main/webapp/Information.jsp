@@ -23,7 +23,7 @@
         <script type="text/javascript">
             function getCRFList() {
                 $.ajax({
-                    url: "researcher/getCRFList",
+                    url: "researcher/getCRFListByUserId",
                     contentType: 'application/json;charset=UTF-8',
                     dataType: "json",
                     data: {"user_id": JSON.stringify(document.getElementById("user_id").textContent)},
@@ -38,7 +38,32 @@
             }
 
             function getPDF(c_id) {
-                window.location.href = "jasper/exportPdf?c_id=" + c_id+"&type=pdf"
+                window.location.href = "jasper/exportPdf?c_id=" + c_id + "&type=pdf"
+            }
+
+            function getDragList() {
+                $.ajax({
+                    url: "user/getDragList",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"user_id": JSON.stringify(document.getElementById("user_id").textContent)},
+                    success: function (reps) {
+                        console.log(reps)
+                        app.drag = reps;
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function submitFeedBack() {
+                app.feedback.bf_u_id = document.getElementById("user_id").textContent;
+                app.feedback.user_name = document.getElementById("user_name").textContent;
+                app.feedback.user_age = document.getElementById("user_age").textContent;
+                app.feedback.user_sex = document.getElementById("user_sex").textContent;
+                console.log(app.feedback)
+
             }
         </script>
     </head>
@@ -49,6 +74,7 @@
         <div class="param" id="phone_number">${user.phone_number}</div>
         <div class="param" id="address">${user.address}</div>
         <div class="param" id="identification_number">${user.identification_number}</div>
+        <div class="param" id="user_age">${user.user_age}</div>
         <div id="app">
             <el-container>
                 <el-header>
@@ -367,6 +393,44 @@
                                     </el-table-column>
                                 </el-table>
                             </div>
+                            <div v-show="selectid==4" id="selectid-4">
+                                <div id="feedback">
+                                    <el-select v-model="feedback.bf_d_id" placeholder="请选择">
+                                        <el-option
+                                                v-for="item in drag"
+                                                :key="item.d_id"
+                                                :label="item.d_generic_name"
+                                                :value="item.d_id">
+                                        </el-option>
+                                    </el-select>
+                                    <el-form ref="feedback" label-position="top" :model="feedback" label-width="100px">
+                                        <el-form-item label="1.使用药物多长时间?">
+                                            <el-input v-model="feedback.bf_filed1"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="2.使用过程中是否有不良反应:">
+                                            <el-radio-group v-model="feedback.bf_filed2">
+                                                <el-radio label="是"></el-radio>
+                                                <el-radio label="否"></el-radio>
+                                            </el-radio-group>
+                                        </el-form-item>
+                                        <el-form-item label="3.具体不良反应有哪些?:">
+                                            <el-input v-model="feedback.bf_filed3"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="4.使用后感觉药效如何?:">
+                                            <el-input v-model="feedback.bf_filed4"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="5.对药物的一些建议?:">
+                                            <el-input v-model="feedback.bf_filed5"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="6.其他?:">
+                                            <el-input v-model="feedback.bf_filed6"></el-input>
+                                        </el-form-item>
+                                        <el-form-item>
+                                            <el-button type="primary" @click="submitFeedBack">提交反馈</el-button>
+                                        </el-form-item>
+                                    </el-form>
+                                </div>
+                            </div>
                         </el-main>
                         <el-footer>
                             &copy; 2022 毕业设计 | Design by 201805020527王潘锋
@@ -462,7 +526,6 @@
                         passwordForm: {
                             pass: '',
                             checkPass: '',
-
                         },
                         passwordRules: {
                             pass: [
@@ -471,8 +534,6 @@
                             checkPass: [
                                 {validator: validatePass2, trigger: 'blur'}
                             ],
-
-
                         },
                         addressForm: {
                             address: '',
@@ -482,6 +543,22 @@
                                 {required: true, message: '请填写地址', trigger: 'blur'}
                             ]
                         },
+                        feedback: {
+                            bf_id: '',
+                            bf_u_id: '',
+                            bf_d_id: '',
+                            bf_date: '',
+                            bf_filed1: '',
+                            bf_filed2: '',
+                            bf_filed3: '',
+                            bf_filed4: '',
+                            bf_filed5: '',
+                            bf_filed6: '',
+                            user_name: '',
+                            user_age: '',
+                            user_sex: '',
+                        },
+                        drag: [],
 
                     };
                 },
@@ -557,6 +634,7 @@
                 ,
                 created: function () {
                     getCRFList();
+                    getDragList();
                 }
             })
         </script>

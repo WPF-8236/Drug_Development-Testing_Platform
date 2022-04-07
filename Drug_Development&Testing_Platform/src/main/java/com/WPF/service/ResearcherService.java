@@ -13,5 +13,7 @@ public interface ResearcherService {
 
 	int submitCRF(DC dc, BloodRoutine bloodRoutine, UrineRoutine urineRoutine, BowelRoutine bowelRoutine, BloodChemistry bloodChemistry, ECOG ecog, VitalSigns vitalSigns, PhyExam phyExam);
 
-	List<CRFReport> getCRFList(String user_id);
+	List<CRFReport> getCRFListByUserId(String user_id);
+
+	List<CRFReport> getCRFListByRaId(String ra_id);
 }

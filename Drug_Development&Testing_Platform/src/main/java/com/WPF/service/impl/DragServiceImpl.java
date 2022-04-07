@@ -22,4 +22,9 @@ public class DragServiceImpl implements DragService {
 	public int changeDragDApprove(String d_id, int trg) {
 		return dragDao.updateDragDApprove(d_id, trg);
 	}
+
+	@Override
+	public List<Drag> getDragListByUserId(String user_id) {
+		return dragDao.selectDragByUserId(user_id);
+	}
 }

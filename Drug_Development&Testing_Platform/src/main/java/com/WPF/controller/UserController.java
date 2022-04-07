@@ -1,11 +1,15 @@
 package com.WPF.controller;
 
+import com.WPF.domain.Drag;
 import com.WPF.domain.User;
 import com.WPF.domain.UserGrade;
+import com.WPF.domain.Volunteer;
+import com.WPF.service.DragService;
 import com.WPF.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -15,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -22,6 +27,8 @@ import java.util.UUID;
 public class UserController {
 	@Resource
 	private UserService userService;
+	@Resource
+	private DragService dragService;
 
 	@RequestMapping("/fileupload")
 	public String fileupload(HttpServletResponse response, HttpServletRequest request, MultipartFile upload) throws Exception {
@@ -213,5 +220,18 @@ public class UserController {
 			printWriter.print("完善失败！！");
 			printWriter.close();
 		}
+	}
+
+	@RequestMapping("/getDragList")
+	@ResponseBody
+	public List<Drag> getDragList(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		List<Drag> drags = null;
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("user_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String user_id = mapper.readValue(json, String.class);
+		drags = dragService.getDragListByUserId(user_id);
+		return drags;
 	}
 }

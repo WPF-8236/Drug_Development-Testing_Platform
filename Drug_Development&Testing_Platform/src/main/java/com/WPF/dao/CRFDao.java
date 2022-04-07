@@ -23,4 +23,6 @@ public interface CRFDao {
 	int submitPhyExam(PhyExam phyExam);
 
 	List<CRFReport> selectCRFReportByUserId(@Param("user_id") String user_id);
+
+	List<CRFReport> selectCRFListByRaId(@Param("ra_id") String ra_id);
 }
