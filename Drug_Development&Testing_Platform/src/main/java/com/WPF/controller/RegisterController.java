@@ -23,7 +23,6 @@ public class RegisterController {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter printWriter = response.getWriter();
-		System.out.println(user_id + "  " + password);
 		int num = 0;
 		num = registerService.checkRegister(user_id);
 		if (num == 1) {

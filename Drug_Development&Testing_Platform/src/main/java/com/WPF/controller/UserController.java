@@ -30,7 +30,6 @@ public class UserController {
 	@RequestMapping("/fileupload")
 	public String fileupload(HttpServletResponse response, HttpServletRequest request, MultipartFile upload) throws Exception {
 		String path = request.getSession().getServletContext().getRealPath("/img/");
-		System.out.println(path);
 		File file = new File(path);
 		if (!file.exists()) {
 			file.mkdirs();
@@ -59,7 +58,6 @@ public class UserController {
 		PrintWriter printWriter = response.getWriter();
 		int num = 0;
 		num = userService.updateUserPassword(user, userGrade);
-		System.out.println(num);
 		if (num != 0) {
 			printWriter.print("修改成功");
 			printWriter.close();
@@ -80,7 +78,6 @@ public class UserController {
 		PrintWriter printWriter = response.getWriter();
 		int num = 0;
 		num = userService.updateAddress(user);
-		System.out.println(num);
 		if (num != 0) {
 			printWriter.print("修改成功");
 			printWriter.close();
@@ -109,7 +106,6 @@ public class UserController {
 		PrintWriter printWriter = response.getWriter();
 		int num = 0;
 		num = userService.updateModifyBasicInformation(user, userGrade, old_user_id);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("修改成功");
@@ -139,7 +135,6 @@ public class UserController {
 		PrintWriter printWriter = response.getWriter();
 		int num = 0;
 		num = userService.updateModifyDetailedInformation(user, userGrade);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("修改成功");
@@ -167,7 +162,6 @@ public class UserController {
 		PrintWriter printWriter = response.getWriter();
 		int num = 0;
 		num = userService.updateModifyPrivacyInformation(user);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("修改成功");
@@ -203,13 +197,11 @@ public class UserController {
 		user.setPhone_number(phone_number);
 		user.setEmail(email);
 		user.setAddress(address);
-		System.out.println(user);
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter printWriter = response.getWriter();
 		int num = 0;
 		num = userService.update(user);
-		System.out.println(num);
 		if (num != 0) {
 			printWriter.print("完善成功");
 			printWriter.close();
@@ -222,14 +214,12 @@ public class UserController {
 	@RequestMapping("/getDragList")
 	@ResponseBody
 	public List<Drag> getDragList(HttpServletResponse response, HttpServletRequest request) throws Exception {
-		List<Drag> drags = null;
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		String json = request.getParameter("user_id");
 		ObjectMapper mapper = new ObjectMapper();
 		String user_id = mapper.readValue(json, String.class);
-		drags = dragService.getDragListByUserId(user_id);
-		return drags;
+		return dragService.getDragListByUserId(user_id);
 	}
 
 	@RequestMapping("/submitFeedBack")
@@ -244,7 +234,6 @@ public class UserController {
 		feedBack.setBf_date(new java.util.Date().toLocaleString());
 		int num = 0;
 		num = userService.addFeedBack(feedBack);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("添加成功");

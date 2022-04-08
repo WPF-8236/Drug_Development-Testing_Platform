@@ -26,9 +26,7 @@ public class RecruitController {
 	public List<Recruit> getRecruit(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		List<Recruit> recruits = recruitService.getRecruits();
-		System.out.println(recruits);
-		return recruits;
+		return recruitService.getRecruits();
 	}
 
 	@RequestMapping("/getRecruitList")
@@ -36,9 +34,7 @@ public class RecruitController {
 	public List<RecruitList> getRecruitList(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		List<RecruitList> recruitList = recruitService.getRecruitListWithispe1();
-		System.out.println(recruitList);
-		return recruitList;
+		return recruitService.getRecruitListWithispe1();
 	}
 
 	@RequestMapping("/getRecruitList2")
@@ -46,9 +42,7 @@ public class RecruitController {
 	public List<RecruitList> getRecruitList2(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		List<RecruitList> recruitList = recruitService.getRecruitListWithispe2();
-		System.out.println(recruitList);
-		return recruitList;
+		return recruitService.getRecruitListWithispe2();
 	}
 
 	@RequestMapping("/getRecruitByUserID")
@@ -59,9 +53,8 @@ public class RecruitController {
 		String json = request.getParameter("user_id");
 		ObjectMapper mapper = new ObjectMapper();
 		String user_id = mapper.readValue(json, String.class);
-		List<RecruitList> recruitList = recruitService.getUserRecruitList(user_id);
-		System.out.println(recruitList);
-		return recruitList;
+		return recruitService.getUserRecruitList(user_id);
+
 	}
 
 	@RequestMapping("/submitRecruitList")

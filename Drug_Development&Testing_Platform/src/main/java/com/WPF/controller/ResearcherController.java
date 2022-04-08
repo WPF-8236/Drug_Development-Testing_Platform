@@ -36,7 +36,6 @@ public class ResearcherController {
 		int num2 = 0;
 		num1 = researcherService.addPhyExam(physicalExam);
 		num2 = recruitService.changeRecruitListispe(physicalExam.getPe_rl_id());
-		System.out.println(num1 * num2);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num1 * num2 != 0) {
 			json = objectMapper.writeValueAsString("提交成功");
@@ -52,53 +51,45 @@ public class ResearcherController {
 	@RequestMapping("/getVolunteers")
 	@ResponseBody
 	public List<Volunteer> getVolunteers(HttpServletResponse response, HttpServletRequest request) throws Exception {
-		List<Volunteer> volunteers = null;
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		String json = request.getParameter("ra_id");
 		ObjectMapper mapper = new ObjectMapper();
 		String ra_id = mapper.readValue(json, String.class);
-		volunteers = researcherService.getVolunteers(ra_id);
-		return volunteers;
+		return researcherService.getVolunteers(ra_id);
 	}
 
 	@RequestMapping("/getCRFListByUserId")
 	@ResponseBody
 	public List<CRFReport> getCRFListByUserId(HttpServletResponse response, HttpServletRequest request) throws Exception {
-		List<CRFReport> crfReports = null;
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		String json = request.getParameter("user_id");
 		ObjectMapper mapper = new ObjectMapper();
 		String user_id = mapper.readValue(json, String.class);
-		crfReports = researcherService.getCRFListByUserId(user_id);
-		return crfReports;
+		return researcherService.getCRFListByUserId(user_id);
 	}
 
 	@RequestMapping("/getCRFListByRaId")
 	@ResponseBody
 	public List<CRFReport> getCRFListByRaId(HttpServletResponse response, HttpServletRequest request) throws Exception {
-		List<CRFReport> crfReports = null;
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		String json = request.getParameter("ra_id");
 		ObjectMapper mapper = new ObjectMapper();
 		String ra_id = mapper.readValue(json, String.class);
-		crfReports = researcherService.getCRFListByRaId(ra_id);
-		return crfReports;
+		return researcherService.getCRFListByRaId(ra_id);
 	}
 
 	@RequestMapping("/getFeedBack")
 	@ResponseBody
 	public List<FeedBack> getFeedBack(HttpServletResponse response, HttpServletRequest request) throws Exception {
-		List<FeedBack> feedBacks = null;
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		String json = request.getParameter("ra_id");
 		ObjectMapper mapper = new ObjectMapper();
 		String ra_id = mapper.readValue(json, String.class);
-		feedBacks = researcherService.getFeedBackByRaId(ra_id);
-		return feedBacks;
+		return researcherService.getFeedBackByRaId(ra_id);
 	}
 
 

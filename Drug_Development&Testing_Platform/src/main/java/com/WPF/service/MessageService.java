@@ -9,4 +9,6 @@ public interface MessageService {
 	List<Message> getMessageBym_mark(String m_mark);
 
 	List<Drag> getDrag(String key, String value);
+
+	List<Drag> getDragListByApprove();
 }

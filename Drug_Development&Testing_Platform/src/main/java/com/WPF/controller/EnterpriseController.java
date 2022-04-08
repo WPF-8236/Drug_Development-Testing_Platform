@@ -32,7 +32,6 @@ public class EnterpriseController {
 		UserGrade userGrade = new UserGrade(researcher.getRa_id(), researcher.getRa_password(), 4);
 		int num = 0;
 		num = enterpriseService.addResearcher(researcher, userGrade);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("添加成功");
@@ -56,7 +55,6 @@ public class EnterpriseController {
 		drag.setD_id(new Date().toLocaleString());
 		int num = 0;
 		num = enterpriseService.addDrag(drag);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("申请成功");
@@ -80,7 +78,6 @@ public class EnterpriseController {
 		recruit.setR_id(new Date().toLocaleString());
 		int num = 0;
 		num = enterpriseService.addRecruit(recruit);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("申请成功");
@@ -208,7 +205,6 @@ public class EnterpriseController {
 		String json = request.getParameter("u_ra");
 		ObjectMapper mapper = new ObjectMapper();
 		URa uRa = mapper.readValue(json, URa.class);
-		System.out.println(uRa);
 		int num = 0;
 		num = enterpriseService.addURa(uRa);
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -231,7 +227,6 @@ public class EnterpriseController {
 		String json = request.getParameter("u_ra");
 		ObjectMapper mapper = new ObjectMapper();
 		URa uRa = mapper.readValue(json, URa.class);
-		System.out.println(uRa);
 		int num = 0;
 		num = enterpriseService.deleteVolunteer(uRa);
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -267,6 +262,19 @@ public class EnterpriseController {
 			printWriter.print(json);
 			printWriter.close();
 		}
+	}
+
+	@RequestMapping("/getProgressListByDId")
+	@ResponseBody
+	public List<Progress> getProgressListByDId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<Progress> progresses = new ArrayList<>();
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("dp_d_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String dp_d_id = mapper.readValue(json, String.class);
+		progresses = enterpriseService.getProgressListByDId(dp_d_id);
+		return progresses;
 	}
 
 	@RequestMapping("/getVolunteersByRaId")

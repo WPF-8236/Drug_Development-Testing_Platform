@@ -28,9 +28,7 @@ public class MessageController {
 		List<Message> messages = new ArrayList<>();
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		System.out.println(m_mark);
 		messages = messageService.getMessageBym_mark(m_mark);
-		System.out.println(messages);
 		return messages;
 	}
 
@@ -43,9 +41,18 @@ public class MessageController {
 		List<Drag> drags = new ArrayList<>();
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		System.out.println(key + " " + value);
 		drags = messageService.getDrag(key, value);
-		System.out.println(drags);
+		return drags;
+	}
+
+	@RequestMapping("/getDragListByApprove")
+	@ResponseBody
+	public List<Drag> getDragListByApprove(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		List<Drag> drags = new ArrayList<>();
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		drags = messageService.getDragListByApprove();
 		return drags;
 	}
 

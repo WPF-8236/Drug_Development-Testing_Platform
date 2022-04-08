@@ -66,4 +66,10 @@
         set d_approve=#{trg}
         where d_id = #{d_id}
     </update>
+
+    <select id="selectDragByApprove" resultType="Drag">
+        select *
+        from ddtp_drag
+        where d_approve = '1'
+    </select>
 </mapper>

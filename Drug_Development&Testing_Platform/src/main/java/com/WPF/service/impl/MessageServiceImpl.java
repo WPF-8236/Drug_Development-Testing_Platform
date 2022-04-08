@@ -32,4 +32,9 @@ public class MessageServiceImpl implements MessageService {
 		else
 			return dragDao.selectDragByApprovalNumber("%" + value + "%");
 	}
+
+	@Override
+	public List<Drag> getDragListByApprove() {
+		return dragDao.selectDragByApprove();
+	}
 }

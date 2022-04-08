@@ -156,4 +156,9 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	public int addProgress(Progress progress) {
 		return progressDao.insertProgress(progress);
 	}
+
+	@Override
+	public List<Progress> getProgressListByDId(String dp_d_id) {
+		return progressDao.selectProgressListByDId(dp_d_id);
+	}
 }

@@ -7,4 +7,10 @@
         insert into ddtp_drag_progress(dp_id, dp_d_id, dp_data, dp_text, dp_stage)
         VALUES (#{dp_id}, #{dp_d_id}, #{dp_data}, #{dp_text}, #{dp_stage})
     </insert>
+
+    <select id="selectProgressListByDId" resultType="Progress">
+        select *
+        from ddtp_drag_progress
+        where dp_d_id = #{dp_d_id} order by dp_data desc;
+    </select>
 </mapper>

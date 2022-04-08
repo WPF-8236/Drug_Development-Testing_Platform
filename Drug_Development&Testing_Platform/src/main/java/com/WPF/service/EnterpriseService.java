@@ -48,4 +48,6 @@ public interface EnterpriseService {
 	List<Drag> getDragListWithApprove(String e_id);
 
 	int addProgress(Progress progress);
+
+	List<Progress> getProgressListByDId(String dp_d_id);
 }

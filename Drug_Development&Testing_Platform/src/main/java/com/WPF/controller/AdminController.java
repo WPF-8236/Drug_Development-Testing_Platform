@@ -43,7 +43,6 @@ public class AdminController {
 		UserGrade userGrade = new UserGrade(enterprise.getE_id(), enterprise.getE_password(), 3);
 		int num = 0;
 		num = enterpriseService.addEnterprise(enterprise, userGrade);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("添加成功");
@@ -87,7 +86,6 @@ public class AdminController {
 		String e_id = mapper.readValue(json, String.class);
 		int num = 0;
 		num = enterpriseService.deleteEnterprise(e_id);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("删除成功");
@@ -111,7 +109,6 @@ public class AdminController {
 		UserGrade userGrade = new UserGrade(enterprise.getE_id(), enterprise.getE_password(), 3);
 		int num = 0;
 		num = enterpriseService.updateEnterprise(enterprise, userGrade);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("修改成功");
@@ -136,7 +133,6 @@ public class AdminController {
 		int trg = mapper.readValue(json2, Integer.class);
 		int num = 0;
 		num = recruitService.changeRecruitListisv(rl_id, trg);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("修改成功");
@@ -161,7 +157,6 @@ public class AdminController {
 		String rl_u_id = mapper.readValue(json2, String.class);
 		int num = 0;
 		num = enterpriseService.updateARlUE(rl_id, rl_u_id);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("修改成功");
@@ -186,7 +181,6 @@ public class AdminController {
 		int trg = mapper.readValue(json2, Integer.class);
 		int num = 0;
 		num = dragService.changeDragDApprove(d_id, trg);
-		System.out.println(num);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("修改成功");

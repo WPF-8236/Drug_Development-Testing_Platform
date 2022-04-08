@@ -35,7 +35,6 @@ public class LoginController {
 	public String login(HttpServletResponse response, HttpServletRequest request, String id, String password) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		System.out.println(id + "  " + password);
 		UserGrade userGrade = loginService.login(id, password);
 		User user = null;
 		Enterprise enterprise = null;
@@ -51,7 +50,6 @@ public class LoginController {
 		} else if (userGrade.getGrade() == 2 || userGrade.getGrade() == 4) {
 			user = userService.getUser(id);
 			researcher = researcherService.getResearcher(id);
-			System.out.println(user);
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			session.setAttribute("researcher", researcher);

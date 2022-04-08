@@ -278,6 +278,22 @@
                     }
                 })
             }
+
+            function getProgressListByDId(dp_d_id) {
+                $.ajax({
+                    url: "enterprise/getProgressListByDId",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"dp_d_id": JSON.stringify(dp_d_id)},
+                    success: function (reps) {
+                        console.log(reps)
+                        app.ProgressList = reps;
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
         </script>
     </head>
     <body>
@@ -652,9 +668,9 @@
                             </div>
                             <div v-if="index==4">
                                 <el-collapse v-model="activeName" @change="handleChange2" accordion>
-                                    <div id="progressListForDrag" v-for="a in DragList">
+                                    <div id="progressListForDrag" v-for="a in DragList" v-if="a.d_approve==1">
                                         <el-collapse-item :title="a.d_trade_name" :name="a.d_id">
-                                            <el-timeline :reverse="false">
+                                            <el-timeline>
                                                 <div id="addProgress">
                                                     <el-form ref="addProgress" :model="addProgress" label-width="100px">
                                                         <el-row :gutter="24">
@@ -1211,6 +1227,7 @@
                     },
                     handleChange2(val) {
                         app.addProgress.dp_d_id = val;
+                        getProgressListByDId(val);
                     },
                     putDrag() {
                         putADrag();
