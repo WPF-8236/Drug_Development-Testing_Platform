@@ -9,4 +9,8 @@ public interface ProgressDao {
 	int insertProgress(Progress progress);
 
 	List<Progress> selectProgressListByDId(@Param("dp_d_id") String dp_d_id);
+
+	int deleteProgressByDpId(@Param("dp_id") String dp_id);
+
+	int changeProgress(Progress progress);
 }

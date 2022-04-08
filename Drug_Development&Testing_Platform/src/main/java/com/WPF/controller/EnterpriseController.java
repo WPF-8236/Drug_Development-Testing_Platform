@@ -264,6 +264,50 @@ public class EnterpriseController {
 		}
 	}
 
+	@RequestMapping("/deleteProgressByDpId")
+	public void deleteProgressByDpId(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("dp_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String dp_id = mapper.readValue(json, String.class);
+		int num = 0;
+		num = enterpriseService.deleteProgressByDpId(dp_id);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("删除成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("删除失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
+	@RequestMapping("/changeProgress")
+	public void changeProgress(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("changeProgress");
+		ObjectMapper mapper = new ObjectMapper();
+		Progress progress = mapper.readValue(json, Progress.class);
+		int num = 0;
+		num = enterpriseService.changeProgress(progress);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("修改成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("修改失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
 	@RequestMapping("/getProgressListByDId")
 	@ResponseBody
 	public List<Progress> getProgressListByDId(HttpServletRequest request, HttpServletResponse response) throws Exception {

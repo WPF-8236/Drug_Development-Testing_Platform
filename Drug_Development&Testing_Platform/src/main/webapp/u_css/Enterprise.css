@@ -143,3 +143,9 @@ body > .el-container {
     max-height: 200px;
     border: none;
 }
+
+#changeAProgress {
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+}

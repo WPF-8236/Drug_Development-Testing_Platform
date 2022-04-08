@@ -50,4 +50,8 @@ public interface EnterpriseService {
 	int addProgress(Progress progress);
 
 	List<Progress> getProgressListByDId(String dp_d_id);
+
+	int deleteProgressByDpId(String dp_id);
+
+	int changeProgress(Progress progress);
 }

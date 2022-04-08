@@ -294,6 +294,38 @@
                     }
                 })
             }
+
+            function deleteProgressByDpId(dp_id) {
+                $.ajax({
+                    url: "enterprise/deleteProgressByDpId",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"dp_id": JSON.stringify(dp_id)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Enterprise.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function putProgress() {
+                $.ajax({
+                    url: "enterprise/changeProgress",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"changeProgress": JSON.stringify(this.app.changeProgress)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Enterprise.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
         </script>
     </head>
     <body>
@@ -336,6 +368,10 @@
                                     </el-menu-item>
                                     <el-menu-item index="5">
                                         <i class="el-icon-setting"></i>
+                                        <span slot="title">药物志愿者招募信息发布</span>
+                                    </el-menu-item>
+                                    <el-menu-item index="6">
+                                        <i class="el-icon-s-order"></i>
                                         <span slot="title">药物志愿者招募信息发布</span>
                                     </el-menu-item>
                                 </el-menu>
@@ -720,6 +756,43 @@
                                                         :key="index"
                                                         :timestamp="Progress.dp_data">
                                                     {{Progress.dp_text}}
+                                                    <el-tag>{{Progress.dp_stage}}期</el-tag>
+                                                    <div>
+                                                        <el-button @click="handleClick7(Progress)" type="text"
+                                                                   size="small">修改
+                                                        </el-button>
+                                                        <el-button @click="handleClick8(Progress.dp_id)" type="text"
+                                                                   size="small">删除
+                                                        </el-button>
+                                                    </div>
+                                                    <el-drawer
+                                                            title="修改进程"
+                                                            :visible.sync="drawer5"
+                                                            :direction="direction">
+                                                        <div id="changeAProgress">
+                                                            <el-form :label-position="labelPosition" label-width="100px"
+                                                                     :model="changeProgress">
+                                                                <el-form-item label="更新时间:">
+                                                                    <el-date-picker
+                                                                            v-model="changeProgress.dp_data"
+                                                                            type="datetime"
+                                                                            placeholder="选择日期"
+                                                                            value-format="yyyy-MM-dd HH:mm:ss">
+                                                                    </el-date-picker>
+                                                                </el-form-item>
+                                                                <el-form-item label="更新备注">
+                                                                    <el-input
+                                                                            v-model="changeProgress.dp_text"></el-input>
+                                                                </el-form-item>
+                                                                <el-form-item label="更新阶段">
+                                                                    <el-input
+                                                                            v-model="changeProgress.dp_stage"></el-input>
+                                                                </el-form-item>
+                                                                <el-button type="primary" @click="putProgress">提交修改
+                                                                </el-button>
+                                                            </el-form>
+                                                        </div>
+                                                    </el-drawer>
                                                 </el-timeline-item>
                                             </el-timeline>
                                         </el-collapse-item>
@@ -971,6 +1044,9 @@
                                     </el-drawer>
                                 </div>
                             </div>
+                            <div v-if="index==6">
+
+                            </div>
                         </el-main>
                         <el-footer>
                             &copy; 2022 毕业设计 | Design by 201805020527王潘锋
@@ -1037,6 +1113,7 @@
                         drawer2: false,
                         drawer3: false,
                         drawer4: false,
+                        drawer5: false,
                         recruitList: [],
                         activeName: 'second',
                         index: '1',
@@ -1131,6 +1208,15 @@
                             dp_text: '',
                             dp_stage: '',
                         },
+                        changeProgress: {
+                            dp_id: '',
+                            dp_d_id: '',
+                            dp_data: '',
+                            dp_text: '',
+                            dp_stage: '',
+                        },
+                        dp_id: '',
+                        Message:'',
                     };
                 },
                 methods: {
@@ -1209,6 +1295,17 @@
                     handleClick6(row) {
                         app.deleteu_ra.v_user_id = row.user_id;
                         deleteVolunteer();
+                    },
+                    handleClick7(p) {
+                        this.drawer5 = true;
+                        this.changeProgress.dp_id = p.dp_id;
+                        this.changeProgress.dp_d_id = p.dp_d_id;
+                        this.changeProgress.dp_data = p.dp_data;
+                        this.changeProgress.dp_text = p.dp_text;
+                        this.changeProgress.dp_stage = p.dp_stage;
+                    },
+                    handleClick8(row) {
+                        deleteProgressByDpId(row);
                     },
                     open(row) {
                         this.$alert(row.r_detial);

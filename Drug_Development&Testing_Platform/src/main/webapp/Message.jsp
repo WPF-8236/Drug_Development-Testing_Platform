@@ -111,6 +111,7 @@
                                                     :key="index"
                                                     :timestamp="Progress.dp_data">
                                                 {{Progress.dp_text}}
+                                                <el-tag>{{Progress.dp_stage}}期</el-tag>
                                             </el-timeline-item>
                                         </el-timeline>
                                     </el-collapse-item>

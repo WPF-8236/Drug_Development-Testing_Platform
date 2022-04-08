@@ -11,6 +11,21 @@
     <select id="selectProgressListByDId" resultType="Progress">
         select *
         from ddtp_drag_progress
-        where dp_d_id = #{dp_d_id} order by dp_data desc;
+        where dp_d_id = #{dp_d_id}
+        order by dp_data desc;
     </select>
+
+    <delete id="deleteProgressByDpId">
+        delete
+        from ddtp_drag_progress
+        where dp_id = #{dp_id}
+    </delete>
+
+    <update id="changeProgress">
+        update ddtp_drag_progress
+        set dp_data=#{dp_data},
+            dp_text=#{dp_text},
+            dp_stage=#{dp_stage}
+        where dp_id = #{dp_id}
+    </update>
 </mapper>

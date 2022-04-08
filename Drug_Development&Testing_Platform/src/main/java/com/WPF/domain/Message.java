@@ -9,11 +9,11 @@ public class Message {
 	private String m_content;
 	private int m_mark;
 	private int m_type;
-	private Timestamp m_time;
+	private String m_time;
 	private String m_read;
 	private String m_author;
 
-	public Message(String m_id, String m_summary, String m_title, String m_content, int m_mark, int m_type, Timestamp m_time, String m_read, String m_author) {
+	public Message(String m_id, String m_summary, String m_title, String m_content, int m_mark, int m_type, String m_time, String m_read, String m_author) {
 		this.m_id = m_id;
 		this.m_summary = m_summary;
 		this.m_title = m_title;
@@ -76,11 +76,11 @@ public class Message {
 		this.m_type = m_type;
 	}
 
-	public Timestamp getM_time() {
+	public String getM_time() {
 		return m_time;
 	}
 
-	public void setM_time(Timestamp m_time) {
+	public void setM_time(String m_time) {
 		this.m_time = m_time;
 	}
 
@@ -102,6 +102,16 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message{" + "m_id='" + m_id + '\'' + ", m_summary='" + m_summary + '\'' + ", m_title='" + m_title + '\'' + ", m_content='" + m_content + '\'' + ", m_mark=" + m_mark + ", m_type=" + m_type + ", m_time=" + m_time + ", m_read='" + m_read + '\'' + ", m_author='" + m_author + '\'' + '}';
+		return "Message{" +
+				"m_id='" + m_id + '\'' +
+				", m_summary='" + m_summary + '\'' +
+				", m_title='" + m_title + '\'' +
+				", m_content='" + m_content + '\'' +
+				", m_mark=" + m_mark +
+				", m_type=" + m_type +
+				", m_time='" + m_time + '\'' +
+				", m_read='" + m_read + '\'' +
+				", m_author='" + m_author + '\'' +
+				'}';
 	}
 }
