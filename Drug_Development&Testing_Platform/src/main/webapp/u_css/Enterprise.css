@@ -149,3 +149,15 @@ body > .el-container {
     margin-right: auto;
     margin-left: auto;
 }
+
+#addAMessage {
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#changeMessage {
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+}

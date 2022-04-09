@@ -308,6 +308,89 @@ public class EnterpriseController {
 		}
 	}
 
+	@RequestMapping("/addMessage")
+	public void addMessage(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("Message");
+		String json1 = request.getParameter("e_id");
+		ObjectMapper mapper = new ObjectMapper();
+		Message message = mapper.readValue(json, Message.class);
+		String e_id = mapper.readValue(json1, String.class);
+		message.setM_id(new Date().toLocaleString());
+		message.setM_time(new Date().toLocaleString());
+		int num = 0;
+		num = enterpriseService.addMessage(message, e_id);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("添加成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("添加失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
+	@RequestMapping("/changeAMessage")
+	public void changeAMessage(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("Message");
+		ObjectMapper mapper = new ObjectMapper();
+		Message message = mapper.readValue(json, Message.class);
+		int num = 0;
+		num = enterpriseService.changeAMessage(message);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("修改成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("修改失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
+	@RequestMapping("/deleteMessageByMId")
+	public void deleteMessageByMId(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("m_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String m_id = mapper.readValue(json, String.class);
+		int num = 0;
+		num = enterpriseService.deleteMessageByMId(m_id);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("删除成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("删除失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
+	@RequestMapping("/getMessageList")
+	@ResponseBody
+	public List<Message> getMessageList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<Message> messages = new ArrayList<>();
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("e_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String e_id = mapper.readValue(json, String.class);
+		messages = enterpriseService.getMessageList(e_id);
+		return messages;
+	}
+
 	@RequestMapping("/getProgressListByDId")
 	@ResponseBody
 	public List<Progress> getProgressListByDId(HttpServletRequest request, HttpServletResponse response) throws Exception {

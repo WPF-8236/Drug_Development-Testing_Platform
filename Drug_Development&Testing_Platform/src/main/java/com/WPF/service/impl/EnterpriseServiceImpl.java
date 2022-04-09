@@ -31,6 +31,10 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	private URaDao uRaDao;
 	@Resource
 	private ProgressDao progressDao;
+	@Resource
+	private MessageDao messageDao;
+	@Resource
+	private MEDao meDao;
 
 	@Override
 	@Transactional
@@ -170,5 +174,29 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	@Override
 	public int changeProgress(Progress progress) {
 		return progressDao.changeProgress(progress);
+	}
+
+	@Override
+	public int addMessage(Message message, String e_id) {
+		int num1 = messageDao.insertMessage(message);
+		int num2 = meDao.insertME(message.getM_id(), e_id);
+		return num1 * num2;
+	}
+
+	@Override
+	public List<Message> getMessageList(String e_id) {
+		return messageDao.selectMessageByEId(e_id);
+	}
+
+	@Override
+	public int deleteMessageByMId(String m_id) {
+		int num1 = messageDao.deleteMessageByMId(m_id);
+		int num2 = meDao.deleteMEByMId(m_id);
+		return num1 * num2;
+	}
+
+	@Override
+	public int changeAMessage(Message message) {
+		return messageDao.updateMessage(message);
 	}
 }

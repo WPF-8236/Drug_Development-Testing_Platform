@@ -37,4 +37,14 @@ public class MessageServiceImpl implements MessageService {
 	public List<Drag> getDragListByApprove() {
 		return dragDao.selectDragByApprove();
 	}
+
+	@Override
+	public List<Message> getMessageList() {
+		return messageDao.selectMessage();
+	}
+
+	@Override
+	public int changeMessageMMark(String m_id, int trg) {
+		return messageDao.changeMessageMMark(m_id,trg);
+	}
 }

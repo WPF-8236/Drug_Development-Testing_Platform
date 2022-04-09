@@ -8,4 +8,42 @@
         from ddtp_message
         where m_mark = #{m_mark}
     </select>
+
+    <insert id="insertMessage">
+        insert into ddtp_message(m_id, m_summary, m_title, m_content, m_mark, m_type, m_time, m_read, m_author)
+        VALUES (#{m_id}, #{m_summary}, #{m_title}, #{m_content}, #{m_mark}, #{m_type}, #{m_time}, #{m_read},
+                #{m_author})
+    </insert>
+
+    <select id="selectMessageByEId" resultType="Message">
+        select ddtp_message.*
+        from ddtp_message
+                 join ddtp_m_e dme on ddtp_message.m_id = dme.m_id
+        where e_id = #{e_id}
+    </select>
+
+    <delete id="deleteMessageByMId">
+        delete
+        from ddtp_message
+        where m_id = #{m_id}
+    </delete>
+
+    <update id="updateMessage">
+        update ddtp_message
+        set m_summary=#{m_summary},
+            m_title=#{m_title},
+            m_content=#{m_content},
+            m_type=#{m_type},
+            m_mark=#{m_mark}
+        where m_id = #{m_id}
+    </update>
+    <select id="selectMessage" resultType="Message">
+        select *
+        from ddtp_message
+    </select>
+    <update id="changeMessageMMark">
+        update ddtp_message
+        set m_mark=#{trg}
+        where m_id = #{m_id}
+    </update>
 </mapper>

@@ -1,7 +1,5 @@
 package com.WPF.domain;
 
-import java.sql.Timestamp;
-
 public class Message {
 	private String m_id;
 	private String m_summary;
@@ -10,10 +8,13 @@ public class Message {
 	private int m_mark;
 	private int m_type;
 	private String m_time;
-	private String m_read;
+	private int m_read;
 	private String m_author;
 
-	public Message(String m_id, String m_summary, String m_title, String m_content, int m_mark, int m_type, String m_time, String m_read, String m_author) {
+	public Message() {
+	}
+
+	public Message(String m_id, String m_summary, String m_title, String m_content, int m_mark, int m_type, String m_time, int m_read, String m_author) {
 		this.m_id = m_id;
 		this.m_summary = m_summary;
 		this.m_title = m_title;
@@ -23,9 +24,6 @@ public class Message {
 		this.m_time = m_time;
 		this.m_read = m_read;
 		this.m_author = m_author;
-	}
-
-	public Message() {
 	}
 
 	public String getM_id() {
@@ -84,11 +82,11 @@ public class Message {
 		this.m_time = m_time;
 	}
 
-	public String getM_read() {
+	public int getM_read() {
 		return m_read;
 	}
 
-	public void setM_read(String m_read) {
+	public void setM_read(int m_read) {
 		this.m_read = m_read;
 	}
 
@@ -110,7 +108,7 @@ public class Message {
 				", m_mark=" + m_mark +
 				", m_type=" + m_type +
 				", m_time='" + m_time + '\'' +
-				", m_read='" + m_read + '\'' +
+				", m_read=" + m_read +
 				", m_author='" + m_author + '\'' +
 				'}';
 	}

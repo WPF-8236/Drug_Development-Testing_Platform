@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.WPF.dao.MEDao">
+    <insert id="insertME">
+        insert into ddtp_m_e(m_id, e_id)
+        VALUES (#{m_id}, #{e_id})
+    </insert>
+
+    <delete id="deleteMEByMId">
+        delete
+        from ddtp_m_e
+        where m_id = #{m_id}
+    </delete>
+</mapper>

@@ -107,7 +107,7 @@
                 })
             }
 
-            function updateARlUE(rl_id,rl_u_id){
+            function updateARlUE(rl_id, rl_u_id) {
                 $.ajax({
                     url: "Admin/updateARlUE",
                     contentType: 'application/json;charset=UTF-8',
@@ -128,6 +128,22 @@
                     contentType: 'application/json;charset=UTF-8',
                     dataType: "json",
                     data: {"d_id": JSON.stringify(d_id), "trg": JSON.stringify(trg)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Admin.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function changeMessageMMark(m_id,trg){
+                $.ajax({
+                    url: "Admin/changeMessageMMark",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"m_id": JSON.stringify(m_id), "trg": JSON.stringify(trg)},
                     success: function (reps) {
                         alert(reps.valueOf());
                         window.location.href = "./Admin.jsp";
@@ -178,6 +194,20 @@
                         app.PhyExam.pe_smoking = reps.pe_smoking.toString();
                         app.PhyExam.pe_drinking = reps.pe_drinking.toString();
 
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function getMessageList() {
+                $.ajax({
+                    url: "Admin/getMessageList",
+                    contentType: 'application/json;charset=UTF-8',
+                    success: function (reps) {
+                        console.log(reps)
+                        app.MessageList = reps;
                     },
                     error: function () {
                         alert('error');
@@ -621,6 +651,63 @@
                                     </el-drawer>
                                 </div>
                             </div>
+                            <div v-show="index==4">
+                                <div id="MessageListDiv">
+                                    <el-table
+                                            :data="MessageList"
+                                            border
+                                            style="width:100%"
+                                            :row-class-name="tableRowClassName2">
+                                        <el-table-column
+                                                prop="m_id"
+                                                label="文章ID"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_title"
+                                                label="文章标题"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_summary"
+                                                label="文章摘要"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_content"
+                                                label="文章内容"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_type"
+                                                label="文章类型"
+                                                width="200"
+                                                :formatter="m_typeFormatter">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_time"
+                                                label="发布时间"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_author"
+                                                label="文章作者"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_mark"
+                                                label="操作"
+                                                width="200">
+                                            <template slot-scope="scope" v-if="scope.row.m_mark==0">
+                                                <el-button @click="handleClick8(scope.row)" type="text" size="small">不通过
+                                                </el-button>
+                                                <el-button @click="handleClick9(scope.row)" type="text" size="small">
+                                                    通过
+                                                </el-button>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                </div>
 
                         </el-main>
                         <el-footer>
@@ -696,6 +783,7 @@
                             pe_smoking: '',
                             pe_drinking: '',
                         },
+                        MessageList: [],
                     };
                 },
                 filters: {
@@ -707,10 +795,27 @@
                     },
                 },
                 methods: {
+                    m_typeFormatter(row, colum) {
+                        if (row.m_type == 0)
+                            return '药物知识'
+                        else if (row.d_mark == 1)
+                            return '药物发布'
+                        else
+                            return '公司新闻'
+                    },
                     tableRowClassName({row, rowIndex}) {
                         if (row.d_approve === 0) {
                             return 'warning-row';
                         } else if (row.d_approve === 1) {
+                            return 'success-row';
+                        } else {
+                            return 'error-row'
+                        }
+                    },
+                    tableRowClassName2({row, rowIndex}) {
+                        if (row.m_mark === 0) {
+                            return 'warning-row';
+                        } else if (row.m_mark === 1) {
                             return 'success-row';
                         } else {
                             return 'error-row'
@@ -766,7 +871,7 @@
                         changeRecruitListisv(row.rl_id, 2);
                     },
                     handleClick4(row) {
-                        updateARlUE(row.rl_id,row.rl_u_id);
+                        updateARlUE(row.rl_id, row.rl_u_id);
                         changeRecruitListisv(row.rl_id, 1);
                     },
                     handleClick5(row) {
@@ -779,6 +884,12 @@
                         getPhyExam(row.rl_id);
                         this.drawer1 = true;
                     },
+                    handleClick8(row) {
+                        changeMessageMMark(row.m_id, 2);
+                    },
+                    handleClick9(row) {
+                        changeMessageMMark(row.m_id, 1);
+                    },
                     select(index, indexPath) {
                         app.index = index;
                     },
@@ -790,6 +901,7 @@
                     getEnterpriseList();
                     getRecruitList();
                     getDragList();
+                    getMessageList();
                 }
             })
         </script>

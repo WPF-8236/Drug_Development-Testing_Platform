@@ -54,4 +54,12 @@ public interface EnterpriseService {
 	int deleteProgressByDpId(String dp_id);
 
 	int changeProgress(Progress progress);
+
+	int addMessage(Message message, String e_id);
+
+	List<Message> getMessageList(String e_id);
+
+	int deleteMessageByMId(String m_id);
+
+	int changeAMessage(Message message);
 }

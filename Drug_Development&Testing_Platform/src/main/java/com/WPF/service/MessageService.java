@@ -11,4 +11,8 @@ public interface MessageService {
 	List<Drag> getDrag(String key, String value);
 
 	List<Drag> getDragListByApprove();
+
+	List<Message> getMessageList();
+
+	int changeMessageMMark(String m_id, int trg);
 }

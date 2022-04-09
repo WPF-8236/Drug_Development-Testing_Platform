@@ -131,6 +131,11 @@
                 app.Recruit.r_address = document.getElementById("e_address").textContent;
             }
 
+            function changeDrawer2() {
+                app.drawer6 = true;
+                app.Message.m_author = document.getElementById("e_name").textContent;
+            }
+
             function putADrag() {
                 console.log(this.app.Drag)
                 $.ajax({
@@ -326,6 +331,75 @@
                     }
                 })
             }
+
+            function putMessage() {
+                $.ajax({
+                    url: "enterprise/addMessage",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {
+                        "Message": JSON.stringify(this.app.Message),
+                        "e_id": JSON.stringify(document.getElementById("e_id").textContent)
+                    },
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Enterprise.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function getMessageList() {
+                $.ajax({
+                    url: "enterprise/getMessageList",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"e_id": JSON.stringify(document.getElementById("e_id").textContent)},
+                    success: function (reps) {
+                        console.log(reps)
+                        app.MessageList = reps;
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function deleteMessageByMId(m_id) {
+                $.ajax({
+                    url: "enterprise/deleteMessageByMId",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {
+                        "m_id": JSON.stringify(m_id),
+                    },
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Enterprise.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function changeAMessage() {
+                $.ajax({
+                    url: "enterprise/changeAMessage",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"Message": JSON.stringify(this.app.changeMessage)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Enterprise.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
         </script>
     </head>
     <body>
@@ -372,7 +446,7 @@
                                     </el-menu-item>
                                     <el-menu-item index="6">
                                         <i class="el-icon-s-order"></i>
-                                        <span slot="title">药物志愿者招募信息发布</span>
+                                        <span slot="title">文章信息发布</span>
                                     </el-menu-item>
                                 </el-menu>
                             </el-col>
@@ -1044,8 +1118,135 @@
                                     </el-drawer>
                                 </div>
                             </div>
-                            <div v-if="index==6">
-
+                            <div v-show="index==6">
+                                <div id="addMessage">
+                                    <el-button type="primary" onclick="changeDrawer2()">添加药物文章</el-button>
+                                </div>
+                                <el-drawer
+                                        title="添加文章"
+                                        :visible.sync="drawer6"
+                                        :direction="direction">
+                                    <div id="addAMessage">
+                                        <el-form :label-position="labelPosition" label-width="100px"
+                                                 :model="Message">
+                                            <el-form-item label="文章标题">
+                                                <el-input v-model="Message.m_title"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="文章摘要">
+                                                <el-input type="textarea" v-model="Message.m_summary"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="文章类型">
+                                                <el-select v-model="Message.m_type" placeholder="请选择">
+                                                    <el-option
+                                                            v-for="item in options4"
+                                                            :key="item.value"
+                                                            :label="item.label"
+                                                            :value="item.value">
+                                                    </el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="文章内容">
+                                                <el-input type="textarea" v-model="Message.m_content"></el-input>
+                                            </el-form-item>
+                                            <el-button type="primary" @click="putMessage">提交申请</el-button>
+                                        </el-form>
+                                    </div>
+                                </el-drawer>
+                                <el-divider></el-divider>
+                                <div id="MessageListDiv">
+                                    <el-table
+                                            :data="MessageList"
+                                            border
+                                            style="width:100%"
+                                            :row-class-name="tableRowClassName">
+                                        <el-table-column
+                                                prop="m_title"
+                                                label="文章标题"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_summary"
+                                                label="文章摘要"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_content"
+                                                label="文章内容"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_type"
+                                                label="文章类型"
+                                                width="200"
+                                                :formatter="m_typeFormatter">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_time"
+                                                label="发布时间"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_read"
+                                                label="阅读数目"
+                                                width="200">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_mark"
+                                                label="状态"
+                                                width="200">
+                                            <template slot-scope="scope">
+                                                <el-tag
+                                                        :type="scope.row.d_approve == '1' ? 'success' : 'danger'"
+                                                        disable-transitions>{{scope.row.m_mark|isvFilter}}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="m_mark"
+                                                label="操作"
+                                                width="200">
+                                            <template slot-scope="scope">
+                                                <el-button @click="handleClick9(scope.row)" type="text" size="small">删除
+                                                </el-button>
+                                                <el-button @click="handleClick10(scope.row)" type="text" size="small">
+                                                    编辑
+                                                </el-button>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-drawer
+                                            title="修改文章"
+                                            :visible.sync="drawer7"
+                                            :direction="direction">
+                                        <div id="changeMessage">
+                                            <el-form :label-position="labelPosition" label-width="100px"
+                                                     :model="changeMessage">
+                                                <el-form-item label="文章标题">
+                                                    <el-input v-model="changeMessage.m_title"></el-input>
+                                                </el-form-item>
+                                                <el-form-item label="文章摘要">
+                                                    <el-input type="textarea"
+                                                              v-model="changeMessage.m_summary"></el-input>
+                                                </el-form-item>
+                                                <el-form-item label="文章类型">
+                                                    <el-select v-model="changeMessage.m_type" placeholder="请选择">
+                                                        <el-option
+                                                                v-for="item in options4"
+                                                                :key="item.value"
+                                                                :label="item.label"
+                                                                :value="item.value">
+                                                        </el-option>
+                                                    </el-select>
+                                                </el-form-item>
+                                                <el-form-item label="文章内容">
+                                                    <el-input type="textarea"
+                                                              v-model="changeMessage.m_content"></el-input>
+                                                </el-form-item>
+                                                <el-button type="primary" @click="changeAMessage">修改</el-button>
+                                            </el-form>
+                                        </div>
+                                    </el-drawer>
+                                </div>
                             </div>
                         </el-main>
                         <el-footer>
@@ -1107,6 +1308,16 @@
                             value: '1',
                             label: '患病志愿者'
                         }],
+                        options4: [{
+                            value: '0',
+                            label: '药物知识'
+                        }, {
+                            value: '1',
+                            label: '药物发布'
+                        }, {
+                            value: '2',
+                            label: '公司新闻'
+                        }],
                         value: '',
                         direction: 'rtl',
                         drawer: false,
@@ -1114,6 +1325,8 @@
                         drawer3: false,
                         drawer4: false,
                         drawer5: false,
+                        drawer6: false,
+                        drawer7: false,
                         recruitList: [],
                         activeName: 'second',
                         index: '1',
@@ -1216,7 +1429,29 @@
                             dp_stage: '',
                         },
                         dp_id: '',
-                        Message:'',
+                        Message: {
+                            m_id: '',
+                            m_summary: '',
+                            m_title: '',
+                            m_content: '',
+                            m_mark: '',
+                            m_type: '',
+                            m_time: '',
+                            m_read: '',
+                            m_author: '',
+                        },
+                        MessageList: [],
+                        changeMessage: {
+                            m_id: '',
+                            m_summary: '',
+                            m_title: '',
+                            m_content: '',
+                            m_mark: '',
+                            m_type: '',
+                            m_time: '',
+                            m_read: '',
+                            m_author: '',
+                        },
                     };
                 },
                 methods: {
@@ -1262,6 +1497,14 @@
                         else
                             return '保健品'
                     },
+                    m_typeFormatter(row, colum) {
+                        if (row.m_type == 0)
+                            return '药物知识'
+                        else if (row.d_mark == 1)
+                            return '药物发布'
+                        else
+                            return '公司新闻'
+                    },
                     handleOpen(key, keyPath) {
                         console.log(key, keyPath);
                     },
@@ -1306,6 +1549,21 @@
                     },
                     handleClick8(row) {
                         deleteProgressByDpId(row);
+                    },
+                    handleClick9(row) {
+                        deleteMessageByMId(row.m_id);
+                    },
+                    handleClick10(row) {
+                        this.drawer7 = true;
+                        this.changeMessage.m_id = row.m_id
+                        this.changeMessage.m_summary = row.m_summary
+                        this.changeMessage.m_title = row.m_title
+                        this.changeMessage.m_content = row.m_content
+                        this.changeMessage.m_mark = 0
+                        this.changeMessage.m_type = row.m_type
+                        this.changeMessage.m_time = row.m_time
+                        this.changeMessage.m_read = row.m_read
+                        this.changeMessage.m_author = row.m_author
                     },
                     open(row) {
                         this.$alert(row.r_detial);
@@ -1358,6 +1616,7 @@
                     getDragList();
                     getRecruits();
                     getVolunteers();
+                    getMessageList();
                 }
             })
         </script>

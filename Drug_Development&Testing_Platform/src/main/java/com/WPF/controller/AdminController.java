@@ -1,10 +1,7 @@
 package com.WPF.controller;
 
 import com.WPF.domain.*;
-import com.WPF.service.DragService;
-import com.WPF.service.EnterpriseService;
-import com.WPF.service.PhysicalExamService;
-import com.WPF.service.RecruitService;
+import com.WPF.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +28,8 @@ public class AdminController {
 
 	@Resource
 	private DragService dragService;
+	@Resource
+	private MessageService messageService;
 
 	@RequestMapping("/addEnterprise")
 	public void addEnterprise(HttpServletResponse response, HttpServletRequest request) throws Exception {
@@ -74,6 +73,16 @@ public class AdminController {
 		response.setContentType("text/html;charset=utf-8");
 		drags = dragService.getDragList();
 		return drags;
+	}
+
+	@RequestMapping("/getMessageList")
+	@ResponseBody
+	public List<Message> getMessageList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<Message> messages = new ArrayList<>();
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		messages = messageService.getMessageList();
+		return messages;
 	}
 
 	@RequestMapping("/deleteEnterprise")
@@ -181,6 +190,30 @@ public class AdminController {
 		int trg = mapper.readValue(json2, Integer.class);
 		int num = 0;
 		num = dragService.changeDragDApprove(d_id, trg);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("修改成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("修改失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
+	@RequestMapping("/changeMessageMMark")
+	public void changeMessageMMark(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("m_id");
+		String json2 = request.getParameter("trg");
+		ObjectMapper mapper = new ObjectMapper();
+		String m_id = mapper.readValue(json, String.class);
+		int trg = mapper.readValue(json2, Integer.class);
+		int num = 0;
+		num = messageService.changeMessageMMark(m_id, trg);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("修改成功");
