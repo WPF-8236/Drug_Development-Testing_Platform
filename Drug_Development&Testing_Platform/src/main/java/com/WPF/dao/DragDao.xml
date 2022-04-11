@@ -72,4 +72,24 @@
         from ddtp_drag
         where d_approve = '1'
     </select>
+
+    <update id="changeDrag">
+        update ddtp_drag
+        set d_manufacturer=#{d_manufacturer},
+            d_batch_number=#{d_batch_number},
+            d_approval_number=#{d_approval_number},
+            d_taboo=#{d_taboo},
+            d_adverse_reactions=#{d_adverse_reactions},
+            d_shelf_life=#{d_shelf_life},
+            d_notes=#{d_notes},
+            d_interaction=#{d_interaction},
+            d_pharmacological=#{d_pharmacological}
+        where d_id = #{d_id}
+    </update>
+
+    <delete id="deleteDragByDId">
+        delete
+        from ddtp_drag
+        where d_id = #{d_id}
+    </delete>
 </mapper>

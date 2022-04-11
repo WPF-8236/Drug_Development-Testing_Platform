@@ -182,7 +182,7 @@
                                             {{message.m_summary}}
                                         </div>
                                         <div id="message-type">
-                                            {{message.m_type}}
+                                            {{message.m_type|m_typeFilter}}
                                         </div>
                                     </div>
                                     <div id="message-2">
@@ -438,6 +438,14 @@
                         m = date.getMinutes() + ':';
                         s = date.getSeconds();
                         return Y + M + D + h + m + s;
+                    },
+                    m_typeFilter(value) {
+                        if (value == 0)
+                            return '药物知识'
+                        else if (value == 1)
+                            return '药物发布'
+                        else
+                            return '公司新闻'
                     },
                 },
                 methods: {

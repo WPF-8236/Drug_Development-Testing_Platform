@@ -25,4 +25,6 @@ public interface CRFDao {
 	List<CRFReport> selectCRFReportByUserId(@Param("user_id") String user_id);
 
 	List<CRFReport> selectCRFListByRaId(@Param("ra_id") String ra_id);
+
+	List<CRFReport> getCRFListByDId(@Param("d_id") String d_id);
 }

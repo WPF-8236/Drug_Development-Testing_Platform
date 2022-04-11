@@ -138,7 +138,7 @@
                 })
             }
 
-            function changeMessageMMark(m_id,trg){
+            function changeMessageMMark(m_id, trg) {
                 $.ajax({
                     url: "Admin/changeMessageMMark",
                     contentType: 'application/json;charset=UTF-8',
@@ -708,7 +708,7 @@
                                         </el-table-column>
                                     </el-table>
                                 </div>
-
+                            </div>
                         </el-main>
                         <el-footer>
                             &copy; 2022 毕业设计 | Design by 201805020527王潘锋

@@ -62,4 +62,10 @@ public interface EnterpriseService {
 	int deleteMessageByMId(String m_id);
 
 	int changeAMessage(Message message);
+
+	int changeDrag(Drag drag);
+
+	int deleteDragByDId(String d_id);
+
+	List<CRFReport> getCRFListByDId(String d_id);
 }

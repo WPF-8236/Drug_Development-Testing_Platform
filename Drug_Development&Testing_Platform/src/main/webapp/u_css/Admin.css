@@ -106,16 +106,16 @@ body > .el-container {
     display: none;
 }
 
-.el-table .warning-row {
-    background: oldlace;
-}
+    .el-table .warning-row {
+        background: oldlace;
+    }
 
-.el-table .success-row {
-    background: #f0f9eb;
-}
+    .el-table .success-row {
+        background: #f0f9eb;
+    }
 
-.el-table .error-row {
-    background: #F56C6C;
-}
+    .el-table .error-row {
+        background: #F56C6C;
+    }
 
 

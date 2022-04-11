@@ -400,6 +400,58 @@
                     }
                 })
             }
+
+            function changeDrag() {
+                $.ajax({
+                    url: "enterprise/changeDrag",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"changeDrag": JSON.stringify(this.app.updateDrag)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Enterprise.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function deleteDragByDId(d_id) {
+                $.ajax({
+                    url: "enterprise/deleteDragByDId",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"d_id": JSON.stringify(d_id)},
+                    success: function (reps) {
+                        alert(reps.valueOf());
+                        window.location.href = "./Enterprise.jsp";
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
+
+            function getPDF(c_id) {
+                window.location.href = "jasper/exportPdf?c_id=" + c_id + "&type=pdf"
+            }
+
+            function getCRFList(d_id) {
+                $.ajax({
+                    url: "enterprise/getCRFListByDId",
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"d_id": JSON.stringify(d_id)},
+                    success: function (reps) {
+                        console.log(reps)
+                        app.CRFList = reps;
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                })
+            }
         </script>
     </head>
     <body>
@@ -448,13 +500,17 @@
                                         <i class="el-icon-s-order"></i>
                                         <span slot="title">文章信息发布</span>
                                     </el-menu-item>
+                                    <el-menu-item index="7">
+                                        <i class="el-icon-s-order"></i>
+                                        <span slot="title">药物测试报告查看</span>
+                                    </el-menu-item>
                                 </el-menu>
                             </el-col>
                         </el-row>
                     </el-aside>
                     <el-container>
                         <el-main>
-                            <div v-if="index==1">
+                            <div v-show="index==1">
                                 <div id="addResearcher">
                                     <el-form ref="addResearcher" :model="addResearcher" label-width="100px">
                                         <el-row :gutter="30">
@@ -574,7 +630,7 @@
                                     </el-drawer>
                                 </div>
                             </div>
-                            <div v-if="index==2">
+                            <div v-show="index==2">
                                 <div id="addDrag">
                                     <el-button type="primary" onclick="changeDrawer()">添加药物申请</el-button>
                                 </div>
@@ -647,7 +703,7 @@
                                         <el-table-column
                                                 prop="d_mark"
                                                 label="药品标记"
-                                                width="200"
+                                                width="150"
                                                 :formatter="d_mark_typeFormatter">
                                         </el-table-column>
                                         <el-table-column
@@ -663,7 +719,7 @@
                                         <el-table-column
                                                 prop="d_approve"
                                                 label="状态"
-                                                width="200">
+                                                width="80">
                                             <template slot-scope="scope">
                                                 <el-tag
                                                         :type="scope.row.d_approve == '1' ? 'success' : 'danger'"
@@ -671,11 +727,62 @@
                                                 </el-tag>
                                             </template>
                                         </el-table-column>
+                                        <el-table-column
+                                                label="操作"
+                                                width="150">
+                                            <template slot-scope="scope">
+                                                <el-button @click="handleClick11(scope.row)" type="text" size="small">删除
+                                                </el-button>
+                                                <el-button @click="handleClick12(scope.row)" type="text" size="small"
+                                                           v-if="scope.row.d_approve==1">
+                                                    更新详细详细
+                                                </el-button>
+                                            </template>
+                                        </el-table-column>
                                     </el-table>
                                 </div>
-
+                                <el-drawer
+                                        title="更新药物详细详细"
+                                        :visible.sync="drawer8"
+                                        :direction="direction">
+                                    <div id="updateADrag">
+                                        <el-form :label-position="labelPosition" label-width="100px"
+                                                 :model="updateDrag">
+                                            <el-form-item label="药品生产厂家">
+                                                <el-input v-model="updateDrag.d_manufacturer"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="药品批次号">
+                                                <el-input v-model="updateDrag.d_batch_number"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="药品批准文号">
+                                                <el-input v-model="updateDrag.d_approval_number"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="药品禁忌">
+                                                <el-input type="textarea" v-model="updateDrag.d_taboo"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="药品不良反应">
+                                                <el-input type="textarea"
+                                                          v-model="updateDrag.d_adverse_reactions"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="药品保质期">
+                                                <el-input v-model="updateDrag.d_shelf_life"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="药品注意事项">
+                                                <el-input type="textarea" v-model="updateDrag.d_notes"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="药品相互作用">
+                                                <el-input type="textarea" v-model="updateDrag.d_interaction"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="药理">
+                                                <el-input type="textarea"
+                                                          v-model="updateDrag.d_pharmacological"></el-input>
+                                            </el-form-item>
+                                            <el-button type="primary" @click="changeDrag">提交</el-button>
+                                        </el-form>
+                                    </div>
+                                </el-drawer>
                             </div>
-                            <div v-if="index==3">
+                            <div v-show="index==3">
                                 <el-collapse v-model="activeNames" @change="handleChange" accordion>
                                     <el-collapse-item title="未分配的志愿者" name="1">
                                         <div id="VolunteerList">
@@ -776,7 +883,7 @@
                                     </div>
                                 </el-collapse>
                             </div>
-                            <div v-if="index==4">
+                            <div v-show="index==4">
                                 <el-collapse v-model="activeName" @change="handleChange2" accordion>
                                     <div id="progressListForDrag" v-for="a in DragList" v-if="a.d_approve==1">
                                         <el-collapse-item :title="a.d_trade_name" :name="a.d_id">
@@ -873,7 +980,7 @@
                                     </div>
                                 </el-collapse>
                             </div>
-                            <div v-if="index==5">
+                            <div v-show="index==5">
                                 <div id="addRecruit">
                                     <el-button type="primary" onclick="changeDrawer1()">添加支援招募申请</el-button>
                                 </div>
@@ -1158,7 +1265,7 @@
                                             :data="MessageList"
                                             border
                                             style="width:100%"
-                                            :row-class-name="tableRowClassName">
+                                            :row-class-name="tableRowClassName1">
                                         <el-table-column
                                                 prop="m_title"
                                                 label="文章标题"
@@ -1196,7 +1303,7 @@
                                                 width="200">
                                             <template slot-scope="scope">
                                                 <el-tag
-                                                        :type="scope.row.d_approve == '1' ? 'success' : 'danger'"
+                                                        :type="scope.row.m_mark == '1' ? 'success' : 'danger'"
                                                         disable-transitions>{{scope.row.m_mark|isvFilter}}
                                                 </el-tag>
                                             </template>
@@ -1247,6 +1354,47 @@
                                         </div>
                                     </el-drawer>
                                 </div>
+                            </div>
+                            <div v-show="index==7">
+                                <el-collapse v-model="activeName" @change="handleChange3" accordion>
+                                    <div id="CRFReportForDrag" v-for="a in DragList" v-if="a.d_approve==1">
+                                        <el-collapse-item :title="a.d_trade_name" :name="a.d_id">
+                                            <el-table
+                                                    :data="CRFList"
+                                                    style="width: 820px">
+                                                <el-table-column
+                                                        prop="c_id"
+                                                        label="报告编号"
+                                                        width="180">
+                                                </el-table-column>
+                                                <el-table-column
+                                                        prop="user_name"
+                                                        label="志愿者姓名"
+                                                        width="180">
+                                                </el-table-column>
+                                                <el-table-column
+                                                        prop="ra_name"
+                                                        label="研究员姓名"
+                                                        width="180">
+                                                </el-table-column>
+                                                <el-table-column
+                                                        prop="c_date"
+                                                        label="报告提交时间"
+                                                        width="180">
+                                                </el-table-column>
+                                                <el-table-column
+                                                        label="操作"
+                                                        width="100">
+                                                    <template slot-scope="scope">
+                                                        <el-button @click="handleClick13(scope.row)" type="text"
+                                                                   size="small">查看
+                                                        </el-button>
+                                                    </template>
+                                                </el-table-column>
+                                            </el-table>
+                                        </el-collapse-item>
+                                    </div>
+                                </el-collapse>
                             </div>
                         </el-main>
                         <el-footer>
@@ -1327,6 +1475,7 @@
                         drawer5: false,
                         drawer6: false,
                         drawer7: false,
+                        drawer8: false,
                         recruitList: [],
                         activeName: 'second',
                         index: '1',
@@ -1356,6 +1505,28 @@
                         activeNames: ['1'],
                         DragList: [],
                         Drag: {
+                            d_id: '',
+                            d_e_id: '',
+                            d_trade_name: '',
+                            d_generic_name: '',
+                            d_specification: '',
+                            d_manufacturer: '',
+                            d_batch_number: '',
+                            d_approval_number: '',
+                            d_attending: '',
+                            d_taboo: '',
+                            d_adverse_reactions: '',
+                            d_shelf_life: '',
+                            d_state: '',
+                            d_approve: '',
+                            d_mark: '',
+                            d_notes: '',
+                            d_ingredients: '',
+                            d_characters: '',
+                            d_interaction: '',
+                            d_pharmacological: '',
+                        },
+                        updateDrag: {
                             d_id: '',
                             d_e_id: '',
                             d_trade_name: '',
@@ -1452,6 +1623,7 @@
                             m_read: '',
                             m_author: '',
                         },
+                        CRFList: [],
                     };
                 },
                 methods: {
@@ -1565,17 +1737,44 @@
                         this.changeMessage.m_read = row.m_read
                         this.changeMessage.m_author = row.m_author
                     },
+                    handleClick11(row) {
+                        deleteDragByDId(row.d_id);
+                    },
+                    handleClick12(row) {
+                        this.drawer8 = true;
+                        this.updateDrag.d_id = row.d_id;
+                        this.updateDrag.d_e_id = row.d_e_id;
+                        this.updateDrag.d_trade_name = row.d_trade_name;
+                        this.updateDrag.d_generic_name = row.d_generic_name;
+                        this.updateDrag.d_manufacturer = row.d_manufacturer;
+                        this.updateDrag.d_batch_number = row.d_batch_number;
+                        this.updateDrag.d_approval_number = row.d_approval_number;
+                        this.updateDrag.d_attending = row.d_attending;
+                        this.updateDrag.d_taboo = row.d_taboo;
+                        this.updateDrag.d_adverse_reactions = row.d_adverse_reactions;
+                        this.updateDrag.d_shelf_life = row.d_shelf_life;
+                        this.updateDrag.d_state = row.d_state;
+                        this.updateDrag.d_approve = row.d_approve;
+                        this.updateDrag.d_mark = row.d_mark;
+                        this.updateDrag.d_notes = row.d_notes;
+                        this.updateDrag.d_ingredients = row.d_ingredients;
+                        this.updateDrag.d_characters = row.d_characters;
+                        this.updateDrag.d_interaction = row.d_interaction;
+                        this.updateDrag.d_pharmacological = row.d_pharmacological;
+                        console.log(this.updateDrag);
+                    },
+                    handleClick13(row) {
+                        getPDF(row.c_id);
+                    },
                     open(row) {
                         this.$alert(row.r_detial);
                     },
                     select(index, indexPath) {
                         app.index = index;
-                    }
-                    ,
+                    },
                     onSubmit() {
                         addResearcher();
-                    }
-                    ,
+                    },
                     handleChange(val) {
                         app.deleteu_ra.v_ra_id = val;
                         getVolunteersByRaId(val);
@@ -1584,10 +1783,12 @@
                         app.addProgress.dp_d_id = val;
                         getProgressListByDId(val);
                     },
+                    handleChange3(val) {
+                        getCRFList(val)
+                    },
                     putDrag() {
                         putADrag();
-                    }
-                    ,
+                    },
                     tableRowClassName({row, rowIndex}) {
                         if (row.d_approve == 0) {
                             return 'warning-row';
@@ -1596,8 +1797,16 @@
                         } else {
                             return 'error-row'
                         }
-                    }
-                    ,
+                    },
+                    tableRowClassName1({row, rowIndex}) {
+                        if (row.m_mark == 0) {
+                            return 'warning-row';
+                        } else if (row.m_mark == 1) {
+                            return 'success-row';
+                        } else {
+                            return 'error-row'
+                        }
+                    },
                 },
                 filters: {
                     isvFilter(value) {

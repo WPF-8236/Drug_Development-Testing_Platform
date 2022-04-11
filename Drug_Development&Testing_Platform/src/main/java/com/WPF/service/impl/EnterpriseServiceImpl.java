@@ -35,6 +35,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	private MessageDao messageDao;
 	@Resource
 	private MEDao meDao;
+	@Resource
+	private CRFDao crfDao;
 
 	@Override
 	@Transactional
@@ -198,5 +200,20 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	@Override
 	public int changeAMessage(Message message) {
 		return messageDao.updateMessage(message);
+	}
+
+	@Override
+	public int changeDrag(Drag drag) {
+		return dragDao.changeDrag(drag);
+	}
+
+	@Override
+	public int deleteDragByDId(String d_id) {
+		return dragDao.deleteDragByDId(d_id);
+	}
+
+	@Override
+	public List<CRFReport> getCRFListByDId(String d_id) {
+		return crfDao.getCRFListByDId(d_id);
 	}
 }

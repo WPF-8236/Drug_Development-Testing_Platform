@@ -356,6 +356,28 @@ public class EnterpriseController {
 		}
 	}
 
+	@RequestMapping("/changeDrag")
+	public void changeDrag(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("changeDrag");
+		ObjectMapper mapper = new ObjectMapper();
+		Drag drag = mapper.readValue(json, Drag.class);
+		int num = 0;
+		num = enterpriseService.changeDrag(drag);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("修改成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("修改失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
 	@RequestMapping("/deleteMessageByMId")
 	public void deleteMessageByMId(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -376,6 +398,39 @@ public class EnterpriseController {
 			printWriter.print(json);
 			printWriter.close();
 		}
+	}
+
+	@RequestMapping("/deleteDragByDId")
+	public void deleteDragByDId(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = response.getWriter();
+		String json = request.getParameter("d_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String d_id = mapper.readValue(json, String.class);
+		int num = 0;
+		num = enterpriseService.deleteDragByDId(d_id);
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (num != 0) {
+			json = objectMapper.writeValueAsString("删除成功");
+			printWriter.print(json);
+			printWriter.close();
+		} else {
+			json = objectMapper.writeValueAsString("删除失败！！");
+			printWriter.print(json);
+			printWriter.close();
+		}
+	}
+
+	@RequestMapping("/getCRFListByDId")
+	@ResponseBody
+	public List<CRFReport> getCRFListByDId(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String json = request.getParameter("d_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String d_id = mapper.readValue(json, String.class);
+		return enterpriseService.getCRFListByDId(d_id);
 	}
 
 	@RequestMapping("/getMessageList")
