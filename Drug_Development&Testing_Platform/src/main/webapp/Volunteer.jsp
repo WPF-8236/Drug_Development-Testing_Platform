@@ -194,8 +194,8 @@
                                         <el-input v-model="recruitList.rl_address" disabled></el-input>
                                     </el-form-item>
                                     <el-form-item label="是否吸烟">
-                                        <el-radio v-model="recruitList.rl_issmoke" label="0">是</el-radio>
-                                        <el-radio v-model="recruitList.rl_issmoke" label="1">否</el-radio>
+                                        <el-radio v-model="recruitList.rl_issmoke" label="1">是</el-radio>
+                                        <el-radio v-model="recruitList.rl_issmoke" label="0">否</el-radio>
                                     </el-form-item>
                                     <el-form-item label="备注">
                                         <el-input type="textarea" :row="3" v-model="recruitList.rl_text"></el-input>

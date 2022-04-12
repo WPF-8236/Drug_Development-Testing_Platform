@@ -129,8 +129,13 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	}
 
 	@Override
-	public int updateARlUE(String rl_id, String rl_u_id) {
-		return rlUEDao.insertRlUEDao(rl_id, rl_u_id);
+	public String getEId(String rl_id) {
+		return rlUEDao.selectEID(rl_id);
+	}
+
+	@Override
+	public int updateARlUE(String e_id, String rl_id, String rl_u_id) {
+		return rlUEDao.insertRlUEDao(e_id, rl_id, rl_u_id);
 	}
 
 	@Override

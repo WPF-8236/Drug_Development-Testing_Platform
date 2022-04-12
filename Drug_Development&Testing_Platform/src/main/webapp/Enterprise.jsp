@@ -735,7 +735,7 @@
                                                 </el-button>
                                                 <el-button @click="handleClick12(scope.row)" type="text" size="small"
                                                            v-if="scope.row.d_approve==1">
-                                                    更新详细详细
+                                                    更新详细信息
                                                 </el-button>
                                             </template>
                                         </el-table-column>

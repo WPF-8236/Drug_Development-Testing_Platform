@@ -165,7 +165,8 @@ public class AdminController {
 		String rl_id = mapper.readValue(json, String.class);
 		String rl_u_id = mapper.readValue(json2, String.class);
 		int num = 0;
-		num = enterpriseService.updateARlUE(rl_id, rl_u_id);
+		String e_id = enterpriseService.getEId(rl_id);
+		num = enterpriseService.updateARlUE(e_id, rl_id, rl_u_id);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if (num != 0) {
 			json = objectMapper.writeValueAsString("修改成功");

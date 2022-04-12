@@ -35,7 +35,9 @@ public interface EnterpriseService {
 
 	int updateARrecruit(Recruit recruit);
 
-	int updateARlUE(String rl_id, String rl_u_id);
+	String getEId(String rl_id);
+
+	int updateARlUE(String e_id, String rl_id, String rl_u_id);
 
 	List<Volunteer> getVolunteers(String e_id);
 

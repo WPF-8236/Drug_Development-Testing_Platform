@@ -5,6 +5,11 @@
 <mapper namespace="com.WPF.dao.RlUEDao">
     <insert id="insertRlUEDao">
         insert into ddtp_rl_u_e(e_id, user_id, rl_id)
-        VALUES ((SELECT r_e_id FROM ddtp_recruit WHERE r_id = #{rl_id}), #{rl_u_id}, #{rl_id})
+        VALUES (#{e_id}, #{rl_u_id}, #{rl_id})
     </insert>
+    <select id="selectEID" resultType="String">
+        SELECT r_e_id
+        FROM ddtp_recruit
+        WHERE r_id = #{rl_id}
+    </select>
 </mapper>
