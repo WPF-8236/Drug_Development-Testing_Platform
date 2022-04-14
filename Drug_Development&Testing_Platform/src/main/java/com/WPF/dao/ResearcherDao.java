@@ -8,7 +8,7 @@ import java.util.List;
 public interface ResearcherDao {
 	int insertResearcher(Researcher researcher);
 
-	List<Researcher> selectResearcher();
+	List<Researcher> selectResearcher(@Param("ra_e_id") String ra_e_id);
 
 	int updateResearcher(Researcher researcher);
 

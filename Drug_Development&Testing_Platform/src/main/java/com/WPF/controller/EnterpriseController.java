@@ -96,7 +96,10 @@ public class EnterpriseController {
 		List<Researcher> researchers = new ArrayList<>();
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		researchers = enterpriseService.getResearcherList();
+		String json = request.getParameter("ra_e_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String ra_e_id = mapper.readValue(json, String.class);
+		researchers = enterpriseService.getResearcherList(ra_e_id);
 		return researchers;
 	}
 

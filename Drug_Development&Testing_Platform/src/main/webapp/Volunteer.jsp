@@ -30,6 +30,7 @@
                     success: function (reps) {
                         console.log(reps);
                         app.recruits = reps;
+                        app.recruitsPage.total = app.recruits.length;
                     },
                     error: function () {
                         alert('error');
@@ -40,7 +41,7 @@
             function changeDrawer2() {
                 app.drawer2 = 'true';
                 app.recruitList.rl_title = app.recruit_detial.r_title;
-                app.recruitList.rl_u_id=document.getElementById("user_id").textContent;
+                app.recruitList.rl_u_id = document.getElementById("user_id").textContent;
                 app.recruitList.rl_user_name = document.getElementById("user_name").textContent;
                 app.recruitList.rl_user_sex = document.getElementById("user_sex").textContent;
                 app.recruitList.rl_user_phone = document.getElementById("phone_number").textContent;
@@ -89,7 +90,9 @@
                 <el-main class="el-tabs">
                     <el-tabs type="border-card">
                         <el-tab-pane label="健康志愿者招募">
-                            <div class="contbox" v-for="recruit in recruits" v-if="recruit.r_type==0">
+                            <div class="contbox"
+                                 v-for="recruit in recruits.slice((recruitsPage.currentPage-1)*recruitsPage.pageSize,recruitsPage.currentPage*recruitsPage.pageSize)"
+                                 v-if="recruit.r_type==0">
                                 <div class="contlist contlist1">
                                     <div class="list_more" @click="drawer = true;recruit_detial = recruit">查看详情</div>
                                     <div class="contlist_left"><h3><a>{{recruit.r_title}}</a></h3>
@@ -107,7 +110,9 @@
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="患者招募">
-                            <div class="contbox" v-for="recruit in recruits" v-if="recruit.r_type==1">
+                            <div class="contbox"
+                                 v-for="recruit in recruits.slice((recruitsPage.currentPage-1)*recruitsPage.pageSize,recruitsPage.currentPage*recruitsPage.pageSize)"
+                                 v-if="recruit.r_type==1">
                                 <div class="contlist contlist1">
                                     <div class="list_more" @click="drawer = true; recruit_detial = recruit">查看详情</div>
                                     <div class="contlist_left"><h3><a>{{recruit.r_title}}</a></h3>
@@ -124,10 +129,20 @@
                                 </div>
                             </div>
                         </el-tab-pane>
-                        <el-drawer
-                                title="详细信息"
-                                :visible.sync="drawer"
-                                :direction="direction">
+                        <div class="block" style="margin-top:15px;">
+                            <el-pagination
+                                    @size-change="handleSizeChange1"
+                                    @current-change="handleCurrentChange1"
+                                    :current-page.sync="recruitsPage.currentPage"
+                                    :page-sizes="[5, 10, 15, 20, 25]"
+                                    :page-size="recruitsPage.pageSize"
+                                    layout="total, sizes, prev, pager, next, jumper"
+                                    :total="recruitsPage.total">
+                            </el-pagination>
+                            <el-drawer
+                                    title="详细信息"
+                                    :visible.sync="drawer"
+                                    :direction="direction">
                             <span>
                                 <div id="main">
 				                    <div class="inner">
@@ -160,53 +175,54 @@
                                     </div>
                                 </div>
                             </span>
-                        </el-drawer>
-                        <el-drawer
-                                title="在线报名"
-                                :visible.sync="drawer2"
-                                :direction="direction">
-                            <div id="recruitList">
-                                <el-form :label-position="labelPosition" label-width="100px" :model="recruitList">
-                                    <el-form-item label="报名项目">
-                                        <el-input v-model="recruitList.rl_title" disabled></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="姓名">
-                                        <el-input v-model="recruitList.rl_user_name" disabled></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="性别">
-                                        <el-input v-if="recruitList.rl_user_sex" value="男" disabled></el-input>
-                                        <el-input v-else value="女" disabled></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="手机号">
-                                        <el-input v-model="recruitList.rl_user_phone" disabled></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="身份证">
-                                        <el-input v-model="recruitList.rl_user_identification_number"
-                                                  disabled></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="身高（cm）">
-                                        <el-input v-model="recruitList.rl_user_height"></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="体重（kg）">
-                                        <el-input v-model="recruitList.rl_user_weight"></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="地址">
-                                        <el-input v-model="recruitList.rl_address" disabled></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="是否吸烟">
-                                        <el-radio v-model="recruitList.rl_issmoke" label="1">是</el-radio>
-                                        <el-radio v-model="recruitList.rl_issmoke" label="0">否</el-radio>
-                                    </el-form-item>
-                                    <el-form-item label="备注">
-                                        <el-input type="textarea" :row="3" v-model="recruitList.rl_text"></el-input>
-                                    </el-form-item>
+                            </el-drawer>
+                            <el-drawer
+                                    title="在线报名"
+                                    :visible.sync="drawer2"
+                                    :direction="direction">
+                                <div id="recruitList">
+                                    <el-form :label-position="labelPosition" label-width="100px" :model="recruitList">
+                                        <el-form-item label="报名项目">
+                                            <el-input v-model="recruitList.rl_title" disabled></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="姓名">
+                                            <el-input v-model="recruitList.rl_user_name" disabled></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="性别">
+                                            <el-input v-if="recruitList.rl_user_sex" value="男" disabled></el-input>
+                                            <el-input v-else value="女" disabled></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="手机号">
+                                            <el-input v-model="recruitList.rl_user_phone" disabled></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="身份证">
+                                            <el-input v-model="recruitList.rl_user_identification_number"
+                                                      disabled></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="身高（cm）">
+                                            <el-input v-model="recruitList.rl_user_height"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="体重（kg）">
+                                            <el-input v-model="recruitList.rl_user_weight"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="地址">
+                                            <el-input v-model="recruitList.rl_address" disabled></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="是否吸烟">
+                                            <el-radio v-model="recruitList.rl_issmoke" label="1">是</el-radio>
+                                            <el-radio v-model="recruitList.rl_issmoke" label="0">否</el-radio>
+                                        </el-form-item>
+                                        <el-form-item label="备注">
+                                            <el-input type="textarea" :row="3" v-model="recruitList.rl_text"></el-input>
+                                        </el-form-item>
 
-                                    <el-button type="primary" @click="putRecruit">提交报名</el-button>
-                                </el-form>
-                            </div>
-                        </el-drawer>
-                        <el-backtop target=".el-tabs" bottom="100" style="background-color: #f2f5f6;
+                                        <el-button type="primary" @click="putRecruit">提交报名</el-button>
+                                    </el-form>
+                                </div>
+                            </el-drawer>
+                            <el-backtop target=".el-tabs" bottom="100" style="background-color: #f2f5f6;
         box-shadow: 0 0 6px rgba(0,0,0, .12);"></el-backtop>
+                        </div>
                     </el-tabs>
                 </el-main>
                 <el-footer> &copy; 2022 毕业设计 | Design by 201805020527王潘锋</el-footer>
@@ -217,6 +233,11 @@
                 el: '#app',
                 data() {
                     return {
+                        recruitsPage: {
+                            currentPage: 1,
+                            total: '',
+                            pageSize: 25,
+                        },
                         labelPosition: 'left',
                         recruits: [],
                         drawer: false,
@@ -258,6 +279,15 @@
                     }
                 },
                 methods: {
+                    handleSizeChange1(val) {
+                        console.log(`每页 ${val} 条`);
+                        this.recruitsPage.currentPage = 1;
+                        this.recruitsPage.pageSize = val;
+                    },
+                    handleCurrentChange1(val) {
+                        console.log(`当前页: ${val}`);
+                        this.recruitsPage.currentPage = val;
+                    },
                     putRecruit() {
                         submitRecruitList()
                     }

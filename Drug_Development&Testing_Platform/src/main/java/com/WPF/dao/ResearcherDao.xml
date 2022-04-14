@@ -11,6 +11,7 @@
     <select id="selectResearcher" resultType="Researcher">
         select *
         from ddtp_researcher
+        where ra_e_id = #{ra_e_id}
     </select>
 
     <select id="selectAResearcher" resultType="Researcher">

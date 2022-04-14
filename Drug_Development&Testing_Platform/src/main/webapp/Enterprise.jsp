@@ -43,6 +43,8 @@
                 $.ajax({
                     url: "enterprise/getResearcherList",
                     contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"ra_e_id": JSON.stringify(document.getElementById("e_id").textContent)},
                     success: function (reps) {
                         console.log(reps)
                         app.researcherList = reps;
@@ -62,6 +64,7 @@
                     success: function (reps) {
                         console.log(reps)
                         app.DragList = reps;
+                        app.DragListPage.total = app.DragList.length;
                     },
                     error: function () {
                         alert('error');
@@ -196,6 +199,7 @@
                     success: function (reps) {
                         console.log(reps)
                         app.recruitList = reps;
+                        app.recruitListPage.total = app.recruitList.length;
                     },
                     error: function () {
                         alert('error');
@@ -676,7 +680,7 @@
                                 <el-divider></el-divider>
                                 <div id="DragListDiv">
                                     <el-table
-                                            :data="DragList"
+                                            :data="DragList.slice((DragListPage.currentPage-1)*DragListPage.pageSize,DragListPage.currentPage*DragListPage.pageSize)"
                                             border
                                             style="width:100%"
                                             :row-class-name="tableRowClassName">
@@ -740,6 +744,17 @@
                                             </template>
                                         </el-table-column>
                                     </el-table>
+                                </div>
+                                <div class="block" style="margin-top:15px;">
+                                    <el-pagination
+                                            @size-change="handleSizeChange1"
+                                            @current-change="handleCurrentChange1"
+                                            :current-page.sync="DragListPage.currentPage"
+                                            :page-sizes="[5, 10, 15, 20, 25]"
+                                            :page-size="DragListPage.pageSize"
+                                            layout="total, sizes, prev, pager, next, jumper"
+                                            :total="DragListPage.total">
+                                    </el-pagination>
                                 </div>
                                 <el-drawer
                                         title="更新药物详细详细"
@@ -1065,7 +1080,7 @@
                                 <el-divider></el-divider>
                                 <div id="recruitListDiv">
                                     <el-table
-                                            :data="recruitList"
+                                            :data="recruitList.slice((recruitListPage.currentPage-1)*recruitListPage.pageSize,recruitListPage.currentPage*recruitListPage.pageSize)"
                                             border
                                             style="width: 100%">
                                         <el-table-column
@@ -1145,6 +1160,17 @@
                                             </template>
                                         </el-table-column>
                                     </el-table>
+                                    <div class="block" style="margin-top:15px;">
+                                        <el-pagination
+                                                @size-change="handleSizeChange2"
+                                                @current-change="handleCurrentChange2"
+                                                :current-page.sync="recruitListPage.currentPage"
+                                                :page-sizes="[5, 10, 15, 20, 25]"
+                                                :page-size="recruitListPage.pageSize"
+                                                layout="total, sizes, prev, pager, next, jumper"
+                                                :total="recruitListPage.total">
+                                        </el-pagination>
+                                    </div>
                                     <el-drawer
                                             title="编辑信息"
                                             :visible.sync="drawer4"
@@ -1413,6 +1439,16 @@
                 el: '#app',
                 data() {
                     return {
+                        recruitListPage: {
+                            currentPage: 1,
+                            total: '',
+                            pageSize: 5,
+                        },
+                        DragListPage: {
+                            currentPage: 1,
+                            total: '',
+                            pageSize: 5,
+                        },
                         options: [{
                             value: '1',
                             label: '化学药物(制剂)'
@@ -1627,6 +1663,24 @@
                     };
                 },
                 methods: {
+                    handleSizeChange1(val) {
+                        console.log(`每页 ${val} 条`);
+                        this.DragListPage.currentPage = 1;
+                        this.DragListPage.pageSize = val;
+                    },
+                    handleCurrentChange1(val) {
+                        console.log(`当前页: ${val}`);
+                        this.DragListPage.currentPage = val;
+                    },
+                    handleSizeChange2(val) {
+                        console.log(`每页 ${val} 条`);
+                        this.recruitListPage.currentPage = 1;
+                        this.recruitListPage.pageSize = val;
+                    },
+                    handleCurrentChange2(val) {
+                        console.log(`当前页: ${val}`);
+                        this.recruitListPage.currentPage = val;
+                    },
                     r_typeFormatter(row, colum) {
                         if (row.r_type == 0)
                             return '健康志愿者'

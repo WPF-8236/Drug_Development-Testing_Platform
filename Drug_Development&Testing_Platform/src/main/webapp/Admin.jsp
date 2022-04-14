@@ -54,6 +54,7 @@
                     success: function (reps) {
                         console.log(reps)
                         app.enterpriseList = reps;
+                        app.enterprisePage.total = app.enterpriseList.length;
                     },
                     error: function () {
                         alert('error');
@@ -68,6 +69,7 @@
                     success: function (reps) {
                         console.log(reps)
                         app.DragList = reps;
+                        app.DragListPage.total = app.DragList.length;
                     },
                     error: function () {
                         alert('error');
@@ -294,14 +296,14 @@
                                 </div>
                                 <div id="enterpriseList">
                                     <el-table
-                                            :data="enterpriseList"
+                                            :data="enterpriseList.slice((enterprisePage.currentPage-1)*enterprisePage.pageSize,enterprisePage.currentPage*enterprisePage.pageSize)"
                                             border
                                             style="width: 100%">
                                         <el-table-column
                                                 fixed
                                                 prop="e_id"
                                                 label="公司编号"
-                                                width="200">
+                                                width="180">
                                         </el-table-column>
                                         <el-table-column
                                                 prop="e_name"
@@ -340,6 +342,17 @@
                                             </template>
                                         </el-table-column>
                                     </el-table>
+                                    <div class="block" style="margin-top:15px;">
+                                        <el-pagination
+                                                @size-change="handleSizeChange1"
+                                                @current-change="handleCurrentChange1"
+                                                :current-page.sync="enterprisePage.currentPage"
+                                                :page-sizes="[5, 10, 15, 20, 25]"
+                                                :page-size="enterprisePage.pageSize"
+                                                layout="total, sizes, prev, pager, next, jumper"
+                                                :total="enterprisePage.total">
+                                        </el-pagination>
+                                    </div>
                                     <el-drawer
                                             title="编辑信息"
                                             :visible.sync="drawer"
@@ -374,7 +387,7 @@
                             <div v-show="index==2">
                                 <div id="DragList">
                                     <el-table
-                                            :data="DragList"
+                                            :data="DragList.slice((DragListPage.currentPage-1)*DragListPage.pageSize,DragListPage.currentPage*DragListPage.pageSize)"
                                             border
                                             style="width:100%"
                                             :row-class-name="tableRowClassName">
@@ -427,6 +440,17 @@
                                             </template>
                                         </el-table-column>
                                     </el-table>
+                                </div>
+                                <div class="block" style="margin-top:15px;">
+                                    <el-pagination
+                                            @size-change="handleSizeChange2"
+                                            @current-change="handleCurrentChange2"
+                                            :current-page.sync="DragListPage.currentPage"
+                                            :page-sizes="[5, 10, 15, 20, 25]"
+                                            :page-size="DragListPage.pageSize"
+                                            layout="total, sizes, prev, pager, next, jumper"
+                                            :total="DragListPage.total">
+                                    </el-pagination>
                                 </div>
                             </div>
                             <div v-show="index==3">
@@ -726,6 +750,16 @@
                 el: '#app',
                 data() {
                     return {
+                        enterprisePage: {
+                            currentPage: 1,
+                            total: '',
+                            pageSize: 5,
+                        },
+                        DragListPage: {
+                            currentPage: 1,
+                            total: '',
+                            pageSize: 5,
+                        },
                         direction: 'rtl',
                         drawer: false,
                         drawer1: false,
@@ -795,6 +829,24 @@
                     },
                 },
                 methods: {
+                    handleSizeChange1(val) {
+                        console.log(`每页 ${val} 条`);
+                        this.enterprisePage.currentPage = 1;
+                        this.enterprisePage.pageSize = val;
+                    },
+                    handleCurrentChange1(val) {
+                        console.log(`当前页: ${val}`);
+                        this.enterprisePage.currentPage = val;
+                    },
+                    handleSizeChange2(val) {
+                        console.log(`每页 ${val} 条`);
+                        this.DragListPage.currentPage = 1;
+                        this.DragListPage.pageSize = val;
+                    },
+                    handleCurrentChange2(val) {
+                        console.log(`当前页: ${val}`);
+                        this.DragListPage.currentPage = val;
+                    },
                     m_typeFormatter(row, colum) {
                         if (row.m_type == 0)
                             return '药物知识'

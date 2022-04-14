@@ -17,7 +17,7 @@ public interface EnterpriseService {
 
 	List<Enterprise> getEnterpriseList();
 
-	List<Researcher> getResearcherList();
+	List<Researcher> getResearcherList(String ra_e_id);
 
 	List<Drag> getDragList(String d_e_id);
 

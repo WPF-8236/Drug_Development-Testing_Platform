@@ -75,8 +75,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 	}
 
 	@Override
-	public List<Researcher> getResearcherList() {
-		return researcherDao.selectResearcher();
+	public List<Researcher> getResearcherList(String ra_e_id) {
+		return researcherDao.selectResearcher(ra_e_id);
 	}
 
 	@Override
