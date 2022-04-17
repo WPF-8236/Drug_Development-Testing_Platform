@@ -211,6 +211,7 @@
                     success: function (reps) {
                         console.log(reps)
                         app.MessageList = reps;
+                        app.messagesPage.total = app.MessageList.length;
                     },
                     error: function () {
                         alert('error');
@@ -690,7 +691,7 @@
                             <div v-show="index==4">
                                 <div id="MessageListDiv">
                                     <el-table
-                                            :data="MessageList"
+                                            :data="MessageList.slice((messagesPage.currentPage-1)*messagesPage.pageSize,messagesPage.currentPage*messagesPage.pageSize)"
                                             border
                                             style="width:100%"
                                             :row-class-name="tableRowClassName2">
@@ -743,6 +744,17 @@
                                             </template>
                                         </el-table-column>
                                     </el-table>
+                                    <div class="block" style="margin-top:15px;">
+                                        <el-pagination
+                                                @size-change="handleSizeChange4"
+                                                @current-change="handleCurrentChange4"
+                                                :current-page.sync="messagesPage.currentPage"
+                                                :page-sizes="[5, 10, 15, 20, 25]"
+                                                :page-size="messagesPage.pageSize"
+                                                layout="total, sizes, prev, pager, next, jumper"
+                                                :total="messagesPage.total">
+                                        </el-pagination>
+                                    </div>
                                 </div>
                             </div>
                         </el-main>
@@ -762,6 +774,11 @@
                 el: '#app',
                 data() {
                     return {
+                        messagesPage: {
+                            currentPage: 1,
+                            total: '',
+                            pageSize: 10,
+                        },
                         recruitListPage: {
                             currentPage: 1,
                             total: '',
@@ -872,6 +889,15 @@
                     handleCurrentChange3(val) {
                         console.log(`当前页: ${val}`);
                         this.recruitListPage.currentPage = val;
+                    },
+                    handleSizeChange4(val) {
+                        console.log(`每页 ${val} 条`);
+                        this.messagesPage.currentPage = 1;
+                        this.messagesPage.pageSize = val;
+                    },
+                    handleCurrentChange4(val) {
+                        console.log(`当前页: ${val}`);
+                        this.messagesPage.currentPage = val;
                     },
                     m_typeFormatter(row, colum) {
                         if (row.m_type == 0)

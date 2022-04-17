@@ -28,6 +28,7 @@
                     success: function (reps) {
                         console.log(reps);
                         app.messages = reps;
+                        app.messagesPage.total = app.messages.length;
                     },
                     error: function () {
                         alert('error');
@@ -196,7 +197,7 @@
                         </el-tab-pane>
                         <el-tab-pane label="药物科普">
                             <div id="messages">
-                                <div v-for="message in messages" id="message">
+                                <div v-for="message in messages.slice((messagesPage.currentPage-1)*messagesPage.pageSize,messagesPage.currentPage*messagesPage.pageSize)" id="message">
                                     <div id="message-title">
                                         {{message.m_title}}
                                     </div>
@@ -228,6 +229,17 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="block" style="margin-top:15px;">
+                                <el-pagination
+                                        @size-change="handleSizeChange2"
+                                        @current-change="handleCurrentChange2"
+                                        :current-page.sync="messagesPage.currentPage"
+                                        :page-sizes="[5, 10, 15, 20, 25]"
+                                        :page-size="messagesPage.pageSize"
+                                        layout="total, sizes, prev, pager, next, jumper"
+                                        :total="messagesPage.total">
+                                </el-pagination>
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="药物对比">
@@ -457,6 +469,11 @@
                             total: '',
                             pageSize: 10,
                         },
+                        messagesPage: {
+                            currentPage: 1,
+                            total: '',
+                            pageSize: 10,
+                        },
                     };
                 },
                 filters: {
@@ -488,6 +505,15 @@
                     handleCurrentChange1(val) {
                         console.log(`当前页: ${val}`);
                         this.DragListPage.currentPage = val;
+                    },
+                    handleSizeChange2(val) {
+                        console.log(`每页 ${val} 条`);
+                        this.messagesPage.currentPage = 1;
+                        this.messagesPage.pageSize = val;
+                    },
+                    handleCurrentChange2(val) {
+                        console.log(`当前页: ${val}`);
+                        this.messagesPage.currentPage = val;
                     },
                     messageClick(tab, event) {
                         if (tab.index == 2)

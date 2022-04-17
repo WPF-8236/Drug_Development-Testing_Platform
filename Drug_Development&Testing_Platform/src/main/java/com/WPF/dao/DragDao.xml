@@ -22,7 +22,7 @@
     </select>
 
     <select id="selectDragByUserId" resultType="Drag">
-        select *
+        select distinct ddtp_drag.*
         from ddtp_drag
                  join ddtp_d_c ddc on ddtp_drag.d_id = ddc.d_id
         where ddc.c_user_id = #{user_id}
