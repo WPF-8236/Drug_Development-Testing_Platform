@@ -13,7 +13,7 @@ public interface RecruitService {
 	List<RecruitList> getUserRecruitList(String user_id);
 
 	List<RecruitList> getRecruitListWithispe1();
-	List<RecruitList> getRecruitListWithispe2();
+	List<RecruitList> getRecruitListWithispe2(String e_id);
 
 	int changeRecruitListisv(String rl_id,int trg);
 	int changeRecruitListispe(String rl_id);

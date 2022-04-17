@@ -9,12 +9,14 @@ import java.util.List;
 public interface RecruitListDao {
 	int insertRecruitList(RecruitList recruitList);
 
-	List<RecruitList> selectAllRecruitListByUserID(@Param("user_id")String user_id);
+	List<RecruitList> selectAllRecruitListByUserID(@Param("user_id") String user_id);
 
 	List<RecruitList> selectAllRecruitListWithispe1();
-	List<RecruitList> selectAllRecruitListWithispe2();
 
-	int updateRecruitListisv(@Param("rl_id")String rl_id,@Param("trg") int trg);
-	int updateRecruitListispe(@Param("rl_id")String rl_id);
+	List<RecruitList> selectAllRecruitListWithispe2(@Param("e_id") String e_id);
+
+	int updateRecruitListisv(@Param("rl_id") String rl_id, @Param("trg") int trg);
+
+	int updateRecruitListispe(@Param("rl_id") String rl_id);
 
 }

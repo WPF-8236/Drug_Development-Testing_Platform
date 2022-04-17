@@ -39,8 +39,8 @@ public class RecruitServiceImpl implements RecruitService {
 	}
 
 	@Override
-	public List<RecruitList> getRecruitListWithispe2() {
-		return recruitListDao.selectAllRecruitListWithispe2();
+	public List<RecruitList> getRecruitListWithispe2(String e_id) {
+		return recruitListDao.selectAllRecruitListWithispe2(e_id);
 	}
 
 	@Override

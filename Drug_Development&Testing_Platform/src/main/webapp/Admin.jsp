@@ -40,6 +40,7 @@
                     success: function (reps) {
                         console.log(reps)
                         app.recruitList = reps;
+                        app.recruitListPage.total = app.recruitList.length;
                     },
                     error: function () {
                         alert('error');
@@ -109,12 +110,12 @@
                 })
             }
 
-            function updateARlUE(rl_id, rl_u_id) {
+            function updateARlUE(r_id, rl_u_id) {
                 $.ajax({
                     url: "Admin/updateARlUE",
                     contentType: 'application/json;charset=UTF-8',
                     dataType: "json",
-                    data: {"rl_id": JSON.stringify(rl_id), "rl_u_id": JSON.stringify(rl_u_id)},
+                    data: {"rl_id": JSON.stringify(r_id), "rl_u_id": JSON.stringify(rl_u_id)},
                     success: function (reps) {
                         alert(reps.valueOf());
                     },
@@ -456,7 +457,7 @@
                             <div v-show="index==3">
                                 <div id="recruitlist">
                                     <el-table
-                                            :data="recruitList"
+                                            :data="recruitList.slice((recruitListPage.currentPage-1)*recruitListPage.pageSize,recruitListPage.currentPage*recruitListPage.pageSize)"
                                             border
                                             style="width: 100%"
                                             :row-class-name="tableRowClassName1">
@@ -519,6 +520,17 @@
                                             </template>
                                         </el-table-column>
                                     </el-table>
+                                    <div class="block" style="margin-top:15px;">
+                                        <el-pagination
+                                                @size-change="handleSizeChange3"
+                                                @current-change="handleCurrentChange3"
+                                                :current-page.sync="recruitListPage.currentPage"
+                                                :page-sizes="[5, 10, 15, 20, 25]"
+                                                :page-size="recruitListPage.pageSize"
+                                                layout="total, sizes, prev, pager, next, jumper"
+                                                :total="recruitListPage.total">
+                                        </el-pagination>
+                                    </div>
                                     <el-drawer
                                             title="体检数据"
                                             :visible.sync="drawer1"
@@ -750,6 +762,11 @@
                 el: '#app',
                 data() {
                     return {
+                        recruitListPage: {
+                            currentPage: 1,
+                            total: '',
+                            pageSize: 5,
+                        },
                         enterprisePage: {
                             currentPage: 1,
                             total: '',
@@ -847,6 +864,15 @@
                         console.log(`当前页: ${val}`);
                         this.DragListPage.currentPage = val;
                     },
+                    handleSizeChange3(val) {
+                        console.log(`每页 ${val} 条`);
+                        this.recruitListPage.currentPage = 1;
+                        this.recruitListPage.pageSize = val;
+                    },
+                    handleCurrentChange3(val) {
+                        console.log(`当前页: ${val}`);
+                        this.recruitListPage.currentPage = val;
+                    },
                     m_typeFormatter(row, colum) {
                         if (row.m_type == 0)
                             return '药物知识'
@@ -923,7 +949,7 @@
                         changeRecruitListisv(row.rl_id, 2);
                     },
                     handleClick4(row) {
-                        updateARlUE(row.rl_id, row.rl_u_id);
+                        updateARlUE(row.r_id, row.rl_u_id);
                         changeRecruitListisv(row.rl_id, 1);
                     },
                     handleClick5(row) {

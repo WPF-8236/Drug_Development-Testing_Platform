@@ -41,6 +41,7 @@
             function changeDrawer2() {
                 app.drawer2 = 'true';
                 app.recruitList.rl_title = app.recruit_detial.r_title;
+                app.recruitList.r_id = app.recruit_detial.r_id;
                 app.recruitList.rl_u_id = document.getElementById("user_id").textContent;
                 app.recruitList.rl_user_name = document.getElementById("user_name").textContent;
                 app.recruitList.rl_user_sex = document.getElementById("user_sex").textContent;
@@ -247,6 +248,7 @@
                             r_title: '',
                         },
                         recruitList: {
+                            r_id: '',
                             rl_u_id: '',
                             rl_title: '',
                             rl_user_name: '',

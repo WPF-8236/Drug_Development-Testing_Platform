@@ -216,6 +216,7 @@
                     success: function (reps) {
                         console.log(reps)
                         app.volunteers = reps;
+                        app.VolunteerListPage.total = app.volunteers.length;
                     },
                     error: function () {
                         alert('error');
@@ -802,7 +803,7 @@
                                     <el-collapse-item title="未分配的志愿者" name="1">
                                         <div id="VolunteerList">
                                             <el-table
-                                                    :data="volunteers"
+                                                    :data="volunteers.slice((VolunteerListPage.currentPage-1)*VolunteerListPage.pageSize,VolunteerListPage.currentPage*VolunteerListPage.pageSize)"
                                                     border
                                                     style="width:100%">
                                                 <el-table-column
@@ -853,6 +854,17 @@
                                                     </template>
                                                 </el-table-column>
                                             </el-table>
+                                        </div>
+                                        <div class="block" style="margin-top:15px;">
+                                            <el-pagination
+                                                    @size-change="handleSizeChange3"
+                                                    @current-change="handleCurrentChange3"
+                                                    :current-page.sync="VolunteerListPage.currentPage"
+                                                    :page-sizes="[5, 10, 15, 20, 25]"
+                                                    :page-size="VolunteerListPage.pageSize"
+                                                    layout="total, sizes, prev, pager, next, jumper"
+                                                    :total="VolunteerListPage.total">
+                                            </el-pagination>
                                         </div>
                                     </el-collapse-item>
                                     <div id="researcherListForVolunteer" v-for="researcher in researcherList">
@@ -1444,6 +1456,11 @@
                             total: '',
                             pageSize: 5,
                         },
+                        VolunteerListPage: {
+                            currentPage: 1,
+                            total: '',
+                            pageSize: 5,
+                        },
                         DragListPage: {
                             currentPage: 1,
                             total: '',
@@ -1608,10 +1625,12 @@
                         u_ra: {
                             v_user_id: '',
                             v_ra_id: '',
+                            v_rl_id: '',
                         },
                         deleteu_ra: {
                             v_user_id: '',
                             v_ra_id: '',
+                            v_rl_id: '',
                         },
                         ProgressList: [],
                         addProgress: {
@@ -1680,6 +1699,15 @@
                     handleCurrentChange2(val) {
                         console.log(`当前页: ${val}`);
                         this.recruitListPage.currentPage = val;
+                    },
+                    handleSizeChange3(val) {
+                        console.log(`每页 ${val} 条`);
+                        this.VolunteerListPage.currentPage = 1;
+                        this.VolunteerListPage.pageSize = val;
+                    },
+                    handleCurrentChange3(val) {
+                        console.log(`当前页: ${val}`);
+                        this.VolunteerListPage.currentPage = val;
                     },
                     r_typeFormatter(row, colum) {
                         if (row.r_type == 0)
@@ -1759,6 +1787,7 @@
                     },
                     handleClick5(row) {
                         this.u_ra.v_user_id = row.user_id;
+                        this.u_ra.v_rl_id = row.rl_id;
                         addURa();
                     },
                     handleClick6(row) {

@@ -56,4 +56,14 @@ public class MessageController {
 		return drags;
 	}
 
+	@RequestMapping("/getAllDrag")
+	@ResponseBody
+	public List<Drag> getAllDrag(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		List<Drag> drags = new ArrayList<>();
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		drags = messageService.getAllDrag();
+		return drags;
+	}
 }

@@ -42,7 +42,10 @@ public class RecruitController {
 	public List<RecruitList> getRecruitList2(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		return recruitService.getRecruitListWithispe2();
+		String json = request.getParameter("ra_e_id");
+		ObjectMapper mapper = new ObjectMapper();
+		String e_id = mapper.readValue(json, String.class);
+		return recruitService.getRecruitListWithispe2(e_id);
 	}
 
 	@RequestMapping("/getRecruitByUserID")

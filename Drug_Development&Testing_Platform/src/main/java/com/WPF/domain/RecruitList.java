@@ -2,6 +2,7 @@ package com.WPF.domain;
 
 public class RecruitList {
 	private String rl_id;
+	private String r_id;
 	private String rl_u_id;
 	private String rl_title;
 	private String rl_user_name;
@@ -19,8 +20,9 @@ public class RecruitList {
 	public RecruitList() {
 	}
 
-	public RecruitList(String rl_id, String rl_u_id, String rl_title, String rl_user_name, int rl_user_sex, String rl_user_phone, String rl_user_identification_number, double rl_user_height, double rl_user_weight, String rl_address, int rl_issmoke, String rl_text, int isv, int ispe) {
+	public RecruitList(String rl_id, String r_id, String rl_u_id, String rl_title, String rl_user_name, int rl_user_sex, String rl_user_phone, String rl_user_identification_number, double rl_user_height, double rl_user_weight, String rl_address, int rl_issmoke, String rl_text, int isv, int ispe) {
 		this.rl_id = rl_id;
+		this.r_id = r_id;
 		this.rl_u_id = rl_u_id;
 		this.rl_title = rl_title;
 		this.rl_user_name = rl_user_name;
@@ -42,6 +44,14 @@ public class RecruitList {
 
 	public void setRl_id(String rl_id) {
 		this.rl_id = rl_id;
+	}
+
+	public String getR_id() {
+		return r_id;
+	}
+
+	public void setR_id(String r_id) {
+		this.r_id = r_id;
 	}
 
 	public String getRl_u_id() {
@@ -152,6 +162,7 @@ public class RecruitList {
 	public String toString() {
 		return "RecruitList{" +
 				"rl_id='" + rl_id + '\'' +
+				", r_id='" + r_id + '\'' +
 				", rl_u_id='" + rl_u_id + '\'' +
 				", rl_title='" + rl_title + '\'' +
 				", rl_user_name='" + rl_user_name + '\'' +

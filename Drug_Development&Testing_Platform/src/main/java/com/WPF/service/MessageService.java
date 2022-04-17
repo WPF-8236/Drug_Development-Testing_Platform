@@ -15,4 +15,6 @@ public interface MessageService {
 	List<Message> getMessageList();
 
 	int changeMessageMMark(String m_id, int trg);
+
+	List<Drag> getAllDrag();
 }

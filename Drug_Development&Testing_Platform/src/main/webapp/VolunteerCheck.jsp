@@ -26,9 +26,12 @@
                 $.ajax({
                     url: "recruit/getRecruitList2",
                     contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    data: {"ra_e_id": JSON.stringify(document.getElementById("ra_e_id").textContent)},
                     success: function (reps) {
                         console.log(reps)
                         app.recruitList = reps;
+                        app.recruitListPage.total = app.recruitList.length;
                     },
                     error: function () {
                         alert('error');
@@ -75,20 +78,25 @@
                 <el-main class="el-tabs">
                     <div id="recruitlist">
                         <el-table
-                                :data="recruitList"
+                                :data="recruitList.slice((recruitListPage.currentPage-1)*recruitListPage.pageSize,recruitListPage.currentPage*recruitListPage.pageSize)"
                                 border
                                 style="width: 1600px;margin-right: auto;margin-left: auto"
                                 :row-class-name="tableRowClassName">
                             <el-table-column
                                     prop="rl_user_name"
                                     label="姓名"
+                                    width="150">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="rl_title"
+                                    label="招募标题"
                                     width="200">
                             </el-table-column>
                             <el-table-column
                                     prop="rl_user_sex"
                                     label="性别"
                                     :formatter="sexTypeFormatter"
-                                    width="200">
+                                    width="100">
                             </el-table-column>
                             <el-table-column
                                     prop="rl_user_phone"
@@ -126,6 +134,17 @@
                                 </template>
                             </el-table-column>
                         </el-table>
+                        <div class="block" style="margin-top:15px;">
+                            <el-pagination
+                                    @size-change="handleSizeChange1"
+                                    @current-change="handleCurrentChange1"
+                                    :current-page.sync="recruitListPage.currentPage"
+                                    :page-sizes="[5, 10, 15, 20, 25]"
+                                    :page-size="recruitListPage.pageSize"
+                                    layout="total, sizes, prev, pager, next, jumper"
+                                    :total="recruitListPage.total">
+                            </el-pagination>
+                        </div>
                         <el-drawer
                                 title="体检数据"
                                 :visible.sync="drawer"
@@ -239,6 +258,11 @@
                 el: '#app',
                 data() {
                     return {
+                        recruitListPage: {
+                            currentPage: 1,
+                            total: '',
+                            pageSize: 5,
+                        },
                         drawer: false,
                         labelPosition: 'left',
                         direction: 'rtl',
@@ -275,6 +299,15 @@
                 },
                 filters: {},
                 methods: {
+                    handleSizeChange1(val) {
+                        console.log(`每页 ${val} 条`);
+                        this.recruitListPage.currentPage = 1;
+                        this.recruitListPage.pageSize = val;
+                    },
+                    handleCurrentChange1(val) {
+                        console.log(`当前页: ${val}`);
+                        this.recruitListPage.currentPage = val;
+                    },
                     handleClick(row) {
                         this.drawer = 'true';
                         this.PhyExam.pe_rl_id = row.rl_id;

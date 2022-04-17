@@ -3,10 +3,12 @@ package com.WPF.domain;
 public class URa {
 	private String v_user_id;
 	private String v_ra_id;
+	private String v_rl_id;
 
-	public URa(String v_user_id, String v_ra_id) {
+	public URa(String v_user_id, String v_ra_id, String v_rl_id) {
 		this.v_user_id = v_user_id;
 		this.v_ra_id = v_ra_id;
+		this.v_rl_id = v_rl_id;
 	}
 
 	public URa() {
@@ -28,11 +30,20 @@ public class URa {
 		this.v_ra_id = v_ra_id;
 	}
 
+	public String getV_rl_id() {
+		return v_rl_id;
+	}
+
+	public void setV_rl_id(String v_rl_id) {
+		this.v_rl_id = v_rl_id;
+	}
+
 	@Override
 	public String toString() {
 		return "URa{" +
 				"v_user_id='" + v_user_id + '\'' +
 				", v_ra_id='" + v_ra_id + '\'' +
+				", v_rl_id='" + v_rl_id + '\'' +
 				'}';
 	}
 }

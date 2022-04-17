@@ -45,6 +45,11 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public int changeMessageMMark(String m_id, int trg) {
-		return messageDao.changeMessageMMark(m_id,trg);
+		return messageDao.changeMessageMMark(m_id, trg);
+	}
+
+	@Override
+	public List<Drag> getAllDrag() {
+		return dragDao.selectAllDrags();
 	}
 }
